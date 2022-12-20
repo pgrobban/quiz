@@ -1,16 +1,12 @@
-import { Button, TextField } from "@mui/material";
-import styles from "../styles/Home.module.css";
-import PersonAddIcon from "@mui/icons-material/PersonAdd";
-import PersonRemoveIcon from "@mui/icons-material/PersonRemove";
-import { useState } from "react";
+import { withRouter } from "next/router";
 import { useAppContext } from "../controllers/AppWrapper";
-import Router, { withRouter } from "next/router";
+import styles from "../styles/Home.module.css";
 
 function Game() {
   const appContext = useAppContext();
-  const { socket, gameHandler } = appContext;
+  const { gameHandler } = appContext;
 
-  const teamNamesAndPoints = gameHandler.getTeamNamesAndPoints();
+  const teamNamesAndPoints = gameHandler?.getTeamNamesAndPoints();
   const sortedTeamsAndPoints = teamNamesAndPoints?.sort((teamA, teamB) => teamB.points - teamA.points);
 
   return (

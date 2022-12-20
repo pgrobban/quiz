@@ -4,11 +4,10 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import PersonRemoveIcon from "@mui/icons-material/PersonRemove";
 import { useState } from "react";
 import { useAppContext } from "../controllers/AppWrapper";
-import Router, { withRouter } from "next/router";
 
 function NewGame() {
   const appContext = useAppContext();
-  const { socket, gameHandler } = appContext;
+  const { gameHandler } = appContext;
   const [teamNames, setTeamNames] = useState(["", ""]);
 
   const updateTeamName = (index: number, newName: string) => {
@@ -26,12 +25,7 @@ function NewGame() {
   };
 
   const startGame = () => {
-    if (socket) {
-      socket.emit('game-start', { gameId: gameHandler.getGameId(), teamNames });
-      Router.push('/game');
-    } else {
-      console.error("*** NO SOCKET...")
-    }
+    gameHandler.requestStartGame(teamNames);
   }
 
   return (
@@ -84,4 +78,4 @@ function NewGame() {
   );
 }
 
-export default withRouter(NewGame);
+export default NewGame;

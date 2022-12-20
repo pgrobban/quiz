@@ -28,12 +28,12 @@ const SocketHandler = (_: NextApiRequest, res: NextApiResponseWithSocket) => {
 
     io.on('connection', (socket) => {
       socket.on('new-game', () => {
-        console.log("*** new game")
         const game = gameHandler.createNewGame();
         socket.emit('new-game-created', game);
+        console.log("*** game created")
       });
 
-      socket.on('game-start', ({ gameId, teamNames }) => {
+      socket.on('start-game', ({ gameId, teamNames }) => {
         const game = gameHandler.startGame(gameId, teamNames);
         socket.emit('game-started', game);
       });
