@@ -1,42 +1,76 @@
 import { Socket } from "socket.io-client";
-import { Game } from "./GameHandler";
 import Router from "next/router";
+import { Game } from "../models/types";
 
 export default class ClientGameHandler {
 
-  private game: Game | null = null;
+  private activeGame: Game | null = null;
+  private hostReceivedGames: Game[] = [];
+  private role: 'play' | 'host' | null = null;
 
   constructor(private socket: Socket) {}
 
   requestNewGame() {
+    this.role = 'play';
     this.socket.emit('new-game');
   }
 
   requestStartGame(teamNames: string[]) {
-    this.socket.emit('start-game', { gameId: this.game?.id, teamNames })
+    this.socket.emit('start-game', { gameId: this.activeGame?.id, teamNames })
   }
 
-  getTeamNamesAndPoints() {
-    if (!this.game) {
+  requestToBeHost() {
+    this.role = 'host';
+    Router.push('/host/game-list');
+  }
+
+  requestGames() {
+    this.socket.emit('request-games');
+  }
+
+  requestHostJoinGame(gameId: string) {
+    this.socket.emit('request-host-join-game', gameId);
+  }
+
+  getActiveGame() {
+    if (!this.activeGame) {
       throw new Error('No game in progress');
     }
-    return this.game.teamsAndPoints;
+    return this.activeGame;
+  }
+
+  getHostReceivedGames() {
+    return this.hostReceivedGames;
   }
 
   onConnected() {
     console.log("*** connected" );
   }
 
+  onDisconnected() {
+    console.log("*** disconnected" );
+  }
+
   onNewGameCreated(game: Game) {
-    this.game = game;
-    Router.push('/new-game');
-    console.log("*** new game created", game);
+    this.activeGame = game;
+    Router.push('/player/new-game');
   }
 
   onGameStarted(game: Game) {
-    this.game = game;
-    Router.push('/game');
-    console.log("*** game created", game);
+    this.activeGame = game;
+    Router.push('/player/game');
+  }
+
+  onHostReceivedGames(games: Game[]) {
+    this.hostReceivedGames = games;
+  }
+
+  onHostJoinedGame(game: Game) {
+    this.activeGame = game;
+
+    if (this.role === 'host') {
+      Router.push('/host/game');
+    }
   }
 
 }

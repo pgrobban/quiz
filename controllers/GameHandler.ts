@@ -1,20 +1,5 @@
 import { v4 as uuid } from 'uuid';
-
-enum GameStatus {
-  created = 'created',
-  started = 'started',
-  inProgress = 'in_progress',
-  ended = 'ended'
-}
-
-export interface Game {
-  id: string;
-  status: GameStatus;
-  teamsAndPoints?: {
-    teamName: string;
-    points: number;
-  }[];
-}
+import { Game, GameStatus, QuestionStatus } from '../models/types';
 
 export default class GameHandler {
 
@@ -26,7 +11,7 @@ export default class GameHandler {
 
   createNewGame() {
     const id = uuid();
-    const game = { id, status: GameStatus.created };
+    const game = { id, gameStatus: GameStatus.created };
     this.games.push(game);
     return game;
   }
@@ -34,14 +19,27 @@ export default class GameHandler {
   startGame(gameId: string, teamNames: string[]) {
     const game = this.games.find((g) => g.id === gameId);
     if (!game) {
-      console.error("*** Didn't find game with id", gameId);
-      return;
+      throw new Error(`*** Didn't find game with id ${gameId}`);
     }
     game.teamsAndPoints = teamNames.map((teamName) => ({
       teamName,
       points: 0
     }));
-    game.status = GameStatus.started;
+    game.gameStatus = GameStatus.waitingForHost;
+    return game;
+  }
+
+  requestGames() {
+    return this.games;
+  }
+
+  requestHostJoinGame(gameId: string) {
+    const game = this.games.find((g) => g.id === gameId);
+    if (!game) {
+      throw new Error(`*** Didn't find game with id ${gameId}`);
+    }
+    game.gameStatus = GameStatus.inProgress;
+    game.questionStatus = QuestionStatus.waitingForQuestion;
     return game;
   }
 

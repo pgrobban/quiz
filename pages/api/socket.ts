@@ -19,27 +19,45 @@ interface NextApiResponseWithSocket extends NextApiResponse {
 
 const SocketHandler = (_: NextApiRequest, res: NextApiResponseWithSocket) => {
   if (res.socket.server.io) {
-    console.log('*** Socket is already running')
-  } else {
-    console.log('*** Socket is initializing')
-    const gameHandler = new GameHandler();
-    const io = new Server(res.socket.server)
-    res.socket.server.io = io;
-
-    io.on('connection', (socket) => {
-      socket.on('new-game', () => {
-        const game = gameHandler.createNewGame();
-        socket.emit('new-game-created', game);
-        console.log("*** game created")
-      });
-
-      socket.on('start-game', ({ gameId, teamNames }) => {
-        const game = gameHandler.startGame(gameId, teamNames);
-        socket.emit('game-started', game);
-      });
-    });
+    return res.end(); // socket is already runing
   }
-  res.end()
+  const gameHandler = new GameHandler();
+  const io = new Server(res.socket.server)
+  res.socket.server.io = io;
+
+  io.on('connection', (socket) => {
+    socket.on('connect', () => console.log("*** client connected"));
+
+    socket.on('new-game', () => {
+      const game = gameHandler.createNewGame();
+      socket.emit('new-game-created', game);
+    });
+
+    socket.on('start-game', ({ gameId, teamNames }) => {
+      const game = gameHandler.startGame(gameId, teamNames);
+      socket.join(game.id);
+      socket.emit('game-started', game);
+    });
+
+    socket.on("request-games", () => {
+      const games = gameHandler.requestGames();
+      socket.emit('received-games', games);
+    });
+
+    socket.on("request-host-join-game", (gameId) => {
+      const game = gameHandler.requestHostJoinGame(gameId);
+      socket.join(game.id);
+    
+      io.to(game.id).emit('host-joined-game', game);
+      console.log("** host-joined-game", gameId)
+    });
+  });
+
+  io.on('disconnect', () => {
+    console.log("*** disconnected")
+  })
+
+  return res.end();
 }
 
 export default SocketHandler;

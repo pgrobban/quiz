@@ -1,9 +1,9 @@
 import { Button, TextField } from "@mui/material";
-import styles from "../styles/Home.module.css";
+import styles from "../../styles/Home.module.css";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import PersonRemoveIcon from "@mui/icons-material/PersonRemove";
 import { useState } from "react";
-import { useAppContext } from "../controllers/AppWrapper";
+import { useAppContext } from "../../controllers/AppWrapper";
 
 function NewGame() {
   const appContext = useAppContext();
@@ -33,10 +33,10 @@ function NewGame() {
       <main className={styles.main}>
         <div>
         <h3>New game</h3>
-        <h3>
+        <h4>
           Enter team names <br />
           (at least two teams are required)
-        </h3>
+        </h4>
         <div>
           {teamNames.map((teamName, index) => {
             return (
@@ -45,7 +45,7 @@ function NewGame() {
                   value={teamName}
                   onChange={(e) => updateTeamName(index, e.target.value)}
                   placeholder="Enter a team name..."
-                  style={{ background: "white" }}
+                  variant="filled"
                   InputProps={{
                     endAdornment: (
                       <Button
@@ -64,7 +64,7 @@ function NewGame() {
           })}
         </div>
 
-        <Button variant="contained">
+        <Button variant="contained" style={{ marginTop: 10 }}>
           <PersonAddIcon onClick={() => addTeamName()} />
         </Button>
         </div>

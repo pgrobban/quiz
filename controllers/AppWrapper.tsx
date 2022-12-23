@@ -1,7 +1,8 @@
+import { cloneDeep } from "lodash";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import io from "socket.io-client";
+import { Game } from "../models/types";
 import ClientGameHandler from "./ClientGameHandler";
-import { Game } from "./GameHandler";
 export interface IAppContext {
   gameHandler: ClientGameHandler;
 }
@@ -17,9 +18,13 @@ export function AppWrapper({ children }: { children: React.ReactNode }) {
     const getSocket = async () => {
       await fetch("/api/socket");
 
-      socket.on("connect", () => { gameHandler?.onConnected(); });
-      socket.on("new-game-created", (game: Game) => { gameHandler?.onNewGameCreated(game); setGameHandler(gameHandler); });
-      socket.on('game-started', (game: Game) => { gameHandler?.onGameStarted(game); setGameHandler(gameHandler); });
+      socket.on("connect", () => { gameHandler.onConnected(); });
+      socket.on("disconnect", () => { gameHandler.onDisconnected(); });
+
+      socket.on("new-game-created", (game: Game) => { gameHandler.onNewGameCreated(game); setGameHandler(cloneDeep(gameHandler)); });
+      socket.on('game-started', (game: Game) => { gameHandler.onGameStarted(game); setGameHandler(cloneDeep(gameHandler)); });
+      socket.on('received-games', (games: Game[]) => { gameHandler.onHostReceivedGames(games); setGameHandler(cloneDeep(gameHandler));  });
+      socket.on('host-joined-game', (game: Game) => { gameHandler.onHostJoinedGame(game); setGameHandler(cloneDeep(gameHandler)); });
     };
     getSocket();
   }, []);

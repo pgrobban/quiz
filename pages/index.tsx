@@ -13,6 +13,10 @@ function Home() {
     gameHandler.requestNewGame();
   };
 
+  const handleHostClicked = () => {
+    gameHandler.requestToBeHost();
+  }
+
   return (
     <>
       <Head>
@@ -22,13 +26,13 @@ function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <h3>Robban&apos;s Pointless Quiz</h3>
+        <h2>Robban&apos;s Pointless Quiz</h2>
         <Image src="/images/logo.png" alt="Logo" width={384} height={214} />
         <div className={styles.menu}>
           <Button variant="contained" style={{ width: 200, height: 50 }} onClick={handleNewGameClicked}>
             New game
           </Button>
-          <Button variant="contained">Host</Button>
+          <Button variant="contained" onClick={handleHostClicked}>Host</Button>
         </div>
       </main>
     </>
