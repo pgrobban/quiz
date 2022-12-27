@@ -11,28 +11,62 @@ const socket = io();
 const gh = new ClientGameHandler(socket);
 export const AppContext = createContext<IAppContext>({ gameHandler: gh });
 
-export default function AppWrapper({ children }: { children: React.ReactNode }) {
+export default function AppWrapper({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const [gameHandler, setGameHandler] = useState<ClientGameHandler>(gh);
 
   useEffect(() => {
     const getSocket = async () => {
       await fetch("/api/socket");
 
-      socket.on("connect", () => { gameHandler.onConnected(); setGameHandler(cloneDeep(gameHandler)); });
-      socket.on("disconnect", () => { gameHandler.onDisconnected(); setGameHandler(cloneDeep(gameHandler)); });
+      socket.on("connect", () => {
+        gameHandler.onConnected();
+        setGameHandler(cloneDeep(gameHandler));
+      });
+      socket.on("disconnect", () => {
+        gameHandler.onDisconnected();
+        setGameHandler(cloneDeep(gameHandler));
+      });
 
-      socket.on("new-game-created", (game: Game) => { gameHandler.onNewGameCreated(game); setGameHandler(cloneDeep(gameHandler)); });
-      socket.on('game-started', (game: Game) => { gameHandler.onGameStarted(game); setGameHandler(cloneDeep(gameHandler)); });
-      socket.on('received-games', (games: Game[]) => { gameHandler.onHostReceivedGames(games); setGameHandler(cloneDeep(gameHandler));  });
-      socket.on('received-game', (game: Game) => { gameHandler.onReceivedGame(game); setGameHandler(cloneDeep(gameHandler));  });
-      socket.on('host-joined-game', (game: Game) => { gameHandler.onHostJoinedGame(game); setGameHandler(cloneDeep(gameHandler)); });
-      socket.on('active-round-set', (game: Game) => { gameHandler.onActiveRoundSet(game); setGameHandler(cloneDeep(gameHandler)); });
+      socket.on("new-game-created", (game: Game) => {
+        gameHandler.onNewGameCreated(game);
+        setGameHandler(cloneDeep(gameHandler));
+      });
+      socket.on("game-started", (game: Game) => {
+        gameHandler.onGameStarted(game);
+        setGameHandler(cloneDeep(gameHandler));
+      });
+      socket.on("received-games", (games: Game[]) => {
+        gameHandler.onHostReceivedGames(games);
+        setGameHandler(cloneDeep(gameHandler));
+      });
+      socket.on("received-game", (game: Game) => {
+        gameHandler.onReceivedGame(game);
+        setGameHandler(cloneDeep(gameHandler));
+      });
+      socket.on("host-joined-game", (game: Game) => {
+        gameHandler.onHostJoinedGame(game);
+        setGameHandler(cloneDeep(gameHandler));
+      });
+      socket.on("active-round-set", (game: Game) => {
+        gameHandler.onActiveRoundSet(game);
+        setGameHandler(cloneDeep(gameHandler));
+      });
+      socket.on("active-question-set", (game: Game) => {
+        gameHandler.onActiveQuestionSet(game);
+        setGameHandler(cloneDeep(gameHandler));
+      });
     };
     getSocket();
   }, []);
 
   return (
-    <AppContext.Provider value={{ gameHandler }}>{children}</AppContext.Provider>
+    <AppContext.Provider value={{ gameHandler }}>
+      {children}
+    </AppContext.Provider>
   );
 }
 

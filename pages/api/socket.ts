@@ -61,6 +61,11 @@ const SocketHandler = (_: NextApiRequest, res: NextApiResponseWithSocket) => {
       const game = gameHandler.requestSetActiveRound(gameId, gameRound);
       io.to(game.id).emit('active-round-set', game);
     });
+
+    socket.on('request-set-active-question', ({ gameId, questionText }) => {
+      const game = gameHandler.requestSetActiveQuestion(gameId, questionText);
+      io.to(game.id).emit('active-question-set', game);
+    });
   });
 
   io.on('disconnect', () => {

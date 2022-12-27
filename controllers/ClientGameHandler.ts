@@ -43,7 +43,7 @@ export default class ClientGameHandler {
   }
 
   requestSetActiveQuestion(questionText: string) {
-    this.socket.emit('request-set-active-question', questionText);
+    this.socket.emit('request-set-active-question', { gameId: this.activeGame?.id, questionText });
   }
 
   getConnectionStatus() {
@@ -113,6 +113,10 @@ export default class ClientGameHandler {
   }
 
   onActiveRoundSet(game: Game) {
+    this.activeGame = game;
+  }
+
+  onActiveQuestionSet(game: Game) {
     this.activeGame = game;
   }
 

@@ -44,9 +44,7 @@ export default function QuestionPicker() {
                   <Button
                     color="primary"
                     variant="contained"
-                    onClick={() =>
-                      gameHandler.requestSetActiveQuestion(round, questionText)
-                    }
+                    onClick={() => gameHandler.requestSetActiveQuestion(questionText)}
                   >
                     Pick
                   </Button>

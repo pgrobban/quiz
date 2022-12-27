@@ -17,7 +17,7 @@ function Game() {
     return;
   }
 
-  const { gameStatus, questionStatus } = game;
+  const { gameStatus, questionStatus, currentQuestion } = game;
 
   console.log("*** game", game);
 
@@ -36,6 +36,9 @@ function Game() {
             )}
             {questionStatus === QuestionStatus.waitingForQuestion && (
               <h4>Waiting for host to pick a question...</h4>
+            )}
+            {questionStatus === QuestionStatus.receivedQuestion && currentQuestion && (
+              <h2>{currentQuestion.question.questionText}</h2>
             )}
           </>
         )}

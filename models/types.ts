@@ -30,6 +30,9 @@ interface PossibleAnswer{
   answerText: string;
   points: number;
 };
+
+export type AnswerStatus = 'unanswered' | 'answered';
+
 export interface Question {
   questionText: string;
   possibleAnswers: PossibleAnswer[];
@@ -37,7 +40,7 @@ export interface Question {
 
 export interface QuestionInGame extends Question {
   possibleAnswers: (PossibleAnswer & {
-    status: 'unanswered' | 'answered';
+    status: AnswerStatus;
   })[];
 }
 
@@ -49,6 +52,6 @@ export interface Game {
   round?: GameRound;
   currentQuestion?: {
     questionInRound: number;
-    question: Question;
+    question: QuestionInGame;
   }
 }
