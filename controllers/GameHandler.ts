@@ -1,5 +1,5 @@
 import { v4 as uuid } from 'uuid';
-import { Game, GameStatus, QuestionStatus } from '../models/types';
+import { Game, GameRound, GameStatus, QuestionStatus } from '../models/types';
 
 export default class GameHandler {
 
@@ -17,10 +17,7 @@ export default class GameHandler {
   }
 
   startGame(gameId: string, teamNames: string[]) {
-    const game = this.games.find((g) => g.id === gameId);
-    if (!game) {
-      throw new Error(`*** Didn't find game with id ${gameId}`);
-    }
+    const game = this.getGameById(gameId);
     game.teamsAndPoints = teamNames.map((teamName) => ({
       teamName,
       points: 0
@@ -29,16 +26,28 @@ export default class GameHandler {
     return game;
   }
 
-  requestGames() {
+  getGames() {
     return this.games;
   }
 
-  requestHostJoinGame(gameId: string) {
+  getGameById(gameId: string) {
     const game = this.games.find((g) => g.id === gameId);
     if (!game) {
       throw new Error(`*** Didn't find game with id ${gameId}`);
     }
+    return game;
+  }
+
+  requestHostJoinGame(gameId: string) {
+    const game = this.getGameById(gameId);
     game.gameStatus = GameStatus.inProgress;
+    game.questionStatus = QuestionStatus.waitingForRound;
+    return game;
+  }
+
+  requestSetActiveRound(gameId: string, gameRound: GameRound) {
+    const game = this.getGameById(gameId);
+    game.round = gameRound;
     game.questionStatus = QuestionStatus.waitingForQuestion;
     return game;
   }

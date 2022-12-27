@@ -5,17 +5,8 @@ import { Button } from "@mui/material";
 import { useAppContext } from "../controllers/AppWrapper";
 
 function Home() {
-
   const appContext = useAppContext();
   const { gameHandler } = appContext;
-
-  const handleNewGameClicked = () => {
-    gameHandler.requestNewGame();
-  };
-
-  const handleHostClicked = () => {
-    gameHandler.requestToBeHost();
-  }
 
   return (
     <>
@@ -29,10 +20,10 @@ function Home() {
         <h2>Robban&apos;s Pointless Quiz</h2>
         <Image src="/images/logo.png" alt="Logo" width={384} height={214} />
         <div className={styles.menu}>
-          <Button variant="contained" style={{ width: 200, height: 50 }} onClick={handleNewGameClicked}>
+          <Button variant="contained" style={{ width: 200, height: 50 }} onClick={() => gameHandler.requestNewGame()}>
             New game
           </Button>
-          <Button variant="contained" onClick={handleHostClicked}>Host</Button>
+          <Button variant="contained" onClick={() => gameHandler.requestToBeHost()}>Host</Button>
         </div>
       </main>
     </>

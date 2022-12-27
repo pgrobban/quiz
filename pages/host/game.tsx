@@ -1,18 +1,28 @@
 import { withRouter } from "next/router";
+import ScoreList from "../../components/ScoreList";
 import { useAppContext } from "../../controllers/AppWrapper";
-import { GameStatus, QuestionStatus } from "../../models/types";
+import { QuestionStatus } from "../../models/types";
 import styles from "../../styles/Home.module.css";
 import QuestionPicker from "./QuestionPicker";
+import RoundPicker from "./RoundPicker";
 
 function Game() {
   const appContext = useAppContext();
   const { gameHandler } = appContext;
-  const game = gameHandler.getActiveGame();
-  const { teamsAndPoints, gameStatus, questionStatus } = game;
-  const sortedTeamsAndPoints = teamsAndPoints?.sort(
-    (teamA, teamB) => teamB.points - teamA.points
-  );
-  console.log("*** game", game);
+  if (gameHandler.getConnectionStatus() === "disconnected") {
+    return <h3>Disconnected</h3>
+  }
+  if (gameHandler.getConnectionStatus() === "reconnecting") {
+    return <h3>Lost connection. Reconnecting...</h3>
+  }
+
+  const activeGame = gameHandler.getActiveGame();
+  if (!activeGame) {
+    return null;
+  }
+
+  const { questionStatus, round } = activeGame;
+  console.log("*** game", activeGame);
 
   return (
     <>
@@ -20,22 +30,17 @@ function Game() {
         <h3>Hosting</h3>
 
         {
-          questionStatus === QuestionStatus.waitingForQuestion && (
+          !round && (
+            <RoundPicker />
+          )
+        }
+        {
+          round && questionStatus === QuestionStatus.waitingForQuestion && (
             <QuestionPicker />
           )
         }
 
-        <div>
-          <h4>Teams</h4>
-
-          <ol>
-            {sortedTeamsAndPoints?.map((teamNameAndPoint) => (
-              <li key={teamNameAndPoint.teamName}>
-                {teamNameAndPoint.teamName} {teamNameAndPoint.points} pts
-              </li>
-            ))}
-          </ol>
-        </div>
+        <ScoreList />
       </main>
     </>
   );

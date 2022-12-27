@@ -19,7 +19,7 @@ interface NextApiResponseWithSocket extends NextApiResponse {
 
 const SocketHandler = (_: NextApiRequest, res: NextApiResponseWithSocket) => {
   if (res.socket.server.io) {
-    return res.end(); // socket is already runing
+    return res.end(); // socket is already running
   }
   const gameHandler = new GameHandler();
   const io = new Server(res.socket.server)
@@ -39,17 +39,27 @@ const SocketHandler = (_: NextApiRequest, res: NextApiResponseWithSocket) => {
       socket.emit('game-started', game);
     });
 
-    socket.on("request-games", () => {
-      const games = gameHandler.requestGames();
+    socket.on('request-games', () => {
+      const games = gameHandler.getGames();
       socket.emit('received-games', games);
     });
 
-    socket.on("request-host-join-game", (gameId) => {
+    socket.on('request-game', (gameId: string) => {
+      const game = gameHandler.getGameById(gameId);
+      socket.emit('received-game', game);
+    });
+
+    socket.on('request-host-join-game', (gameId) => {
       const game = gameHandler.requestHostJoinGame(gameId);
       socket.join(game.id);
     
       io.to(game.id).emit('host-joined-game', game);
       console.log("** host-joined-game", gameId)
+    });
+
+    socket.on('request-set-active-round', ({ gameId, gameRound }) => {
+      const game = gameHandler.requestSetActiveRound(gameId, gameRound);
+      io.to(game.id).emit('active-round-set', game);
     });
   });
 

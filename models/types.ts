@@ -7,6 +7,7 @@ export enum GameStatus {
 }
 
 export enum QuestionStatus {
+  waitingForRound = 'waiting_for_round',
   waitingForQuestion = 'waiting_for_question',
   receivedQuestion = 'received_question',
   announcingResults = 'announcing_results'

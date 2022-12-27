@@ -24,10 +24,6 @@ function NewGame() {
     setTeamNames([...teamNames, ""]);
   };
 
-  const startGame = () => {
-    gameHandler.requestStartGame(teamNames);
-  }
-
   return (
     <>
       <main className={styles.main}>
@@ -69,7 +65,7 @@ function NewGame() {
         </Button>
         </div>
         <div>
-          <Button variant="contained" color="primary" onClick={() => startGame()}>
+          <Button variant="contained" color="primary" onClick={() => gameHandler.requestStartGame(teamNames)}>
             Start game
           </Button>
         </div>

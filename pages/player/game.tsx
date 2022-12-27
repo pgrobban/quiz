@@ -1,4 +1,4 @@
-import { withRouter } from "next/router";
+import ScoreList from "../../components/ScoreList";
 import { useAppContext } from "../../controllers/AppWrapper";
 import { GameStatus, QuestionStatus } from "../../models/types";
 import styles from "../../styles/Home.module.css";
@@ -7,10 +7,18 @@ function Game() {
   const appContext = useAppContext();
   const { gameHandler } = appContext;
   const game = gameHandler.getActiveGame();
-  const { teamsAndPoints, gameStatus, questionStatus } = game;
-  const sortedTeamsAndPoints = teamsAndPoints?.sort(
-    (teamA, teamB) => teamB.points - teamA.points
-  );
+  if (!game) {
+    const connectionStatus = gameHandler.getConnectionStatus();
+    if (connectionStatus === "disconnected") {
+      return <h3>Disconnected</h3>;
+    } else if (connectionStatus === "reconnecting") {
+      return <h3>Reconnecting...</h3>;
+    }
+    return;
+  }
+
+  const { gameStatus, questionStatus } = game;
+
   console.log("*** game", game);
 
   return (
@@ -23,26 +31,19 @@ function Game() {
         )}
         {gameStatus === GameStatus.inProgress && (
           <>
-            {questionStatus && QuestionStatus.waitingForQuestion && (
-              <h4>Waiting for question...</h4>
+            {questionStatus === QuestionStatus.waitingForRound && (
+              <h4>Waiting for host to pick a round...</h4>
+            )}
+            {questionStatus === QuestionStatus.waitingForQuestion && (
+              <h4>Waiting for host to pick a question...</h4>
             )}
           </>
         )}
 
-        <div>
-          <h4>Teams</h4>
-
-          <ol>
-            {sortedTeamsAndPoints?.map((teamNameAndPoint) => (
-              <li key={teamNameAndPoint.teamName}>
-                {teamNameAndPoint.teamName} {teamNameAndPoint.points} pts
-              </li>
-            ))}
-          </ol>
-        </div>
+        <ScoreList />
       </main>
     </>
   );
 }
 
-export default withRouter(Game);
+export default Game;

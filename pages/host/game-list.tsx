@@ -1,13 +1,10 @@
-import { Button, TableCell, TableRow, TextField } from "@mui/material";
-import styles from "../../styles/Home.module.css";
 import RecordVoiceOverIcon from "@mui/icons-material/RecordVoiceOver";
+import { Button, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
+import { startCase } from 'lodash';
 import { useEffect, useState } from "react";
 import { useAppContext } from "../../controllers/AppWrapper";
-import Table from "@mui/material/Table";
-import TableHead from "@mui/material/TableHead";
-import TableBody from "@mui/material/TableBody";
 import { Game, GameStatus } from "../../models/types";
-import { startCase } from 'lodash';
+import styles from "../../styles/Home.module.css";
 
 type RequestGameStatus = "requesting" | "done";
 
