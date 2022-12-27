@@ -12,9 +12,32 @@ export enum QuestionStatus {
   announcingResults = 'announcing_results'
 }
 
+export enum GameRound {
+  openEnded = 'open-ended',
+  possibleAnswers = 'possible_answers',
+  cluesAndAnswers = 'clues_and_answers',
+  linkedCategories = 'linked_category',
+  partIdentification = 'part_identification'
+}
+
 interface TeamAndPoints {
   teamName: string;
   points: number;
+}
+
+interface PossibleAnswer{
+  answerText: string;
+  points: number;
+};
+export interface Question {
+  questionText: string;
+  possibleAnswers: PossibleAnswer[];
+}
+
+export interface QuestionInGame extends Question {
+  possibleAnswers: (PossibleAnswer & {
+    status: 'unanswered' | 'answered';
+  })[];
 }
 
 export interface Game {
@@ -22,4 +45,9 @@ export interface Game {
   gameStatus: GameStatus;
   teamsAndPoints?: TeamAndPoints[];
   questionStatus?: QuestionStatus;
+  round?: GameRound;
+  currentQuestion?: {
+    questionInRound: number;
+    question: Question;
+  }
 }

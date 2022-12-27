@@ -2,6 +2,7 @@ import { withRouter } from "next/router";
 import { useAppContext } from "../../controllers/AppWrapper";
 import { GameStatus, QuestionStatus } from "../../models/types";
 import styles from "../../styles/Home.module.css";
+import QuestionPicker from "./QuestionPicker";
 
 function Game() {
   const appContext = useAppContext();
@@ -17,6 +18,12 @@ function Game() {
     <>
       <main className={styles.main}>
         <h3>Hosting</h3>
+
+        {
+          questionStatus === QuestionStatus.waitingForQuestion && (
+            <QuestionPicker />
+          )
+        }
 
         <div>
           <h4>Teams</h4>

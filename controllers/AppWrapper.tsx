@@ -9,9 +9,9 @@ export interface IAppContext {
 
 const socket = io();
 const gh = new ClientGameHandler(socket);
-const AppContext = createContext<IAppContext>({ gameHandler: gh });
+export const AppContext = createContext<IAppContext>({ gameHandler: gh });
 
-export function AppWrapper({ children }: { children: React.ReactNode }) {
+export default function AppWrapper({ children }: { children: React.ReactNode }) {
   const [gameHandler, setGameHandler] = useState<ClientGameHandler>(gh);
 
   useEffect(() => {

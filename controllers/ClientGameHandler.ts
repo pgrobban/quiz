@@ -1,6 +1,6 @@
 import { Socket } from "socket.io-client";
 import Router from "next/router";
-import { Game } from "../models/types";
+import { Game, GameRound } from "../models/types";
 
 export default class ClientGameHandler {
 
@@ -30,6 +30,13 @@ export default class ClientGameHandler {
 
   requestHostJoinGame(gameId: string) {
     this.socket.emit('request-host-join-game', gameId);
+  }
+
+  requestSetActiveQuestion(gameRound: GameRound, questionText: string) {
+    this.socket.emit('request-set-active-question', {
+      gameRound,
+      questionText
+    });
   }
 
   getActiveGame() {
