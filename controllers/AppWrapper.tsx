@@ -44,7 +44,7 @@ export default function AppWrapper({
         setGameHandler(cloneDeep(gameHandler));
       });
       socket.on("received-game", (game: Game) => {
-        gameHandler.onReceivedGame(game);
+        gameHandler.onReceivedGameAfterReconnect(game);
         setGameHandler(cloneDeep(gameHandler));
       });
       socket.on("host-joined-game", (game: Game) => {
@@ -57,6 +57,10 @@ export default function AppWrapper({
       });
       socket.on("active-question-set", (game: Game) => {
         gameHandler.onActiveQuestionSet(game);
+        setGameHandler(cloneDeep(gameHandler));
+      });
+      socket.on("team-answer-requested", (game: Game) => {
+        gameHandler.onTeamAnswerRequested(game);
         setGameHandler(cloneDeep(gameHandler));
       });
     };

@@ -1,5 +1,6 @@
-import { withRouter } from "next/router";
+import { Button } from "@mui/material";
 import ScoreList from "../../components/ScoreList";
+import withReconnect from "../../components/WithReconnect";
 import { useAppContext } from "../../controllers/AppWrapper";
 import { QuestionStatus } from "../../models/types";
 import styles from "../../styles/Home.module.css";
@@ -9,36 +10,52 @@ import RoundPicker from "./RoundPicker";
 function Game() {
   const appContext = useAppContext();
   const { gameHandler } = appContext;
-  if (gameHandler.getConnectionStatus() === "disconnected") {
-    return <h3>Disconnected</h3>
-  }
-  if (gameHandler.getConnectionStatus() === "reconnecting") {
-    return <h3>Lost connection. Reconnecting...</h3>
-  }
-
   const activeGame = gameHandler.getActiveGame();
   if (!activeGame) {
     return null;
   }
 
-  const { questionStatus, round } = activeGame;
-  console.log("*** game", activeGame);
+  const { questionStatus, round, currentQuestion } = activeGame;
 
   return (
     <>
       <main className={styles.main}>
         <h3>Hosting</h3>
 
-        {
-          !round && (
-            <RoundPicker />
-          )
-        }
-        {
-          round && questionStatus === QuestionStatus.waitingForQuestion && (
-            <QuestionPicker />
-          )
-        }
+        {!round && <RoundPicker />}
+        {round && (
+          <>
+            {questionStatus === QuestionStatus.waitingForQuestion && (
+              <QuestionPicker />
+            )}
+            <>
+              {currentQuestion && (
+                <>
+                  <h4>Question {currentQuestion.questionInRound}</h4>
+                  <h2>{currentQuestion.question.questionText}</h2>
+
+                  {questionStatus === QuestionStatus.receivedQuestion && (
+                    <>
+                      <Button
+                        color="primary"
+                        variant="contained"
+                        onClick={() => gameHandler.requestTeamAnswer()}
+                      >
+                        Request first team answer
+                      </Button>
+                    </>
+                  )}
+
+                  {questionStatus === QuestionStatus.inProgress && currentQuestion.orderedTeamsLeftToAnswer && (
+                    <>
+                      Requesting answer from {currentQuestion.orderedTeamsLeftToAnswer[0]}
+                    </>
+                  )}
+                </>
+              )}
+            </>
+          </>
+        )}
 
         <ScoreList />
       </main>
@@ -46,4 +63,4 @@ function Game() {
   );
 }
 
-export default withRouter(Game);
+export default withReconnect(Game);

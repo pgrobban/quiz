@@ -1,6 +1,7 @@
 import { v4 as uuid } from 'uuid';
-import { AnswerStatus, Game, GameRound, GameStatus, QuestionStatus } from '../models/types';
+import { AnswerStatus, Game, GameRound, GameStatus, QuestionStatus, TeamAndPoints } from '../models/types';
 import questions from '../models/questions';
+import { orderBy, shuffle } from 'lodash';
 export default class GameHandler {
 
   private games: Game[];
@@ -67,10 +68,46 @@ export default class GameHandler {
     const questionWithAnswerStatuses = { ...questionModel, possibleAnswers: questionModel.possibleAnswers.map((answer) => ({ answerText: answer.answerText, points: answer.points, status: 'unanswered' as AnswerStatus })) };
     game.currentQuestion = {
       question: questionWithAnswerStatuses,
-      questionInRound: game.currentQuestion ? (game.currentQuestion.questionInRound + 1) : 1
+      questionInRound: game.currentQuestion ? (game.currentQuestion.questionInRound + 1) : 1,
+      answeredTeams: []
     };
     game.questionStatus = QuestionStatus.receivedQuestion;
     return game;
   }
 
+  requestTeamAnswer(gameId: string) {
+    const game = this.getGameById(gameId);
+    if (!game.currentQuestion || !game.teamsAndPoints || !game.questionStatus || ![QuestionStatus.receivedQuestion, QuestionStatus.inProgress].includes(game.questionStatus)) {
+      throw new Error('requestTeamAnswer Assertion error');
+    }
+
+    if (game.questionStatus === QuestionStatus.receivedQuestion) {
+      game.currentQuestion.orderedTeamsLeftToAnswer = this.getOrderedTeamsToAnswer(game.teamsAndPoints, game.currentQuestion.questionInRound);
+      game.currentQuestion.answeredTeams = [];
+    } else {
+      if (!game.currentQuestion.orderedTeamsLeftToAnswer) {
+        throw new Error('requestTeamAnswer Assertion error');
+      }
+
+      game.currentQuestion.answeredTeams.push(game.currentQuestion.orderedTeamsLeftToAnswer[0])
+      game.currentQuestion.orderedTeamsLeftToAnswer = game.currentQuestion.orderedTeamsLeftToAnswer.slice(1);
+    }
+
+    game.questionStatus = QuestionStatus.inProgress;
+    return game;
+  }
+
+  private getOrderedTeamsToAnswer(teamsAndPoints: TeamAndPoints[], questionInRound: number) {
+    let orderedTeamsAndPoints;
+    switch (questionInRound) {
+      case 1:
+        orderedTeamsAndPoints = shuffle(teamsAndPoints);
+      case 2:
+        orderedTeamsAndPoints = orderBy(teamsAndPoints, ['points'], ['asc']);
+      case 3:
+      default:
+        orderedTeamsAndPoints = orderBy(teamsAndPoints, ['points'], ['desc']);
+    }
+    return orderedTeamsAndPoints.map((teamAndPoints) => teamAndPoints.teamName);
+  }
 }

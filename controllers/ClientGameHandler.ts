@@ -2,7 +2,8 @@ import { Socket } from "socket.io-client";
 import Router from "next/router";
 import { Game, GameRound } from "../models/types";
 
-type ConnectionStatus = 'connected' | 'disconnected' | 'reconnecting';
+export type ConnectionStatus = 'connected' | 'disconnected' | 'reconnecting' | 'unknown';
+
 export default class ClientGameHandler {
 
   private activeGame: Game | null = null;
@@ -46,6 +47,10 @@ export default class ClientGameHandler {
     this.socket.emit('request-set-active-question', { gameId: this.activeGame?.id, questionText });
   }
 
+  requestTeamAnswer() {
+    this.socket.emit('request-team-answer', this.activeGame?.id);
+  }
+
   getConnectionStatus() {
     return this.connectionStatus;
   }
@@ -71,17 +76,16 @@ export default class ClientGameHandler {
   }
 
   onConnected() {
-    console.log("*** connected");
     this.connectionStatus = 'connected';
   }
 
   onDisconnected() {
-    console.log("*** disconnected" );
     this.connectionStatus = 'disconnected';
   }
 
-  onReceivedGame(game: Game) {
+  onReceivedGameAfterReconnect(game: Game) {
     this.activeGame = game;
+    this.connectionStatus = 'connected';
   }
 
   onNewGameCreated(game: Game) {
@@ -117,6 +121,10 @@ export default class ClientGameHandler {
   }
 
   onActiveQuestionSet(game: Game) {
+    this.activeGame = game;
+  }
+
+  onTeamAnswerRequested(game: Game) {
     this.activeGame = game;
   }
 

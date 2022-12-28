@@ -10,6 +10,7 @@ export enum QuestionStatus {
   waitingForRound = 'waiting_for_round',
   waitingForQuestion = 'waiting_for_question',
   receivedQuestion = 'received_question',
+  inProgress = 'in_progress',
   announcingResults = 'announcing_results'
 }
 
@@ -21,7 +22,7 @@ export enum GameRound {
   partIdentification = 'part_identification'
 }
 
-interface TeamAndPoints {
+export interface TeamAndPoints {
   teamName: string;
   points: number;
 }
@@ -53,5 +54,7 @@ export interface Game {
   currentQuestion?: {
     questionInRound: number;
     question: QuestionInGame;
+    answeredTeams: string[];
+    orderedTeamsLeftToAnswer?: string[]
   }
 }

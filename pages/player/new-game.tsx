@@ -4,6 +4,7 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import PersonRemoveIcon from "@mui/icons-material/PersonRemove";
 import { useState } from "react";
 import { useAppContext } from "../../controllers/AppWrapper";
+import withReconnect from "../../components/WithReconnect";
 
 function NewGame() {
   const appContext = useAppContext();
@@ -74,4 +75,4 @@ function NewGame() {
   );
 }
 
-export default NewGame;
+export default withReconnect(NewGame);

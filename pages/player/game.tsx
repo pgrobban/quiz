@@ -1,4 +1,5 @@
 import ScoreList from "../../components/ScoreList";
+import withReconnect from "../../components/WithReconnect";
 import { useAppContext } from "../../controllers/AppWrapper";
 import { GameStatus, QuestionStatus } from "../../models/types";
 import styles from "../../styles/Home.module.css";
@@ -8,19 +9,10 @@ function Game() {
   const { gameHandler } = appContext;
   const game = gameHandler.getActiveGame();
   if (!game) {
-    const connectionStatus = gameHandler.getConnectionStatus();
-    if (connectionStatus === "disconnected") {
-      return <h3>Disconnected</h3>;
-    } else if (connectionStatus === "reconnecting") {
-      return <h3>Reconnecting...</h3>;
-    }
-    return;
+    return null;
   }
 
   const { gameStatus, questionStatus, currentQuestion } = game;
-
-  console.log("*** game", game);
-
   return (
     <>
       <main className={styles.main}>
@@ -37,9 +29,18 @@ function Game() {
             {questionStatus === QuestionStatus.waitingForQuestion && (
               <h4>Waiting for host to pick a question...</h4>
             )}
-            {questionStatus === QuestionStatus.receivedQuestion && currentQuestion && (
-              <h2>{currentQuestion.question.questionText}</h2>
-            )}
+            {questionStatus &&
+              [
+                QuestionStatus.receivedQuestion,
+                QuestionStatus.inProgress,
+                QuestionStatus.announcingResults,
+              ].includes(questionStatus) &&
+              currentQuestion && (
+                <>
+                  <h4>Question {currentQuestion.questionInRound}</h4>
+                  <h2>{currentQuestion.question.questionText}</h2>
+                </>
+              )}
           </>
         )}
 
@@ -49,4 +50,4 @@ function Game() {
   );
 }
 
-export default Game;
+export default withReconnect(Game);
