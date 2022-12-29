@@ -13,6 +13,8 @@ function Game() {
   }
 
   const { gameStatus, questionStatus, currentQuestion } = game;
+  console.log("***", game);
+
   return (
     <>
       <main className={styles.main}>
@@ -32,13 +34,19 @@ function Game() {
             {questionStatus &&
               [
                 QuestionStatus.receivedQuestion,
-                QuestionStatus.inProgress,
+                QuestionStatus.waitingForTeamAnswer,
                 QuestionStatus.announcingResults,
               ].includes(questionStatus) &&
               currentQuestion && (
                 <>
                   <h4>Question {currentQuestion.questionInRound}</h4>
                   <h2>{currentQuestion.question.questionText}</h2>
+
+                  {
+                    questionStatus === QuestionStatus.waitingForTeamAnswer && currentQuestion.orderedTeamsLeftToAnswer && (
+                      <h4>Waiting for answer from team {currentQuestion.orderedTeamsLeftToAnswer[0]}</h4>
+                    )
+                  }
                 </>
               )}
           </>

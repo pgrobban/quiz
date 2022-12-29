@@ -2,7 +2,7 @@ import { Button } from "@mui/material";
 import ScoreList from "../../components/ScoreList";
 import withReconnect from "../../components/WithReconnect";
 import { useAppContext } from "../../controllers/AppWrapper";
-import { QuestionStatus } from "../../models/types";
+import { NON_VERIFIED_ANSWER, NO_OR_INVALID_ANSWER, QuestionStatus } from "../../models/types";
 import styles from "../../styles/Home.module.css";
 import QuestionPicker from "./QuestionPicker";
 import RoundPicker from "./RoundPicker";
@@ -16,6 +16,7 @@ function Game() {
   }
 
   const { questionStatus, round, currentQuestion } = activeGame;
+  console.log("*** game", activeGame)
 
   return (
     <>
@@ -46,11 +47,53 @@ function Game() {
                     </>
                   )}
 
-                  {questionStatus === QuestionStatus.inProgress && currentQuestion.orderedTeamsLeftToAnswer && (
-                    <>
-                      Requesting answer from {currentQuestion.orderedTeamsLeftToAnswer[0]}
-                    </>
-                  )}
+                  {questionStatus === QuestionStatus.waitingForTeamAnswer &&
+                    currentQuestion.orderedTeamsLeftToAnswer && (
+                      <>
+                        Requesting answer from{" "}
+                        {currentQuestion.orderedTeamsLeftToAnswer[0]}
+                        <>
+                          <h4>Verified accepted answers</h4>
+                          <div>
+                            {currentQuestion.question.possibleAnswers.map(
+                              (possibleAnswer) => {
+                                const { answerText, points } = possibleAnswer;
+                                return (
+                                  <Button
+                                    key={answerText}
+                                    variant="contained"
+                                    color="primary"
+                                    style={{ margin: 10 }}
+                                    onClick={() => gameHandler.requestVerificationOfAnswer(answerText)}
+                                  >
+                                    {answerText}
+                                    <br />({points} pts)
+                                  </Button>
+                                );
+                              }
+                            )}
+                          </div>
+
+                          <Button
+                            variant="contained"
+                            color="warning"
+                            style={{ margin: 10 }}
+                            onClick={() => gameHandler.requestVerificationOfAnswer(NON_VERIFIED_ANSWER)}
+                          >
+                            Accept a non-verified answer
+                          </Button>
+
+                          <Button
+                            variant="contained"
+                            color="error"
+                            style={{ margin: 10 }}
+                            onClick={() => gameHandler.requestVerificationOfAnswer(NO_OR_INVALID_ANSWER)}
+                          >
+                            Invalid or no answer (100 pts)
+                          </Button>
+                        </>
+                      </>
+                    )}
                 </>
               )}
             </>

@@ -10,7 +10,8 @@ export enum QuestionStatus {
   waitingForRound = 'waiting_for_round',
   waitingForQuestion = 'waiting_for_question',
   receivedQuestion = 'received_question',
-  inProgress = 'in_progress',
+  waitingForTeamAnswer = 'waiting_for_team_answer',
+  awardingPoints = 'awarding_points',
   announcingResults = 'announcing_results'
 }
 
@@ -27,7 +28,8 @@ export interface TeamAndPoints {
   points: number;
 }
 
-interface PossibleAnswer{
+interface PossibleAnswer {
+  clue?: string;
   answerText: string;
   points: number;
 };
@@ -58,3 +60,6 @@ export interface Game {
     orderedTeamsLeftToAnswer?: string[]
   }
 }
+
+export const NON_VERIFIED_ANSWER = 'NON-VERIFIED-ANSWER';
+export const NO_OR_INVALID_ANSWER = 'NO-OR-INVALID-ANSWER';

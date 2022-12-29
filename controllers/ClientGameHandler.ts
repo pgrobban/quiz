@@ -51,6 +51,10 @@ export default class ClientGameHandler {
     this.socket.emit('request-team-answer', this.activeGame?.id);
   }
 
+  requestVerificationOfAnswer(answerText: string) {
+    this.socket.emit('request-verification-of-answer', { gameId: this.activeGame?.id, answerText });
+  }
+
   getConnectionStatus() {
     return this.connectionStatus;
   }

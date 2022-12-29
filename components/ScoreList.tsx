@@ -1,4 +1,5 @@
 import { useAppContext } from "../controllers/AppWrapper";
+import { QuestionStatus } from "../models/types";
 
 export default function ScoreList() {
   const appContext = useAppContext();
@@ -9,21 +10,25 @@ export default function ScoreList() {
     return null;
   }
 
-  const { teamsAndPoints } = activeGame;
+  const { teamsAndPoints, questionStatus, currentQuestion } = activeGame;
   const sortedTeamsAndPoints = teamsAndPoints?.sort(
     (teamA, teamB) => teamB.points - teamA.points
   );
+
+  const currentTeamAnswering = questionStatus === QuestionStatus.waitingForTeamAnswer && currentQuestion?.orderedTeamsLeftToAnswer?.[0];
 
   return (
     <div>
       <h4>Teams</h4>
 
       <ol>
-        {sortedTeamsAndPoints?.map((teamNameAndPoint) => (
-          <li key={teamNameAndPoint.teamName}>
-            {teamNameAndPoint.teamName} {teamNameAndPoint.points} pts
+        {sortedTeamsAndPoints?.map((teamNameAndPoint) => {
+          const { teamName, points } = teamNameAndPoint;
+          const isTeamAnswering = currentTeamAnswering === teamName; 
+          return <li key={teamName} style={{ ...isTeamAnswering && { color: 'red' }}}>
+            {teamName} {points} pts
           </li>
-        ))}
+})}
       </ol>
     </div>
   );

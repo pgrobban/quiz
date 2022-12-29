@@ -52,7 +52,7 @@ const SocketHandler = (_: NextApiRequest, res: NextApiResponseWithSocket) => {
     socket.on('request-host-join-game', (gameId) => {
       const game = gameHandler.requestHostJoinGame(gameId);
       socket.join(game.id);
-    
+
       io.to(game.id).emit('host-joined-game', game);
       console.log("** host-joined-game", gameId)
     });
@@ -70,7 +70,12 @@ const SocketHandler = (_: NextApiRequest, res: NextApiResponseWithSocket) => {
     socket.on('request-team-answer', (gameId) => {
       const game = gameHandler.requestTeamAnswer(gameId);
       io.to(game.id).emit('team-answer-requested', game);
-    })
+    });
+
+    socket.on('request-verification-of-answer', ({ gameId, answerText }) => {
+      const game = gameHandler.requestVerificationOfAnswer(gameId, answerText);
+      io.to(game.id).emit('answer-verified', game);
+    });
   });
 
   io.on('disconnect', () => {

@@ -1,5 +1,5 @@
 import { v4 as uuid } from 'uuid';
-import { AnswerStatus, Game, GameRound, GameStatus, QuestionStatus, TeamAndPoints } from '../models/types';
+import { AnswerStatus, Game, GameRound, GameStatus, NON_VERIFIED_ANSWER, NO_OR_INVALID_ANSWER, QuestionStatus, TeamAndPoints } from '../models/types';
 import questions from '../models/questions';
 import { orderBy, shuffle } from 'lodash';
 export default class GameHandler {
@@ -77,7 +77,7 @@ export default class GameHandler {
 
   requestTeamAnswer(gameId: string) {
     const game = this.getGameById(gameId);
-    if (!game.currentQuestion || !game.teamsAndPoints || !game.questionStatus || ![QuestionStatus.receivedQuestion, QuestionStatus.inProgress].includes(game.questionStatus)) {
+    if (!game.currentQuestion || !game.teamsAndPoints || !game.questionStatus || ![QuestionStatus.receivedQuestion, QuestionStatus.waitingForTeamAnswer].includes(game.questionStatus)) {
       throw new Error('requestTeamAnswer Assertion error');
     }
 
@@ -93,7 +93,7 @@ export default class GameHandler {
       game.currentQuestion.orderedTeamsLeftToAnswer = game.currentQuestion.orderedTeamsLeftToAnswer.slice(1);
     }
 
-    game.questionStatus = QuestionStatus.inProgress;
+    game.questionStatus = QuestionStatus.waitingForTeamAnswer;
     return game;
   }
 
@@ -110,4 +110,24 @@ export default class GameHandler {
     }
     return orderedTeamsAndPoints.map((teamAndPoints) => teamAndPoints.teamName);
   }
+
+  requestVerificationOfAnswer(gameId: string, answerText: string) {
+    const game = this.getGameById(gameId);
+    if (!game.currentQuestion || game.questionStatus !== QuestionStatus.waitingForTeamAnswer) {
+      throw new Error('requestVerificationOfAnswer Assertion error');
+    }
+
+    game.questionStatus = QuestionStatus.awardingPoints;
+
+    if (![NON_VERIFIED_ANSWER, NO_OR_INVALID_ANSWER].includes(answerText)) {
+      const foundPossibleAnswer = game.currentQuestion.question.possibleAnswers.find((possibleAnswer) => possibleAnswer.answerText === answerText);
+      if (foundPossibleAnswer) {
+        foundPossibleAnswer.status = 'answered';
+      } else {
+        throw new Error('requestVerificationOfAnswer Assertion error');
+      }
+    }
+    return game;
+  }
+
 }
