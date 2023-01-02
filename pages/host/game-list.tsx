@@ -8,7 +8,7 @@ import styles from "../../styles/Home.module.css";
 
 type RequestGameStatus = "requesting" | "done";
 
-function NewGame() {
+export default function NewGame() {
   const appContext = useAppContext();
   const { gameHandler } = appContext;
 
@@ -87,5 +87,3 @@ function NewGame() {
     </>
   );
 }
-
-export default NewGame;
