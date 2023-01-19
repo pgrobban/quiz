@@ -20,7 +20,8 @@ export enum GameRound {
   possibleAnswers = 'possible_answers',
   cluesAndAnswers = 'clues_and_answers',
   linkedCategories = 'linked_category',
-  partIdentification = 'part_identification'
+  partIdentification = 'part_identification',
+  fillInBlank = 'fill_in_blank'
 }
 
 export interface TeamAndPoints {
