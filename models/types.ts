@@ -58,7 +58,8 @@ export interface Game {
     questionInRound: number;
     question: QuestionInGame;
     answeredTeams: string[];
-    orderedTeamsLeftToAnswer?: string[]
+    orderedTeamsLeftToAnswer?: string[];
+    lastAnswer?: string;
   }
 }
 

@@ -132,4 +132,8 @@ export default class ClientGameHandler {
     this.activeGame = game;
   }
 
+  onAnswerVerified(game: Game) {
+    this.activeGame = game;
+  }
+
 }

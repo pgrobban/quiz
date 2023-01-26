@@ -63,6 +63,10 @@ export default function AppWrapper({
         gameHandler.onTeamAnswerRequested(game);
         setGameHandler(cloneDeep(gameHandler));
       });
+      socket.on("answer-verified", (game: Game) => {
+        gameHandler.onAnswerVerified(game);
+        setGameHandler(cloneDeep(gameHandler));
+      });
     };
     getSocket();
   }, []);

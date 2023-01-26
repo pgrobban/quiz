@@ -16,6 +16,7 @@ function Game() {
   }
 
   const { questionStatus, round, currentQuestion } = activeGame;
+  console.log("*** game", activeGame)
 
   return (
     <>

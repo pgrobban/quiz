@@ -27,7 +27,7 @@ function Home() {
           <Button variant="contained" onClick={() => gameHandler.requestToBeHost()}>Host</Button>
         </div>
       </main>
-      <CountdownBar />
+      <CountdownBar to={0} callback={() => {}}/>
     </>
   );
 }

@@ -127,6 +127,8 @@ export default class GameHandler {
         throw new Error('requestVerificationOfAnswer Assertion error');
       }
     }
+
+    game.currentQuestion.lastAnswer = answerText;
     return game;
   }
 

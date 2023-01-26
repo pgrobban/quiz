@@ -1,13 +1,20 @@
 import { useEffect, useState } from "react";
 import styles from "../styles/Home.module.css";
 
-export default function CountdownBar() {
+interface Props {
+  to: number;
+  callback: () => void;
+}
+
+export default function CountdownBar(props: Props) {
+  const { to, callback } = props;
   const [score, setScore] = useState(100);
 
   useEffect(() => {
     const i = setInterval(() => {
-      if (score === 0) {
+      if (score === to) {
         clearInterval(i);
+        callback();
         return;
       }
       setScore(score-1);
