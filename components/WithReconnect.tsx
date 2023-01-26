@@ -15,15 +15,7 @@ export default function withReconnect<ChildProps extends {}>(
     useEffect(() => {
       try {
         const activeGame = gameHandler.getActiveGame();
-        if (!activeGame) {
-          if (connectionStatus === "disconnected") {
-            setStatus("disconnected");
-          } else if (connectionStatus === "reconnecting") {
-            setStatus("reconnecting");
-          } else if (connectionStatus === "connected") {
-            setStatus("connected");
-          }
-        }
+        setStatus(connectionStatus);
       } catch (e) {
         Router.push("/index");
       }

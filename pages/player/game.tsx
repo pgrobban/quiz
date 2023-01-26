@@ -13,7 +13,6 @@ function Game() {
   }
 
   const { gameStatus, questionStatus, currentQuestion } = game;
-  console.log("***", game);
 
   return (
     <>
