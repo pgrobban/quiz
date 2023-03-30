@@ -81,3 +81,9 @@
   border: 0;
   height: 5px;
 }
+
+.animateSize {
+  font-size: 30px;
+  transition-property: font-size;
+  transition-duration: 2s;
+}

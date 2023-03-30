@@ -6,23 +6,7 @@ import { GameStatus, QuestionStatus } from "../../models/types";
 import styles from "../../styles/Home.module.css";
 import { NON_VERIFIED_ANSWER, NO_OR_INVALID_ANSWER } from "../../models/types";
 import { useState } from "react";
-import ClientGameHandler from "../../controllers/ClientGameHandler";
-
-function getCountdownTo(gameHandler: ClientGameHandler) {
-  const game = gameHandler.getActiveGame();
-  if (game?.questionStatus !== QuestionStatus.awardingPoints) {
-    return 0;
-  }
-
-  switch (game.currentQuestion?.lastAnswer) {
-    case NON_VERIFIED_ANSWER:
-      return 0;
-    case NO_OR_INVALID_ANSWER:
-      return 100;
-    default:
-      return game.currentQuestion?.question.possibleAnswers.find((answer) => answer.answerText === game.currentQuestion?.lastAnswer)?.points || 0;
-  }
-}
+import { getScoreFromLatestAnswer } from "../../controllers/helpers";
 
 function Game() {
   const appContext = useAppContext();
@@ -32,11 +16,15 @@ function Game() {
     return null;
   }
 
-  const [animatingScore, setAnimatingScore] = useState<boolean>(false);
+  const [isAnimatingScore, setIsAnimatingScore] = useState<boolean>(false);
   const { gameStatus, questionStatus, currentQuestion } = game;
   
-  const countdownTo = getCountdownTo(gameHandler);
-  console.log("***", game);
+  const countdownTo = getScoreFromLatestAnswer(gameHandler);
+
+  const onFinishedAnimatingScore = () => {
+    setIsAnimatingScore(false);
+    gameHandler.requestTeamAnswer();
+  }
 
   return (
     <>
@@ -85,7 +73,7 @@ function Game() {
                           ].includes(currentQuestion.lastAnswer) &&
                             currentQuestion.lastAnswer}
                         </h4>
-                        <CountdownBar to={countdownTo} callback={() => setAnimatingScore(true)} />
+                        <CountdownBar to={countdownTo} callback={() => setIsAnimatingScore(true)} />
                       </>
                     )}
                 </>
@@ -93,7 +81,7 @@ function Game() {
           </>
         )}
 
-        <ScoreList />
+        <ScoreList animate={isAnimatingScore} callback={() => onFinishedAnimatingScore()} />
       </main>
     </>
   );

@@ -1,7 +1,16 @@
+import { useEffect, useState } from "react";
 import { useAppContext } from "../controllers/AppWrapper";
+import { getScoreFromLatestAnswer } from "../controllers/helpers";
 import { QuestionStatus } from "../models/types";
+import styles from "../styles/Home.module.css";
 
-export default function ScoreList() {
+interface Props {
+  animate: boolean;
+  callback?: () => void;
+}
+
+export default function ScoreList(props: Props) {
+  const { animate, callback } = props;
   const appContext = useAppContext();
   const { gameHandler } = appContext;
   const activeGame = gameHandler.getActiveGame();
@@ -15,7 +24,51 @@ export default function ScoreList() {
     (teamA, teamB) => teamB.points - teamA.points
   );
 
-  const currentTeamAnswering = questionStatus === QuestionStatus.waitingForTeamAnswer && currentQuestion?.orderedTeamsLeftToAnswer?.[0];
+  const currentTeamAnswering =
+    questionStatus &&
+    [
+      QuestionStatus.waitingForTeamAnswer,
+      QuestionStatus.awardingPoints,
+    ].includes(questionStatus) &&
+    currentQuestion?.orderedTeamsLeftToAnswer?.[0] || null;
+
+  const pointsToAdd = getScoreFromLatestAnswer(gameHandler);
+  const [pointsLeftToAdd, setPointsLeftToAdd] = useState(
+    animate ? pointsToAdd : 0
+  );
+
+  useEffect(() => {
+    if (!animate) {
+      return;
+    }
+
+    const teamAndScoreElementToTransition = document.querySelector(
+      `#team-score-${currentTeamAnswering}`
+    );
+    if (callback) {
+      teamAndScoreElementToTransition?.addEventListener(
+        "webkitTransitionEnd",
+        callback
+      );
+    }
+
+    const i = setInterval(() => {
+      if (pointsLeftToAdd === 0) {
+        clearInterval(i);
+
+        if (callback) {
+          teamAndScoreElementToTransition?.removeEventListener(
+            "webkitTransitionEnd",
+            callback
+          );
+        }
+        return;
+      }
+      setPointsLeftToAdd(pointsLeftToAdd - 1);
+    }, 50);
+
+    return () => clearInterval(i);
+  }, [animate]);
 
   return (
     <div>
@@ -24,11 +77,24 @@ export default function ScoreList() {
       <ol>
         {sortedTeamsAndPoints?.map((teamNameAndPoint) => {
           const { teamName, points } = teamNameAndPoint;
-          const isTeamAnswering = currentTeamAnswering === teamName; 
-          return <li key={teamName} style={{ ...isTeamAnswering && { color: 'red' }}}>
-            {teamName} {points} pts
-          </li>
-})}
+          const isTeamAnswering = currentTeamAnswering === teamName;
+          const animateThisTeamNameAndScore = isTeamAnswering && animate;
+
+          return (
+            <li
+              key={teamName}
+              id={`team-score-${teamName}`}
+              className={animateThisTeamNameAndScore ? styles.animateSize : ""}
+              style={{ ...(isTeamAnswering && { color: "red" }) }}
+            >
+              {teamName}{" "}
+              {animateThisTeamNameAndScore
+                ? points + (pointsToAdd - pointsLeftToAdd)
+                : points}{" "}
+              pts
+            </li>
+          );
+        })}
       </ol>
     </div>
   );
