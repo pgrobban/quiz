@@ -11,7 +11,7 @@ export default class GameHandler {
     this.games = [];
   }
 
-  createNewGame() {
+  createNewGame(): Game {
     const id = uuid();
     const game = { id, gameStatus: GameStatus.created };
     this.games.push(game);
@@ -48,7 +48,6 @@ export default class GameHandler {
   }
 
   requestSetActiveRound(gameId: string, gameRound: GameRound) {
-    console.log("*** requestSetActiveRound");
     const game = this.getGameById(gameId);
     game.round = gameRound;
     game.questionStatus = QuestionStatus.waitingForQuestion;
@@ -57,7 +56,11 @@ export default class GameHandler {
 
   requestSetActiveQuestion(gameId: string, questionText: string) {
     const game = this.getGameById(gameId);
-    const { round } = game;
+    const { round, gameStatus } = game;
+    if (gameStatus !== GameStatus.waitingForHost || !round) {
+      throw new Error('*** requestSetActiveQuestion Assertion error');
+    }
+
     if (!round) {
       throw new Error(`*** Tried to get round from active game ${gameId}`);
     }
