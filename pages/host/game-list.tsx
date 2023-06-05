@@ -25,7 +25,7 @@ export default function NewGame() {
     return () => {
       clearInterval(refreshGamesInterval);
     };
-  }, []);
+  }, [gameHandler]);
 
   const onJoinGame = (gameId: string) => {
     gameHandler.requestHostJoinGame(gameId);

@@ -55,6 +55,10 @@ export default class ClientGameHandler {
     this.socket.emit('request-verification-of-answer', { gameId: this.activeGame?.id, answerText });
   }
 
+  requestAddingScoreAndNextTeamAnswer() {
+    this.socket.emit('request-adding-score-and-next-team-answer', this.activeGame?.id);
+  }
+
   getConnectionStatus() {
     return this.connectionStatus;
   }
@@ -136,4 +140,7 @@ export default class ClientGameHandler {
     this.activeGame = game;
   }
 
+  onAddedScore(game: Game) {
+    this.activeGame = game;
+  }
 }

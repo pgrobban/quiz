@@ -47,7 +47,7 @@ export default function AppWrapper({
         gameHandler.onReceivedGameAfterReconnect(game);
         setGameHandler(cloneDeep(gameHandler));
       });
-      socket.on("host-joined-game", (game: Game) => {
+      socket.once("host-joined-game", (game: Game) => {
         gameHandler.onHostJoinedGame(game);
         setGameHandler(cloneDeep(gameHandler));
       });
@@ -67,9 +67,13 @@ export default function AppWrapper({
         gameHandler.onAnswerVerified(game);
         setGameHandler(cloneDeep(gameHandler));
       });
+      socket.on("added-score", (game: Game) => {
+        gameHandler.onAddedScore(game);
+        setGameHandler(cloneDeep(gameHandler));
+      });
     };
     getSocket();
-  }, []);
+  }, [gameHandler]);
 
   return (
     <AppContext.Provider value={{ gameHandler }}>

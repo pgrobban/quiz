@@ -16,7 +16,6 @@ function Game() {
   }
 
   const { questionStatus, round, currentQuestion } = activeGame;
-  console.log("*** game", activeGame)
 
   return (
     <>
@@ -57,7 +56,7 @@ function Game() {
                           <div>
                             {currentQuestion.question.possibleAnswers.map(
                               (possibleAnswer) => {
-                                const { answerText, points } = possibleAnswer;
+                                const { answerText, points, answered } = possibleAnswer;
                                 return (
                                   <Button
                                     key={answerText}
@@ -65,6 +64,7 @@ function Game() {
                                     color="primary"
                                     style={{ margin: 10 }}
                                     onClick={() => gameHandler.requestVerificationOfAnswer(answerText)}
+                                    disabled={answered}
                                   >
                                     {answerText}
                                     <br />({points} pts)

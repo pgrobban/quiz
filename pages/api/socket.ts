@@ -76,6 +76,11 @@ const SocketHandler = (_: NextApiRequest, res: NextApiResponseWithSocket) => {
       const game = gameHandler.requestVerificationOfAnswer(gameId, answerText);
       io.to(game.id).emit('answer-verified', game);
     });
+
+    socket.on('request-adding-score-and-next-team-answer', (gameId) => {
+      const game = gameHandler.requestAddingOfScoreAndNextTeamAnswer(gameId);
+      io.to(game.id).emit('added-score', game);
+    });
   });
 
   io.on('disconnect', () => {

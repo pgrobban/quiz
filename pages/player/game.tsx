@@ -12,18 +12,18 @@ function Game() {
   const appContext = useAppContext();
   const { gameHandler } = appContext;
   const game = gameHandler.getActiveGame();
+  const [isAnimatingScore, setIsAnimatingScore] = useState<boolean>(false);
+  const { gameStatus, questionStatus, currentQuestion } = game || {};
   if (!game) {
     return null;
   }
 
-  const [isAnimatingScore, setIsAnimatingScore] = useState<boolean>(false);
-  const { gameStatus, questionStatus, currentQuestion } = game;
-  
+
   const countdownTo = getScoreFromLatestAnswer(gameHandler);
 
   const onFinishedAnimatingScore = () => {
     setIsAnimatingScore(false);
-    gameHandler.requestTeamAnswer();
+    gameHandler.requestAddingScoreAndNextTeamAnswer();
   }
 
   return (
