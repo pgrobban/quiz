@@ -14,12 +14,11 @@ export default function withReconnect<ChildProps extends {}>(
 
     useEffect(() => {
       try {
-        const activeGame = gameHandler.getActiveGame();
         setStatus(connectionStatus);
       } catch (e) {
         Router.push("/index");
       }
-    }, [gameHandler]);
+    }, [connectionStatus]);
 
     switch (status) {
       case "connected":

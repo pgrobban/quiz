@@ -4,6 +4,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import type { Socket as NetSocket } from 'net'
 import type { Server as IOServer } from 'socket.io'
 import GameHandler from '../../controllers/GameHandler'
+import { QuestionStatus } from '../../models/types'
 
 interface SocketServer extends HTTPServer {
   io?: IOServer;
@@ -33,7 +34,8 @@ const SocketHandler = (_: NextApiRequest, res: NextApiResponseWithSocket) => {
       socket.emit('new-game-created', game);
     });
 
-    socket.on('start-game', ({ gameId, teamNames }) => {
+    socket.once('start-game', ({ gameId, teamNames }) => {
+      console.log("**** socket start game")
       const game = gameHandler.startGame(gameId, teamNames);
       socket.join(game.id);
       socket.emit('game-started', game);
@@ -54,7 +56,6 @@ const SocketHandler = (_: NextApiRequest, res: NextApiResponseWithSocket) => {
       socket.join(game.id);
 
       io.to(game.id).emit('host-joined-game', game);
-      console.log("** host-joined-game", gameId)
     });
 
     socket.on('request-set-active-round', ({ gameId, gameRound }) => {
@@ -77,9 +78,20 @@ const SocketHandler = (_: NextApiRequest, res: NextApiResponseWithSocket) => {
       io.to(game.id).emit('answer-verified', game);
     });
 
-    socket.on('request-adding-score-and-next-team-answer', (gameId) => {
-      const game = gameHandler.requestAddingOfScoreAndNextTeamAnswer(gameId);
+    socket.on('request-adding-score', (gameId) => {
+      const game = gameHandler.requestAddingOfScore(gameId);
       io.to(game.id).emit('added-score', game);
+    });
+
+    socket.on('request-continue-game', (gameId) => {
+      console.log("*** in request continue game", gameId)
+      const game = gameHandler.requestContinueGame(gameId);
+      switch (game.questionStatus) {
+        case QuestionStatus.waitingForTeamAnswer:
+          io.to(game.id).emit('request-team-answer');
+        default:
+          console.log("bla")
+      }
     });
   });
 

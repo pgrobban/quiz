@@ -23,7 +23,7 @@ function Game() {
 
   const onFinishedAnimatingScore = () => {
     setIsAnimatingScore(false);
-    gameHandler.requestAddingScoreAndNextTeamAnswer();
+    gameHandler.requestAddingScore();
   }
 
   return (

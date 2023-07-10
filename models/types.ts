@@ -12,6 +12,7 @@ export enum QuestionStatus {
   receivedQuestion = 'received_question',
   waitingForTeamAnswer = 'waiting_for_team_answer',
   awardingPoints = 'awarding_points',
+  pointsAdded = 'points_added',
   announcingResults = 'announcing_results'
 }
 
@@ -58,6 +59,7 @@ export interface Game {
     answeredTeams: string[];
     orderedTeamsLeftToAnswer?: string[];
     lastAnswer?: string;
+    turn: number;
   }
 }
 

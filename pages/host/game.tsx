@@ -100,7 +100,7 @@ function Game() {
           </>
         )}
 
-        <ScoreList />
+        <ScoreList animate />
       </main>
     </>
   );

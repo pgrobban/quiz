@@ -11,7 +11,10 @@ export default class ClientGameHandler {
   private hostReceivedGames: Game[] = [];
   private role: 'play' | 'host' | null = null;
 
-  constructor(private socket: Socket) {}
+  constructor(private socket: Socket) {
+    console.log("*** creating socket")
+    this.socket.on('added-score', () => this.requestContinueGame());
+  }
 
   requestNewGame() {
     this.role = 'play';
@@ -19,6 +22,7 @@ export default class ClientGameHandler {
   }
 
   requestStartGame(teamNames: string[]) {
+    console.log("**** requesting start game")
     if (!this.activeGame || ['disconnected', 'reconnecting'].includes(this.connectionStatus)) {
       throw new Error('Requested start game while disconnected or no game in progress');
     }
@@ -55,8 +59,13 @@ export default class ClientGameHandler {
     this.socket.emit('request-verification-of-answer', { gameId: this.activeGame?.id, answerText });
   }
 
-  requestAddingScoreAndNextTeamAnswer() {
-    this.socket.emit('request-adding-score-and-next-team-answer', this.activeGame?.id);
+  requestAddingScore() {
+    this.socket.emit('request-adding-score', this.activeGame?.id);
+  }
+
+  requestContinueGame() {
+    console.log("*** request continue", this.activeGame?.id)
+    this.socket.emit('request-continue-game', this.activeGame?.id);
   }
 
   getConnectionStatus() {

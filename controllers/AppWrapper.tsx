@@ -70,6 +70,7 @@ export default function AppWrapper({
       socket.on("added-score", (game: Game) => {
         gameHandler.onAddedScore(game);
         setGameHandler(cloneDeep(gameHandler));
+        socket.emit('request-continue-game');
       });
     };
     getSocket();

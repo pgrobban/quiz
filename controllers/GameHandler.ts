@@ -11,6 +11,15 @@ import {
   TeamAndPoints,
 } from "../models/types";
 
+const NUMBER_OF_TURNS_FOR_ROUND: Record<GameRound, number> = {
+  [GameRound.openEnded]: 3,
+  [GameRound.cluesAndAnswers]: 3,
+  [GameRound.fillInBlank]: 3,
+  [GameRound.linkedCategories]: 3,
+  [GameRound.partIdentification]: 3,
+  [GameRound.possibleAnswers]: 3
+}
+
 export default class GameHandler {
   private games: Game[];
 
@@ -56,6 +65,10 @@ export default class GameHandler {
 
   requestSetActiveRound(gameId: string, gameRound: GameRound) {
     const game = this.getGameById(gameId);
+    if (game.gameStatus !== GameStatus.inProgress) {
+      throw new Error("*** requstSetActiveRound Assertion error");
+    }
+
     game.round = gameRound;
     game.questionStatus = QuestionStatus.waitingForQuestion;
     return game;
@@ -64,7 +77,7 @@ export default class GameHandler {
   requestSetActiveQuestion(gameId: string, questionText: string) {
     const game = this.getGameById(gameId);
     const { round, gameStatus } = game;
-    if (gameStatus !== GameStatus.waitingForHost || !round) {
+    if (gameStatus !== GameStatus.inProgress || !round) {
       throw new Error("*** requestSetActiveQuestion Assertion error");
     }
 
@@ -95,13 +108,27 @@ export default class GameHandler {
         ? game.currentQuestion.questionInRound + 1
         : 1,
       answeredTeams: [],
+      turn: 0
     };
     game.questionStatus = QuestionStatus.receivedQuestion;
+    this.requestSetTurnNumber(game.id);
+    return this.requestTeamAnswer(game.id);
+  }
+
+  requestSetTurnNumber(gameId: string) {
+    const game = this.getGameById(gameId);
+    const { round, gameStatus } = game;
+    if (gameStatus !== GameStatus.inProgress || !round || game.questionStatus !== QuestionStatus.receivedQuestion || !game.currentQuestion) {
+      throw new Error("*** requestSetTurnNumber Assertion error");
+    }
+
+    game.currentQuestion.turn += 1;
     return game;
   }
 
   requestTeamAnswer(gameId: string) {
     const game = this.getGameById(gameId);
+    console.log("*** in requestTeamAnswer", game)
 
     if (
       !game.currentQuestion ||
@@ -121,7 +148,7 @@ export default class GameHandler {
       game.currentQuestion.orderedTeamsLeftToAnswer =
         this.getOrderedTeamsToAnswer(
           game.teamsAndPoints,
-          game.currentQuestion.questionInRound
+          game.currentQuestion.turn
         );
       game.currentQuestion.answeredTeams = [];
       game.currentQuestion.lastAnswer = undefined;
@@ -145,10 +172,10 @@ export default class GameHandler {
 
   private getOrderedTeamsToAnswer(
     teamsAndPoints: TeamAndPoints[],
-    questionInRound: number
+    turn: number
   ) {
     let orderedTeamsAndPoints;
-    switch (questionInRound) {
+    switch (turn) {
       case 1:
         orderedTeamsAndPoints = shuffle(teamsAndPoints);
       case 2:
@@ -189,7 +216,7 @@ export default class GameHandler {
     return game;
   }
 
-  requestAddingOfScoreAndNextTeamAnswer(gameId: string) {
+  requestAddingOfScore(gameId: string) {
     const game = this.getGameById(gameId);
     if (
       !game.currentQuestion ||
@@ -198,7 +225,7 @@ export default class GameHandler {
       game.questionStatus !== QuestionStatus.awardingPoints
     ) {
       console.log(game);
-      throw new Error("requestAddingOfScoreAndNextTeamAnswer Assertion error");
+      throw new Error("requestAddingOfScore Assertion error");
     }
 
     const teamToAwardPoints = game.currentQuestion.orderedTeamsLeftToAnswer[0];
@@ -207,7 +234,7 @@ export default class GameHandler {
     );
     if (!t) {
       console.log(game);
-      throw new Error("requestAddingOfScoreAndNextTeamAnswer Assertion error");
+      throw new Error("requestAddingOfScore Assertion error");
     }
 
     const lastAnswer = game.currentQuestion.lastAnswer;
@@ -227,7 +254,32 @@ export default class GameHandler {
       }
     }
 
-    game.questionStatus = QuestionStatus.waitingForTeamAnswer;
-    return this.requestTeamAnswer(gameId);
+    game.questionStatus = QuestionStatus.pointsAdded;
+    return game;
+  }
+
+  requestContinueGame(gameId: string) {
+    const game = this.getGameById(gameId);
+    if (
+      !game.currentQuestion ||
+      !game.round ||
+      !game.currentQuestion?.orderedTeamsLeftToAnswer ||
+      !game.teamsAndPoints ||
+      game.questionStatus !== QuestionStatus.pointsAdded
+    ) {
+      console.log(game);
+      throw new Error("requestContinueGame Assertion error");
+    }
+
+    if (game.currentQuestion.orderedTeamsLeftToAnswer.length > 0) {
+      game.questionStatus = QuestionStatus.waitingForTeamAnswer;
+      return this.requestTeamAnswer(gameId);
+    }
+
+    if (game.currentQuestion.turn < NUMBER_OF_TURNS_FOR_ROUND[game.round]) {
+      this.requestSetTurnNumber(gameId);
+      return this.requestTeamAnswer(gameId);
+    }
+    return game;
   }
 }
