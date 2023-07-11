@@ -11,10 +11,7 @@ export default class ClientGameHandler {
   private hostReceivedGames: Game[] = [];
   private role: 'play' | 'host' | null = null;
 
-  constructor(private socket: Socket) {
-    console.log("*** creating socket")
-    this.socket.on('added-score', () => this.requestContinueGame());
-  }
+  constructor(private socket: Socket) {}
 
   requestNewGame() {
     this.role = 'play';
@@ -22,8 +19,8 @@ export default class ClientGameHandler {
   }
 
   requestStartGame(teamNames: string[]) {
-    console.log("**** requesting start game")
-    if (!this.activeGame || ['disconnected', 'reconnecting'].includes(this.connectionStatus)) {
+    console.log("**** requesting start game", this.activeGame)
+    if (!this.activeGame) {
       throw new Error('Requested start game while disconnected or no game in progress');
     }
 
@@ -106,6 +103,7 @@ export default class ClientGameHandler {
   }
 
   onNewGameCreated(game: Game) {
+    console.log("*** on new game")
     this.activeGame = game;
     localStorage.setItem('gameId', game.id);
     Router.push('/player/new-game');
@@ -130,6 +128,8 @@ export default class ClientGameHandler {
 
     if (this.role === 'host') {
       Router.push('/host/game');
+    } else {
+      this.socket.emit('request-game', game.id);
     }
   }
 

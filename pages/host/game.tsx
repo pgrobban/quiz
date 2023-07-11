@@ -2,20 +2,23 @@ import { Button } from "@mui/material";
 import ScoreList from "../../components/ScoreList";
 import withReconnect from "../../components/WithReconnect";
 import { useAppContext } from "../../controllers/AppWrapper";
-import { NON_VERIFIED_ANSWER, NO_OR_INVALID_ANSWER, QuestionStatus } from "../../models/types";
+import {
+  NON_VERIFIED_ANSWER,
+  NO_OR_INVALID_ANSWER,
+  QuestionStatus,
+} from "../../models/types";
 import styles from "../../styles/Home.module.css";
 import QuestionPicker from "./QuestionPicker";
 import RoundPicker from "./RoundPicker";
 
 function Game() {
   const appContext = useAppContext();
-  const { gameHandler } = appContext;
-  const activeGame = gameHandler.getActiveGame();
-  if (!activeGame) {
+  const { gameHandler, gameState } = appContext;
+  if (!gameState) {
     return null;
   }
 
-  const { questionStatus, round, currentQuestion } = activeGame;
+  const { questionStatus, round, currentQuestion } = gameState;
 
   return (
     <>
@@ -56,14 +59,19 @@ function Game() {
                           <div>
                             {currentQuestion.question.possibleAnswers.map(
                               (possibleAnswer) => {
-                                const { answerText, points, answered } = possibleAnswer;
+                                const { answerText, points, answered } =
+                                  possibleAnswer;
                                 return (
                                   <Button
                                     key={answerText}
                                     variant="contained"
                                     color="primary"
                                     style={{ margin: 10 }}
-                                    onClick={() => gameHandler.requestVerificationOfAnswer(answerText)}
+                                    onClick={() =>
+                                      gameHandler.requestVerificationOfAnswer(
+                                        answerText
+                                      )
+                                    }
                                     disabled={answered}
                                   >
                                     {answerText}
@@ -78,7 +86,11 @@ function Game() {
                             variant="contained"
                             color="warning"
                             style={{ margin: 10 }}
-                            onClick={() => gameHandler.requestVerificationOfAnswer(NON_VERIFIED_ANSWER)}
+                            onClick={() =>
+                              gameHandler.requestVerificationOfAnswer(
+                                NON_VERIFIED_ANSWER
+                              )
+                            }
                           >
                             Accept a non-verified answer
                           </Button>
@@ -87,13 +99,28 @@ function Game() {
                             variant="contained"
                             color="error"
                             style={{ margin: 10 }}
-                            onClick={() => gameHandler.requestVerificationOfAnswer(NO_OR_INVALID_ANSWER)}
+                            onClick={() =>
+                              gameHandler.requestVerificationOfAnswer(
+                                NO_OR_INVALID_ANSWER
+                              )
+                            }
                           >
                             Invalid or no answer (100 pts)
                           </Button>
                         </>
                       </>
                     )}
+
+                  {questionStatus === QuestionStatus.pointsAdded && (
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      style={{ margin: 10 }}
+                      onClick={() => gameHandler.requestContinueGame()}
+                    >
+                      Continue game
+                    </Button>
+                  )}
                 </>
               )}
             </>

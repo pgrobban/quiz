@@ -2,7 +2,7 @@ import { Button, TextField } from "@mui/material";
 import styles from "../../styles/Home.module.css";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import PersonRemoveIcon from "@mui/icons-material/PersonRemove";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAppContext } from "../../controllers/AppWrapper";
 import withReconnect from "../../components/WithReconnect";
 
@@ -10,6 +10,10 @@ function NewGame() {
   const appContext = useAppContext();
   const { gameHandler } = appContext;
   const [teamNames, setTeamNames] = useState(["", ""]);
+
+  useEffect(() => {
+    gameHandler.getActiveGame(); 
+  }, [])
 
   const updateTeamName = (index: number, newName: string) => {
     setTeamNames((teamNames) =>
@@ -75,4 +79,4 @@ function NewGame() {
   );
 }
 
-export default withReconnect(NewGame);
+export default NewGame;

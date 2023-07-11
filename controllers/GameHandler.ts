@@ -75,6 +75,7 @@ export default class GameHandler {
   }
 
   requestSetActiveQuestion(gameId: string, questionText: string) {
+    console.log("*** requestSetActiveQuestion")
     const game = this.getGameById(gameId);
     const { round, gameStatus } = game;
     if (gameStatus !== GameStatus.inProgress || !round) {

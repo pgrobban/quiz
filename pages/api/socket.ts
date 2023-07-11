@@ -88,7 +88,7 @@ const SocketHandler = (_: NextApiRequest, res: NextApiResponseWithSocket) => {
       const game = gameHandler.requestContinueGame(gameId);
       switch (game.questionStatus) {
         case QuestionStatus.waitingForTeamAnswer:
-          io.to(game.id).emit('request-team-answer');
+          io.to(game.id).emit('team-answer-requested', game);
         default:
           console.log("bla")
       }

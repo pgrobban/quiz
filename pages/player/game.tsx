@@ -10,14 +10,13 @@ import { getScoreFromLatestAnswer } from "../../controllers/helpers";
 
 function Game() {
   const appContext = useAppContext();
-  const { gameHandler } = appContext;
-  const game = gameHandler.getActiveGame();
+  const { gameHandler, gameState } = appContext;
   const [isAnimatingScore, setIsAnimatingScore] = useState<boolean>(false);
-  const { gameStatus, questionStatus, currentQuestion } = game || {};
-  if (!game) {
+
+  const { gameStatus, questionStatus, currentQuestion } = gameState || {};
+  if (!gameState) {
     return null;
   }
-
 
   const countdownTo = getScoreFromLatestAnswer(gameHandler);
 
@@ -87,4 +86,4 @@ function Game() {
   );
 }
 
-export default withReconnect(Game);
+export default Game;
