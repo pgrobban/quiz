@@ -38,6 +38,7 @@ interface PossibleAnswer {
 
 export interface Question {
   questionText: string;
+  explanation?: string;
   possibleAnswers: PossibleAnswer[];
 }
 
