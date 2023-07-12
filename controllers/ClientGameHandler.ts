@@ -97,7 +97,7 @@ export default class ClientGameHandler {
     this.connectionStatus = 'disconnected';
   }
 
-  onReceivedGameAfterReconnect(game: Game) {
+  onReceivedGame(game: Game) {
     this.activeGame = game;
     this.connectionStatus = 'connected';
   }

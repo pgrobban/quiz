@@ -43,7 +43,7 @@ export default function AppWrapper({
         gameHandler.onHostReceivedGames(games);
       });
       socket.on("received-game", (game: Game) => {
-        gameHandler.onReceivedGameAfterReconnect(game);
+        gameHandler.onReceivedGame(game);
         setGameState(game);
       });
       socket.on("host-joined-game", (game: Game) => {

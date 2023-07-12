@@ -86,12 +86,8 @@ const SocketHandler = (_: NextApiRequest, res: NextApiResponseWithSocket) => {
     socket.on('request-continue-game', (gameId) => {
       console.log("*** in request continue game", gameId)
       const game = gameHandler.requestContinueGame(gameId);
-      switch (game.questionStatus) {
-        case QuestionStatus.waitingForTeamAnswer:
-          io.to(game.id).emit('team-answer-requested', game);
-        default:
-          console.log("bla")
-      }
+      console.log("*** after continue", game)
+      io.to(game.id).emit('received-game', game);
     });
   });
 

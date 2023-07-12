@@ -51,7 +51,7 @@ describe('#ClientGameHandler', () => {
     it('Should set the active round and question status to waiting for question', () => {
       const game: Game = {
         id: '123',
-        gameStatus: GameStatus.waitingForHost
+        gameStatus: GameStatus.inProgress
       };
       gameHandler.getGameById = jest.fn((_: string) => game);
 
@@ -65,9 +65,13 @@ describe('#ClientGameHandler', () => {
     it('Should set some properties on game.currentQuestion and questionStatus', () => {
       const game: Game = {
         id: '123',
-        gameStatus: GameStatus.waitingForHost,
+        gameStatus: GameStatus.inProgress,
         round: GameRound.openEnded,
-        questionStatus: QuestionStatus.waitingForQuestion
+        questionStatus: QuestionStatus.waitingForQuestion,
+        teamsAndPoints: [{
+          teamName: 'aaa',
+          points: 0
+        }]
       };
       gameHandler.getGameById = jest.fn((_: string) => game);
   
@@ -75,29 +79,9 @@ describe('#ClientGameHandler', () => {
       expect(game.currentQuestion?.question.possibleAnswers).toHaveLength(21);
       expect(game.currentQuestion?.questionInRound).toBe(1);
       expect(game.currentQuestion?.answeredTeams).toHaveLength(0);
-      expect(game.questionStatus).toBe(QuestionStatus.receivedQuestion);
+      expect(game.currentQuestion?.turn).toBe(1);
+      expect(game.questionStatus).toBe(QuestionStatus.waitingForTeamAnswer);
     });
-
-    it('Should increase round by one after a question is over', () => {
-      const game: Game = {
-        id: '123',
-        gameStatus: GameStatus.waitingForHost,
-        round: GameRound.openEnded,
-        questionStatus: QuestionStatus.waitingForQuestion,
-        currentQuestion: {
-          question: {
-            questionText: 'Some question',
-            possibleAnswers: []
-          },
-          questionInRound: 1,
-          answeredTeams: ['teamA', 'teamB']
-        }
-      };
-      gameHandler.getGameById = jest.fn((_: string) => game);
-
-      gameHandler.requestSetActiveQuestion(game.id, 'US states ending in \'A\'');
-      expect(game.currentQuestion?.questionInRound).toBe(2);
-    })
   })
 
   describe('#requestTeamAnswer', () => {
@@ -114,47 +98,20 @@ describe('#ClientGameHandler', () => {
             possibleAnswers: []
           },
           questionInRound: 1,
-          answeredTeams: ['teamA', 'teamB']
+          answeredTeams: ['teamA', 'teamB'],
+          turn: 1
         }
       };
       gameHandler.getGameById = jest.fn((_: string) => game);
 
       gameHandler.requestTeamAnswer(game.id);
       expect(game.gameStatus).toBe(GameStatus.inProgress);
+      expect(game.questionStatus).toBe(QuestionStatus.waitingForTeamAnswer);
       expect(game.currentQuestion?.question.questionText).toBe('Some question');
       expect(game.currentQuestion?.questionInRound).toBe(1);
       expect(game.currentQuestion?.lastAnswer).not.toBeDefined();
       expect(game.currentQuestion?.answeredTeams).toHaveLength(0);
       expect(game.currentQuestion?.orderedTeamsLeftToAnswer).toHaveLength(2);
     });
-
-    it('Question was not just received, set the next team to answer', () => {
-      const game: Game = {
-        id: '123',
-        gameStatus: GameStatus.inProgress,
-        teamsAndPoints: [{ teamName: 'teamA', points: 0 }, { teamName: 'teamB', points: 0 }],
-        round: GameRound.openEnded,
-        questionStatus: QuestionStatus.waitingForTeamAnswer,
-        currentQuestion: {
-          question: {
-            questionText: 'Some question',
-            possibleAnswers: []
-          },
-          questionInRound: 1,
-          answeredTeams: [],
-          lastAnswer: 'Some answer',
-          orderedTeamsLeftToAnswer: ['teamA', 'teamB']
-        }
-      };
-      gameHandler.getGameById = jest.fn((_: string) => game);
-
-      gameHandler.requestTeamAnswer(game.id);
-      expect(game.gameStatus).toBe(GameStatus.inProgress);
-      expect(game.currentQuestion?.question.questionText).toBe('Some question');
-      expect(game.currentQuestion?.questionInRound).toBe(1);
-      expect(game.currentQuestion?.lastAnswer).toBeDefined();
-      expect(game.currentQuestion?.answeredTeams).toStrictEqual(['teamA']);
-      expect(game.currentQuestion?.orderedTeamsLeftToAnswer).toStrictEqual(['teamB']);
-    })
   });
 });

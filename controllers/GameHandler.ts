@@ -20,6 +20,15 @@ const NUMBER_OF_TURNS_FOR_ROUND: Record<GameRound, number> = {
   [GameRound.possibleAnswers]: 3
 }
 
+const NUMBER_OF_QUESTIONS_FOR_ROUND: Record<GameRound, number> = {
+  [GameRound.openEnded]: 3,
+  [GameRound.cluesAndAnswers]: 3,
+  [GameRound.fillInBlank]: 3,
+  [GameRound.linkedCategories]: 3,
+  [GameRound.partIdentification]: 3,
+  [GameRound.possibleAnswers]: 3
+}
+
 export default class GameHandler {
   private games: Game[];
 
@@ -123,7 +132,8 @@ export default class GameHandler {
       throw new Error("*** requestSetTurnNumber Assertion error");
     }
 
-    game.currentQuestion.turn += 1;
+    game.currentQuestion.turn++;
+    console.log("*** after requestSetTurnNumber", game)
     return game;
   }
 
@@ -145,7 +155,7 @@ export default class GameHandler {
       throw new Error("requestTeamAnswer Assertion error");
     }
 
-    if (game.questionStatus === QuestionStatus.receivedQuestion) {
+    if (game.questionStatus === QuestionStatus.receivedQuestion && (!game.currentQuestion.lastAnswer || game.currentQuestion.orderedTeamsLeftToAnswer?.length === 0)) {
       game.currentQuestion.orderedTeamsLeftToAnswer =
         this.getOrderedTeamsToAnswer(
           game.teamsAndPoints,
@@ -158,16 +168,11 @@ export default class GameHandler {
         console.log("***", game)
         throw new Error("requestTeamAnswer Assertion error");
       }
-
-      game.currentQuestion.answeredTeams.push(
-        game.currentQuestion.orderedTeamsLeftToAnswer[0]
-      );
-      game.currentQuestion.orderedTeamsLeftToAnswer =
-        game.currentQuestion.orderedTeamsLeftToAnswer.slice(1);
     }
 
     game.questionStatus = QuestionStatus.waitingForTeamAnswer;
 
+    console.log("*** after requestTeamAnswer", game)
     return game;
   }
 
@@ -271,15 +276,27 @@ export default class GameHandler {
       console.log(game);
       throw new Error("requestContinueGame Assertion error");
     }
+    
+    game.currentQuestion.answeredTeams.push(
+      game.currentQuestion.orderedTeamsLeftToAnswer[0]
+    );
+    game.currentQuestion.orderedTeamsLeftToAnswer =
+      game.currentQuestion.orderedTeamsLeftToAnswer.slice(1);
 
     if (game.currentQuestion.orderedTeamsLeftToAnswer.length > 0) {
-      game.questionStatus = QuestionStatus.waitingForTeamAnswer;
+      game.questionStatus = QuestionStatus.receivedQuestion;
       return this.requestTeamAnswer(gameId);
     }
 
     if (game.currentQuestion.turn < NUMBER_OF_TURNS_FOR_ROUND[game.round]) {
+      game.questionStatus = QuestionStatus.receivedQuestion;
       this.requestSetTurnNumber(gameId);
       return this.requestTeamAnswer(gameId);
+    }
+
+    game.currentQuestion.questionInRound++;
+    if (game.currentQuestion.questionInRound < NUMBER_OF_QUESTIONS_FOR_ROUND[game.round]) {
+      game.questionStatus = QuestionStatus.waitingForQuestion;
     }
     return game;
   }
