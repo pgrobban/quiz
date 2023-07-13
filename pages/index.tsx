@@ -4,6 +4,8 @@ import Image from "next/image";
 import { Button } from "@mui/material";
 import { useAppContext } from "../controllers/AppWrapper";
 import CountdownBar from "../components/CountdownBar";
+import CluesAndAnswersBoard from "../components/CluesAndAnswersBoard";
+import { GameRound, GameStatus } from "../models/types";
 
 function Home() {
   const appContext = useAppContext();
@@ -21,13 +23,33 @@ function Home() {
         <h2>Robban&apos;s Pointless Quiz</h2>
         <Image src="/images/logo.png" alt="Logo" width={384} height={214} />
         <div className={styles.menu}>
-          <Button variant="contained" style={{ width: 200, height: 50 }} onClick={() => gameHandler.requestNewGame()}>
+          <Button
+            variant="contained"
+            style={{ width: 200, height: 50 }}
+            onClick={() => gameHandler.requestNewGame()}
+          >
             New game
           </Button>
-          <Button variant="contained" onClick={() => gameHandler.requestToBeHost()}>Host</Button>
+          <Button
+            variant="contained"
+            onClick={() => gameHandler.requestToBeHost()}
+          >
+            Host
+          </Button>
         </div>
       </main>
-      <CountdownBar to={0} callback={() => {}}/>
+      <CountdownBar to={0} callback={() => {}} />
+
+      <CluesAndAnswersBoard
+        question={{
+          questionText: "Q",
+          possibleAnswers: [
+            { answered: true, answerText: "Answer A", points: 25 },
+            { answered: false, answerText: "Answer B", points: 12 },
+            { answered: false, answerText: "Answer C", points: 3 },
+          ],
+        }}
+      />
     </>
   );
 }

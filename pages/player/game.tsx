@@ -2,7 +2,7 @@ import CountdownBar from "../../components/CountdownBar";
 import ScoreList from "../../components/ScoreList";
 import withReconnect from "../../components/WithReconnect";
 import { useAppContext } from "../../controllers/AppWrapper";
-import { GameStatus, QuestionStatus } from "../../models/types";
+import { GameRound, GameStatus, QuestionStatus } from "../../models/types";
 import styles from "../../styles/Home.module.css";
 import { NON_VERIFIED_ANSWER, NO_OR_INVALID_ANSWER } from "../../models/types";
 import { useState } from "react";
@@ -52,6 +52,9 @@ function Game() {
                 <>
                   <h4>Question {currentQuestion.questionInRound}</h4>
                   <h2>{currentQuestion.question.questionText}</h2>
+                  <p>{currentQuestion.question.explanation}</p>
+
+                  {gameState.round === GameRound.cluesAndAnswers && <CluesAndAnswersBoard game={gameState} />}
 
                   {questionStatus === QuestionStatus.waitingForTeamAnswer &&
                     currentQuestion.orderedTeamsLeftToAnswer && (
