@@ -1,5 +1,6 @@
 import { Table, TableBody, TableCell, TableRow } from "@mui/material";
 import { QuestionInGame } from "../models/types";
+import { Textfit } from 'react-textfit';
 
 interface Props {
   question: QuestionInGame;
@@ -9,14 +10,21 @@ export default function CluesAndAnswersBoard({ question }: Props) {
   const baseRadius = 800;
 
   return (
-    <div style={{ height: baseRadius-100, marginTop: -50, position: 'relative', overflow: 'hidden' }}>
+    <div
+      style={{
+        height: baseRadius - 100,
+        marginTop: -50,
+        position: "relative",
+        overflow: "hidden",
+      }}
+    >
       <div
         style={{
           width: baseRadius,
           height: baseRadius,
           borderRadius: baseRadius,
           border: "2px solid #641C3B",
-          overflow: 'hidden'
+          overflow: "hidden",
         }}
       >
         <div
@@ -53,64 +61,89 @@ export default function CluesAndAnswersBoard({ question }: Props) {
                   height: 573,
                   borderRadius: 48,
                   border: "2px solid #4F3635",
-                  background:
-                    "radial-gradient(ellipse at top, #070450, transparent), radial-gradient(ellipse at bottom, #C9374B, transparent)",
+                  backgroundImage: 'url(images/clues-and-answers.avif)',
+                  backgroundSize: 'cover'
                 }}
               >
-                <div
-                  style={{
-                    height: 50,
-                    borderRadius: 50,
-                    border: "2px solid #F9F463",
-                    margin: "40px 10px 10px 10px",
-                    background:
-                      "radial-gradient(ellipse at top, #660907, transparent), radial-gradient(ellipse at bottom, #200202, transparent)",
-                  }}
-                >
-                  <div
-                    style={{
-                      fontFamily: "Verdana",
-                      fontSize: 18,
-                      textTransform: "uppercase",
-                      color: "#FEFD3C",
-                      display: 'inline-block',
-                      position: "relative",
-                      width: 310,
-                      paddingLeft: 15
-                    }}
-                  >
-                    <span>Blah blah</span>
-                  </div>
-                  <div
-                    style={{
-                      width: 60,
-                      height: 60,
-                      borderRadius: 75,
-                      border: "3px solid #FAF7A0",
-                      background: "#82264D",
-                      display: 'inline-block',
-                      margin: "-8px 10px 10px 10px"
-                    }}
-                  >
-                    <div style={{ fontSize: 28, fontFamily: 'Arial Black', textAlign: 'center', marginTop: 5, color: '#FEFD1D' }}>
-                      <span>25</span>
-                    </div>
-                  </div>
+                {question.possibleAnswers.map((answer, index) => {
+                  const { clue, answerText, answered, points } = answer;
+                  return (
+                    <div
+                      key={index}
+                      style={{
+                        lineHeight: 1,
+                        height: 55,
+                        borderRadius: 50,
+                        border: "2px solid #F9F463",
+                        margin: "35px 10px 10px 10px",
+                        display: 'flex',
+                        background:
+                          "radial-gradient(ellipse at top, #660907, transparent), radial-gradient(ellipse at bottom, #200202, transparent)",
+                      }}
+                    >
+                      <div
+                        style={{
+                          fontFamily: "Verdana",
+                          textTransform: "uppercase",
+                          color: "#FEFD3C",
+                          display: 'flex',
+                          justifyContent: 'center',
+                          alignContent: 'center',
+                          flexDirection: 'column',
+                          position: "relative",
+                          width: 310,
+                          paddingLeft: 15,
+                          textAlign: 'center',
+                        }}
+                      >
+                        {clue}
+                      </div>
+                      <div
+                        style={{
+                          width: 65,
+                          height: 65,
+                          borderRadius: 75,
+                          border: "3px solid #FAF7A0",
+                          background: "#82264D",
+                          margin: "-8px 0px 10px 10px",
+                          display: 'flex',
+                          justifyContent: 'center',
+                          alignContent: 'center',
+                          flexDirection: 'column',
+                          textAlign: 'center'
+                        }}
+                      >
+                        <div
+                          style={{
+                            fontSize: 28,
+                            fontFamily: "Arial Black",
+                            color: "#FEFD1D"
+                          }}
+                        >
+                          <span>{answered ? points : ""}</span>
+                        </div>
+                      </div>
 
-                  <div
-                    style={{
-                      fontFamily: "Verdana",
-                      fontSize: 18,
-                      textTransform: "uppercase",
-                      padding: 10,
-                      color: "#FEFD3C",
-                      display: 'inline-block',
-                      width: 150
-                    }}
-                  >
-                    <span>Blah</span>
-                  </div>
-                </div>
+                      <div
+                        style={{
+                          fontFamily: "Verdana",
+                          fontSize: 18,
+                          textTransform: "uppercase",
+                          padding: 10,
+                          color: "#FEFD3C",
+                          width: 150,
+                          display: 'flex',
+                          justifyContent: 'center',
+                          alignContent: 'center',
+                          flexDirection: 'column',
+                          textAlign: 'center'
+                        }}
+                      >
+                        <span>{answered ? answerText : ""}</span>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>

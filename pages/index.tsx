@@ -1,11 +1,9 @@
-import Head from "next/head";
-import styles from "../styles/Home.module.css";
-import Image from "next/image";
 import { Button } from "@mui/material";
-import { useAppContext } from "../controllers/AppWrapper";
+import Head from "next/head";
+import Image from "next/image";
 import CountdownBar from "../components/CountdownBar";
-import CluesAndAnswersBoard from "../components/CluesAndAnswersBoard";
-import { GameRound, GameStatus } from "../models/types";
+import { useAppContext } from "../controllers/AppWrapper";
+import styles from "../styles/Home.module.css";
 
 function Home() {
   const appContext = useAppContext();
@@ -39,17 +37,6 @@ function Home() {
         </div>
       </main>
       <CountdownBar to={0} callback={() => {}} />
-
-      <CluesAndAnswersBoard
-        question={{
-          questionText: "Q",
-          possibleAnswers: [
-            { answered: true, answerText: "Answer A", points: 25 },
-            { answered: false, answerText: "Answer B", points: 12 },
-            { answered: false, answerText: "Answer C", points: 3 },
-          ],
-        }}
-      />
     </>
   );
 }
