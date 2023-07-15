@@ -43,12 +43,12 @@ const questions: { [key in GameRound]: Question[] } = {
         { answerText: "Ankara", points: 1 },
         { answerText: "Baku", points: 0 },
         { answerText: "Belgrade", points: 4 },
-        { answerText: "Amsterdam", points: 37 },
-        { answerText: "Amsterdam", points: 37 },
-        { answerText: "Amsterdam", points: 37 },
-        { answerText: "Amsterdam", points: 37 },
-        { answerText: "Amsterdam", points: 37 },
-        { answerText: "Amsterdam", points: 37 },
+        { answerText: "Berlin", points: 62 },
+        { answerText: "Bern", points: 11 },
+        { answerText: "Bratislava", points: 4 },
+        { answerText: "Brussels", points: 42 },
+        { answerText: "Bucharest", points: 4 },
+        { answerText: "Budapest", points: 14 },
         { answerText: "Amsterdam", points: 37 },
         { answerText: "Amsterdam", points: 37 },
         { answerText: "Amsterdam", points: 37 },
@@ -101,6 +101,41 @@ const questions: { [key in GameRound]: Question[] } = {
           points: 10,
         },
       ],
+    },
+    {
+      questionText: "Famous Richards",
+      possibleAnswers: [
+        {
+          clue: "Author of 'The God Delusion'",
+          answerText: "Richard Dawkins",
+          points: 7
+        },
+        {
+          clue: "Leading actor who appeared in 'Pretty Woman'",
+          answerText: "Richard Gere",
+          points: 64
+        },
+        {
+          clue: "German composer of 'Ride of the Valkyries'",
+          answerText: "Richard Wagner",
+          points: 25
+        },
+        {
+          clue: "Former 'Top Gear' and current 'Grand Tour' presenter",
+          answerText: "Richard Hammond",
+          points: 37
+        },
+        {
+          clue: "Actor who starred in 'Close Encounters of The Third Kind'",
+          answerText: "Alexander Graham Bell",
+          points: 21
+        },
+        {
+          clue: "President of the United States 1969-74",
+          answerText: "Nixon",
+          points: 51
+        }
+      ]
     },
     {
       questionText: "Milk",
@@ -164,6 +199,38 @@ const questions: { [key in GameRound]: Question[] } = {
           clue: "R. Descartes (1596)",
           answerText: "Francis",
           points: 26,
+        },
+      ],
+    },
+    {
+      questionText: "People named Alex",
+      explanation:
+        "We are looking for famous people, past and present - each person commonly known by a first name that could be shortened to 'Alex'. We would like you to tell us who they are (full name).",
+      possibleAnswers: [
+        {
+          clue: "Widely credited as the 'inventor' of the telephone",
+          answerText: "Alexander Graham Bell",
+          points: 85,
+        },
+        {
+          clue: "Frontman of the Arctic Monkeys",
+          answerText: "Alex Turner",
+          points: 7,
+        },
+        {
+          clue: "Became manager of Manchester United in 1986",
+          answerText: "Alex Ferguson",
+          points: 75,
+        },
+        {
+          clue: "Voice of Family Guy's 'Lois Griffin'",
+          answerText: "Alex Borstein",
+          points: 0,
+        },
+        {
+          clue: "Scottish bacteriologist who discovered penicillin",
+          answerText: "Alexander Fleming",
+          points: 40,
         },
       ],
     },
