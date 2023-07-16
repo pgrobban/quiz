@@ -64,11 +64,38 @@ const questions: { [key in GameRound]: Question[] } = {
       questionText:
         "Any country (other than UK) that uses any of the following currencies: franc, peso, pound, rupee, shilling",
       explanation: "",
-      possibleAnswers: [{ answerText: "Benin", points: 0 }],
+      possibleAnswers: [
+        { answerText: "Benin", points: 0 },
+        { answerText: "Burkina Faso", points: 0 },
+        { answerText: "Burundi", points: 0 },
+        { answerText: "Cameroon", points: 0 },
+        { answerText: "Central African Republic", points: 0 },
+      ],
     },
     {
       questionText: "Countries that won Eurovision Song Contest",
-      possibleAnswers: [{ answerText: "Austria", points: 1 }],
+      possibleAnswers: [
+        { answerText: "Austria", points: 1 },
+        { answerText: "Azerbaijan", points: 4 },
+        { answerText: "Belgium", points: 1 },
+      ],
+    },
+    {
+      questionText: "Words ending with -oo",
+      explanation:
+        "We are looking for any word that has its own entry in the 'Oxford Dictionary of English' ending with the letters 'oo'. As usual, we will not accept acronyms, proper nouns, trademarks, or hyphenated words. Nor will we accept any words marked as being 'offensive' by the dictionary.",
+      possibleAnswers: [
+        { answerText: "Aloo", points: 0 },
+        { answerText: "Ballyhoo", points: 0 },
+        { answerText: "Bamboo", points: 0 },
+        { answerText: "Bazoo", points: 0 },
+        { answerText: "Boo", points: 18 },
+        { answerText: "Boogaloo", points: 0 },
+        { answerText: "Boohoo", points: 0 },
+        { answerText: "Broo", points: 0 },
+        { answerText: "Buckaroo", points: 0 },
+        { answerText: "Bugaboo", points: 0 },
+      ],
     },
   ],
   clues_and_answers: [
@@ -108,34 +135,34 @@ const questions: { [key in GameRound]: Question[] } = {
         {
           clue: "Author of 'The God Delusion'",
           answerText: "Richard Dawkins",
-          points: 7
+          points: 7,
         },
         {
           clue: "Leading actor who appeared in 'Pretty Woman'",
           answerText: "Richard Gere",
-          points: 64
+          points: 64,
         },
         {
           clue: "German composer of 'Ride of the Valkyries'",
           answerText: "Richard Wagner",
-          points: 25
+          points: 25,
         },
         {
           clue: "Former 'Top Gear' and current 'Grand Tour' presenter",
           answerText: "Richard Hammond",
-          points: 37
+          points: 37,
         },
         {
           clue: "Actor who starred in 'Close Encounters of The Third Kind'",
           answerText: "Alexander Graham Bell",
-          points: 21
+          points: 21,
         },
         {
           clue: "President of the United States 1969-74",
           answerText: "Nixon",
-          points: 51
-        }
-      ]
+          points: 51,
+        },
+      ],
     },
     {
       questionText: "Milk",
@@ -197,8 +224,43 @@ const questions: { [key in GameRound]: Question[] } = {
         },
         {
           clue: "R. Descartes (1596)",
-          answerText: "Francis",
+          answerText: "René",
           points: 26,
+        },
+      ],
+    },
+    {
+      questionText: "Philosophers and their first names (II)",
+      possibleAnswers: [
+        {
+          clue: "J-P. Sartre (1905)",
+          answerText: "Jean-Paul",
+          points: 48,
+        },
+        {
+          clue: "B. Pascal (1623)",
+          answerText: "Blaise",
+          points: 12,
+        },
+        {
+          clue: "F. Nietzche",
+          answerText: "Friedrich",
+          points: 27,
+        },
+        {
+          clue: "A. Rand (1905)",
+          answerText: "Ayn",
+          points: 4,
+        },
+        {
+          clue: "J. Bentham (1748)",
+          answerText: "Francis",
+          points: 8,
+        },
+        {
+          clue: "K. Marx (1818)",
+          answerText: "Karl",
+          points: 91,
         },
       ],
     },
@@ -231,6 +293,80 @@ const questions: { [key in GameRound]: Question[] } = {
           clue: "Scottish bacteriologist who discovered penicillin",
           answerText: "Alexander Fleming",
           points: 40,
+        },
+      ],
+    },
+    {
+      questionText: "Wines and their regions",
+      explanation:
+        "The following are all wines or wine regions. We want to know the name of the countries with which they are the most associated.",
+      possibleAnswers: [
+        {
+          clue: "Champagne",
+          answerText: "France",
+          points: 84,
+        },
+        {
+          clue: "Stellenbosch",
+          answerText: "South Africa",
+          points: 9,
+        },
+        {
+          clue: "Dao Valley",
+          answerText: "Portugal",
+          points: 4,
+        },
+        {
+          clue: "Chianti",
+          answerText: "Italy",
+          points: 62,
+        },
+        {
+          clue: "Hunter Valley",
+          answerText: "Australia",
+          points: 17,
+        },
+        {
+          clue: "Retsina",
+          answerText: "France",
+          points: 32,
+        },
+      ],
+    },
+    {
+      questionText: "Wines and their regions (II)",
+      explanation:
+        "The following are all wines or wine regions. We want to know the name of the countries with which they are the most associated.",
+      possibleAnswers: [
+        {
+          clue: "Sancerre",
+          answerText: "France",
+          points: 36,
+        },
+        {
+          clue: "Barolo",
+          answerText: "Italy",
+          points: 15,
+        },
+        {
+          clue: "Liebfraumilch",
+          answerText: "Germany",
+          points: 80,
+        },
+        {
+          clue: "Mendoza",
+          answerText: "Argentina",
+          points: 5,
+        },
+        {
+          clue: "Tokaji",
+          answerText: "Hungary",
+          points: 7,
+        },
+        {
+          clue: "Rioja",
+          answerText: "Spain",
+          points: 46,
         },
       ],
     },
