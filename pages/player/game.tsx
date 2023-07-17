@@ -7,6 +7,7 @@ import styles from "../../styles/Home.module.css";
 import { NON_VERIFIED_ANSWER, NO_OR_INVALID_ANSWER } from "../../models/types";
 import { useState } from "react";
 import { getScoreFromLatestAnswer } from "../../controllers/helpers";
+import CluesAndAnswersBoard from "../../components/CluesAndAnswersBoard";
 
 function Game() {
   const appContext = useAppContext();
@@ -47,6 +48,7 @@ function Game() {
                 QuestionStatus.waitingForTeamAnswer,
                 QuestionStatus.announcingResults,
                 QuestionStatus.awardingPoints,
+                QuestionStatus.pointsAdded
               ].includes(questionStatus) &&
               currentQuestion && (
                 <>
@@ -54,7 +56,7 @@ function Game() {
                   <h2>{currentQuestion.question.questionText}</h2>
                   <p>{currentQuestion.question.explanation}</p>
 
-                  {gameState.round === GameRound.cluesAndAnswers && <CluesAndAnswersBoard game={gameState} />}
+                  {gameState.round === GameRound.cluesAndAnswers && <CluesAndAnswersBoard question={currentQuestion.question} />}
 
                   {questionStatus === QuestionStatus.waitingForTeamAnswer &&
                     currentQuestion.orderedTeamsLeftToAnswer && (

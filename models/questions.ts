@@ -103,7 +103,7 @@ const questions: { [key in GameRound]: Question[] } = {
       questionText: "Monkeys",
       possibleAnswers: [
         {
-          clue: "In slang terminology, a monkey refers to this amount of sterling",
+          clue: "In slang terminology, a 'monkey' refers to this amount of sterling",
           answerText: "£500",
           points: 10,
         },
