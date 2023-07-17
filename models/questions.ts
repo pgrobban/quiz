@@ -97,6 +97,34 @@ const questions: { [key in GameRound]: Question[] } = {
         { answerText: "Bugaboo", points: 0 },
       ],
     },
+    {
+      questionText: "US states smaller than England",
+      explanation:
+        "We are looking for any of the twenty-two US states that are smaller than England in terms of total land area. We are only counting land area, so are not including water areas a state may possess including inland, coastal, Great Lakes, and territorial waters. To give you an idea, the smallest state that is larger than the total land area of England is Alabama, so we're essentially looking for any US state smaller than Alabama.",
+      possibleAnswers: [
+        { answerText: "Connecticut", points: 15 },
+        { answerText: "Delaware", points: 9 },
+        { answerText: "Hawaii", points: 30 },
+        { answerText: "Indiana", points: 3 },
+        { answerText: "Kentucky", points: 7 },
+        { answerText: "Louisiana", points: 5 },
+        { answerText: "Maine", points: 18 },
+        { answerText: "Maryland", points: 11 },
+        { answerText: "Hawaii", points: 30 },
+        { answerText: "Connecticut", points: 15 },
+        { answerText: "Delaware", points: 9 },
+        { answerText: "Hawaii", points: 30 },
+        { answerText: "Connecticut", points: 15 },
+        { answerText: "Delaware", points: 9 },
+        { answerText: "Hawaii", points: 30 },
+        { answerText: "Connecticut", points: 15 },
+        { answerText: "Delaware", points: 9 },
+        { answerText: "Hawaii", points: 30 },
+        { answerText: "Connecticut", points: 15 },
+        { answerText: "Delaware", points: 9 },
+        { answerText: "Hawaii", points: 30 },
+      ],
+    },
   ],
   clues_and_answers: [
     {
@@ -370,6 +398,38 @@ const questions: { [key in GameRound]: Question[] } = {
         },
       ],
     },
+    {
+      questionText: "Studio albums by The Beatles",
+      explanation:
+        "We will show you five sets of initials that represent titles of some studio albums released by The Beatles. We would like you to tell us what the initials stand for.",
+      possibleAnswers: [
+        {
+          clue: "R",
+          answerText: "Revolver",
+          points: 36,
+        },
+        {
+          clue: "BFS",
+          answerText: "Beatles For Sale",
+          points: 7,
+        },
+        {
+          clue: "MMT",
+          answerText: "Magical Mystery Tour",
+          points: 16,
+        },
+        {
+          clue: "WTB",
+          answerText: "With The Beatles",
+          points: 11,
+        },
+        {
+          clue: "SPLHCB",
+          answerText: "Sgt Pepper's Lonely Hearts Club Band",
+          points: 63,
+        },
+      ],
+    },
   ],
   linked_category: [
     {
@@ -394,33 +454,62 @@ const questions: { [key in GameRound]: Question[] } = {
       questionText: "Picasso Paintings",
       possibleAnswers: [
         {
-          clue: "Cervantes",
-          answerText: "X",
+          answerText: "Cervantes",
           points: 100,
         },
         {
-          clue: "Woman With Pears",
           answerText: "Woman With Pears",
           points: 0,
         },
         {
-          clue: "The Modern Lovers",
-          answerText: "X",
+          answerText: "The Modern Lovers",
           points: 100,
         },
         {
-          clue: "The Accordionist",
           answerText: "The Accordionist",
           points: 0,
         },
         {
-          clue: "Science and Charity",
           answerText: "Science and Charity",
           points: 1,
         },
         {
-          clue: "Les Demoiselles d'Avignon",
           answerText: "Les Demoiselles d'Avignon",
+          points: 1,
+        },
+      ],
+    },
+    {
+      questionText: "Fictional Bears",
+      explanation:
+        "The correct answers here are all fictional bears featured in books, comics, films and television. And all the incorrect answers are not bears at all.",
+      possibleAnswers: [
+        {
+          answerText: "Fozzie",
+          points: 3,
+        },
+        {
+          answerText: "Yogi",
+          points: 63,
+        },
+        {
+          answerText: "Baloo",
+          points: 16,
+        },
+        {
+          answerText: "Columbus",
+          points: 100,
+        },
+        {
+          answerText: "Superted",
+          points: 2,
+        },
+        {
+          answerText: "Rupert",
+          points: 49,
+        },
+        {
+          answerText: "Shardik",
           points: 1,
         },
       ],
