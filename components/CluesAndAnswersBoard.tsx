@@ -1,19 +1,16 @@
-import { Table, TableBody, TableCell, TableRow } from "@mui/material";
 import { QuestionInGame } from "../models/types";
-import { Textfit } from 'react-textfit';
 
 interface Props {
   question: QuestionInGame;
 }
 
 export default function CluesAndAnswersBoard({ question }: Props) {
-  const baseRadius = 800;
+  const baseRadius = 850;
 
   return (
     <div
       style={{
-        height: baseRadius - 100,
-        marginTop: -50,
+        height: baseRadius - 150,
         position: "relative",
         overflow: "hidden",
       }}
@@ -25,6 +22,8 @@ export default function CluesAndAnswersBoard({ question }: Props) {
           borderRadius: baseRadius,
           border: "2px solid #641C3B",
           overflow: "hidden",
+          position: 'relative',
+          top: -60
         }}
       >
         <div
@@ -46,8 +45,8 @@ export default function CluesAndAnswersBoard({ question }: Props) {
           >
             <div
               style={{
-                width: 575,
-                height: 575,
+                width: 620,
+                height: 620,
                 borderRadius: 50,
                 border: "2px solid #9D191F",
                 position: "relative",
@@ -57,11 +56,11 @@ export default function CluesAndAnswersBoard({ question }: Props) {
             >
               <div
                 style={{
-                  width: 573,
-                  height: 573,
+                  width: 618,
+                  height: 618,
                   borderRadius: 48,
                   border: "2px solid #4F3635",
-                  backgroundImage: 'url(images/clues-and-answers.avif)',
+                  backgroundImage: 'url(../images/clues-and-answers.avif)',
                   backgroundSize: 'cover'
                 }}
               >
@@ -91,12 +90,12 @@ export default function CluesAndAnswersBoard({ question }: Props) {
                           alignContent: 'center',
                           flexDirection: 'column',
                           position: "relative",
-                          width: 310,
+                          width: '70%',
                           paddingLeft: 15,
                           textAlign: 'center',
                         }}
                       >
-                        {clue}
+                        <span>{clue}</span>
                       </div>
                       <div
                         style={{

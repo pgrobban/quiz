@@ -106,11 +106,7 @@ export default class GameHandler {
 
     const questionWithAnswerStatuses = {
       ...questionModel,
-      possibleAnswers: questionModel.possibleAnswers.map((answer) => ({
-        answerText: answer.answerText,
-        points: answer.points,
-        answered: false,
-      })),
+      possibleAnswers: questionModel.possibleAnswers.map((answer) => ({...answer, answered: false })),
     };
     game.currentQuestion = {
       question: questionWithAnswerStatuses,
