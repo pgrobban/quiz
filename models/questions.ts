@@ -430,6 +430,79 @@ const questions: { [key in GameRound]: Question[] } = {
         },
       ],
     },
+    {
+      questionText: "Literary villains and their works of fiction",
+      explanation:
+        "In which novel or play do these villains feature?",
+      possibleAnswers: [
+        {
+          clue: "Mrs. Davies",
+          answerText: "Rebecca",
+          points: 10,
+        },
+        {
+          clue: "Big Brother",
+          answerText: "Nineteen eighty-four",
+          points: 36,
+        },
+        {
+          clue: "Mrs. Trunchbull",
+          answerText: "Matilda",
+          points: 53,
+        },
+        {
+          clue: "Bill Sikes",
+          answerText: "Oliver Twist",
+          points: 31,
+        },
+        {
+          clue: "George Wickham",
+          answerText: "Pride and Prejudice",
+          points: 12,
+        },
+        {
+          clue: "Milady de Winter",
+          answerText: "The Three Musketeers",
+          points: 6,
+        },
+      ],
+    },
+    {
+      questionText: "Famous bass players",
+      explanation: "We are about to show you a list of 14 bass players. We would like you to tell us the name of the band of which they were members, with which they had their greates chart success.",
+      possibleAnswers: [
+        {
+          clue: "Sting",
+          answerText: "The Police",
+          points: 53,
+        },
+        {
+          clue: "John Deacon",
+          answerText: "Queen",
+          points: 12,
+        },
+        {
+          clue: "Guy Berryman",
+          answerText: "Coldplay",
+          points: 4,
+        },
+        {
+          clue: "Gene Simmons",
+          answerText: "Kiss",
+          points: 28,
+        },
+        {
+          clue: "Adam Clayton",
+          answerText: "U2",
+          points: 18,
+        },
+        {
+          clue: "Mike Dirnt",
+          answerText: "Green Day",
+          points: 3,
+        },
+      ],
+    },
   ],
   linked_category: [
     {
