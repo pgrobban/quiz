@@ -1,10 +1,10 @@
-import { QuestionInGame } from "../models/types";
+import { AnswersInGame } from "../models/types";
 
 interface Props {
-  question: QuestionInGame;
+  answersInGame: AnswersInGame;
 }
 
-export default function CluesAndAnswersBoard({ question }: Props) {
+export default function CluesAndAnswersBoard({ answersInGame }: Props) {
   const baseRadius = 850;
 
   return (
@@ -64,7 +64,7 @@ export default function CluesAndAnswersBoard({ question }: Props) {
                   backgroundSize: 'cover'
                 }}
               >
-                {question.possibleAnswers.map((answer, index) => {
+                {answersInGame.map((answer, index) => {
                   const { clue, answerText, answered, points } = answer;
                   return (
                     <div

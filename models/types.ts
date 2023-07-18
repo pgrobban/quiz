@@ -42,10 +42,12 @@ export interface Question {
   possibleAnswers: PossibleAnswer[];
 }
 
+export type AnswersInGame = (PossibleAnswer & {
+  answered: boolean;
+})[];
+
 export interface QuestionInGame extends Question {
-  possibleAnswers: (PossibleAnswer & {
-    answered: boolean;
-  })[];
+  possibleAnswers: AnswersInGame;
 }
 
 export interface Game {
