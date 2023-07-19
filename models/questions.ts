@@ -503,6 +503,46 @@ const questions: { [key in GameRound]: Question[] } = {
         },
       ],
     },
+    {
+      questionText: "Famous bass players (II)",
+      possibleAnswers: [
+        {
+          clue: "Geddy Lee",
+          answerText: "Rush",
+          points: 6,
+        },
+        {
+          clue: "Paul McCartney",
+          answerText: "The Beatles",
+          points: 80,
+        },
+        {
+          clue: "John Paul Jones",
+          answerText: "Led Zeppelin",
+          points: 9,
+        },
+        {
+          clue: "Roger Waters",
+          answerText: "Pink Floyd",
+          points: 22,
+        },
+        {
+          clue: "John Entwistle",
+          answerText: "The Who",
+          points: 25,
+        },
+        {
+          clue: "Christopher Wolstenholme",
+          answerText: "Muse",
+          points: 1,
+        },
+        {
+          clue: "Flea",
+          answerText: "Red Hot Chili Peppers",
+          points: 12,
+        },
+      ],
+    }
   ],
   linked_category: [
     {
