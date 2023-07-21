@@ -125,6 +125,31 @@ const questions: { [key in GameRound]: Question[] } = {
         { answerText: "Hawaii", points: 30 },
       ],
     },
+    {
+      questionText: "Sister acts",
+      explanation:
+        "We are looking for act which is either a group or duo that featured the word 'sister' or 'sisters' and has had a UK Top 40 hit up to the start of May 2012.",
+      possibleAnswers: [
+        { answerText: "Beverley Sisters", points: 28 },
+        { answerText: "De Castro Sisters", points: 0 },
+        { answerText: "Hannah & Her Sisters", points: 0 },
+        { answerText: "Kaye Sisters", points: 2 },
+        { answerText: "The McGuire Sisters", points: 0 },
+        { answerText: "Scissor Sisters", points: 0 },
+        { answerText: "Shakespears Sister", points: 12 },
+        { answerText: "Sister 2 Sister", points: 0 },
+        { answerText: "Sister Sledge", points: 43 },
+        { answerText: "Supersister", points: 0 },
+        { answerText: "Swing Out Sister", points: 8 },
+        { answerText: "The Dale Sisters", points: 0 },
+        { answerText: "The England Sisters", points: 0 },
+        { answerText: "The Pointer Sisters", points: 20 },
+        { answerText: "The Shepherd Sisters", points: 0 },
+        { answerText: "The Sisters of Mercy", points: 10 },
+        { answerText: "The Surprise Sisters", points: 0 },
+        { answerText: "Twisted Sister", points: 10 },
+      ],
+    },
   ],
   clues_and_answers: [
     {
