@@ -457,8 +457,7 @@ const questions: { [key in GameRound]: Question[] } = {
     },
     {
       questionText: "Literary villains and their works of fiction",
-      explanation:
-        "In which novel or play do these villains feature?",
+      explanation: "In which novel or play do these villains feature?",
       possibleAnswers: [
         {
           clue: "Mrs. Davies",
@@ -494,7 +493,8 @@ const questions: { [key in GameRound]: Question[] } = {
     },
     {
       questionText: "Famous bass players",
-      explanation: "We are about to show you a list of 14 bass players. We would like you to tell us the name of the band of which they were members, with which they had their greates chart success.",
+      explanation:
+        "We are about to show you a list of 14 bass players. We would like you to tell us the name of the band of which they were members, with which they had their greates chart success.",
       possibleAnswers: [
         {
           clue: "Sting",
@@ -565,6 +565,42 @@ const questions: { [key in GameRound]: Question[] } = {
           clue: "Flea",
           answerText: "Red Hot Chili Peppers",
           points: 12,
+        },
+      ],
+    },
+    {
+      questionText: "Islands of the world",
+      explanation: "Here is a list of clues to well-known islands around the worlds. We would like you to tell us the name of the island described by each clue please. In the case of islands which are part of a country, we are looking for the name of the island itself rather than the name of the country, although some of the islands may be countries in their own right.",
+      possibleAnswers: [
+        {
+          clue: "French island, birthplace of Napoleon Bonaparte",
+          answerText: "Corsica",
+          points: 18,
+        },
+        {
+          clue: "Island which is divided between Indonesia, Malaysia and Brunei",
+          answerText: "Borneo",
+          points: 3,
+        },
+        {
+          clue: "Largest island in the Mediterranean located at the tip of Italy",
+          answerText: "Sicily",
+          points: 35,
+        },
+        {
+          clue: "Large island country near Africa, home to many species of lemur",
+          answerText: "Madagascar",
+          points: 21,
+        },
+        {
+          clue: "One of the world's largest islands, part of the Kingdom of Denmark",
+          answerText: "Greenland",
+          points: 13,
+        },
+        {
+          clue: "English name for the island of 'Rapa Nui', famed for its giant stone statues",
+          answerText: "Easter Island",
+          points: 28,
         },
       ],
     }
