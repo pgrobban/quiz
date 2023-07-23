@@ -150,6 +150,27 @@ const questions: { [key in GameRound]: Question[] } = {
         { answerText: "Twisted Sister", points: 10 },
       ],
     },
+    {
+      questionText: "Surnames of presidents that end in 'N'",
+      explanation:
+        "We are looking for surnames of any US Presidents which end in the letter 'n', prior to Barack Obama. Where more than one President shared the same surname, that surname will only be accepted once..",
+      possibleAnswers: [
+        { answerText: "Buchanan", points: 1 },
+        { answerText: "Clinton", points: 47 },
+        { answerText: "Harrison", points: 1 },
+        { answerText: "Jackson", points: 5 },
+        { answerText: "Jefferson", points: 15 },
+        { answerText: "Johnson", points: 18 },
+        { answerText: "Lincoln", points: 48 },
+        { answerText: "Madison", points: 1 },
+        { answerText: "Nixon", points: 75 },
+        { answerText: "Reagan", points: 33 },
+        { answerText: "Truman", points: 10 },
+        { answerText: "Van Buren", points: 0 },
+        { answerText: "Washington", points: 30 },
+        { answerText: "Wilson", points: 7 }
+      ],
+    },
   ],
   clues_and_answers: [
     {
