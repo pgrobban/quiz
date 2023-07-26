@@ -684,6 +684,42 @@ const questions: { [key in GameRound]: Question[] } = {
           points: 28,
         },
       ],
+    },
+    {
+      questionText: "Cover versions",
+      explanation: "We are going to show you twelve pairs of artists. The second one of each pair has reached the Top 40 in the UK with a cover version of the first artist's song. We would like you to give us the name of the song. We have given you the year in which the cover version charted in brackets.",
+      possibleAnswers: [
+        {
+          clue: "Paul McCartney and Wings/Guns N' Roses (1991)",
+          answerText: "Live and Let Die",
+          points: 13,
+        },
+        {
+          clue: "The Bee Gees/Take That (1996)",
+          answerText: "How Deep Is Your Love",
+          points: 21,
+        },
+        {
+          clue: "Bob Marley/Eric Clapton (1974)",
+          answerText: "I Shot the Sheriff",
+          points: 13,
+        },
+        {
+          clue: "The Beatles/Joe Cocker (1968)",
+          answerText: "With a Little Help From My Friends",
+          points: 26,
+        },
+        {
+          clue: "Otis Redding/Aretha Franklin (1967)",
+          answerText: "Respect",
+          points: 6,
+        },
+        {
+          clue: "Neil Diamond/UB40 (1983)",
+          answerText: "Red Red Wine",
+          points: 25,
+        },
+      ],
     }
   ],
   linked_category: [
