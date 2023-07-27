@@ -720,6 +720,42 @@ const questions: { [key in GameRound]: Question[] } = {
           points: 25,
         },
       ],
+    },
+    {
+      questionText: "Celebrities with double initials",
+      explanation: "We are going to show you clues about actors and musicians, who all have first names and surnames that start with the same letter. We would like you to use the facts to try and name the celebrities. We want the names the celebrities are most commonly known by.",
+      possibleAnswers: [
+        {
+          clue: "Model, married Richard Gere in 1991",
+          answerText: "Cindy Crawford",
+          points: 17,
+        },
+        {
+          clue: "Born in Tennessee, sang 'Simply the Best' in 1989",
+          answerText: "Tina Turner",
+          points: 60,
+        },
+        {
+          clue: "One-sixth of the 'Friends' main cast",
+          answerText: "Courtney Cox",
+          points: 20,
+        },
+        {
+          clue: "Played Juliet in the 2003 film, 'Love Actually'",
+          answerText: "Keira Knightley",
+          points: 7,
+        },
+        {
+          clue: "Creator, writer and star of the Austin Powers films",
+          answerText: "Mike Myers",
+          points: 38,
+        },
+        {
+          clue: "Born 1986, star of 'Mean Girls'",
+          answerText: "Lindsay Lohan",
+          points: 21,
+        },
+      ],
     }
   ],
   linked_category: [
