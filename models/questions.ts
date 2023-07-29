@@ -168,7 +168,7 @@ const questions: { [key in GameRound]: Question[] } = {
         { answerText: "Truman", points: 10 },
         { answerText: "Van Buren", points: 0 },
         { answerText: "Washington", points: 30 },
-        { answerText: "Wilson", points: 7 }
+        { answerText: "Wilson", points: 7 },
       ],
     },
     {
@@ -229,6 +229,50 @@ const questions: { [key in GameRound]: Question[] } = {
         { answerText: "Winterberry", points: 0 },
         { answerText: "Wolfberry", points: 3 },
         { answerText: "Youngberry", points: 0 },
+      ],
+    },
+    {
+      questionText: "Cold War Leaders",
+      explanation:
+        "We are going to show you five countries (along with the title of their leader) - we would like you to name any leader of any of these countries throughout the Cold War. For avoidance of doubt, the 'Cold War' took place between 1946-1989 (inclusive). We will not accept interim leaders or leaders of provisional governments. USA (president). UK (Prime Minister). West Germany (Chancellor). USSR (Chairman or First Secretary of the Communist Party). France (President)",
+      possibleAnswers: [
+        { answerText: "Charles de Gaulle", points: 41 },
+        { answerText: "François Mitterrand", points: 12 },
+        { answerText: "Georges Pompidou", points: 5 },
+        { answerText: "René Coty", points: 0 },
+        { answerText: "Valéry Giscard d’Estaing", points: 5 },
+        { answerText: "Vincent Auriol", points: 0 },
+        { answerText: "Alec Douglas-Home", points: 10 },
+        { answerText: "Anthony Eden", points: 21 },
+        { answerText: "Clement Attlee", points: 20 },
+        { answerText: "Edward Heath", points: 25 },
+        { answerText: "Harold Macmillan", points: 29 },
+        { answerText: "Harold Wilson", points: 40 },
+        { answerText: "James Callaghan", points: 20 },
+        { answerText: "Margaret Thatcher", points: 46 },
+        { answerText: "Winston Churchill", points: 50 },
+        { answerText: "Dwight D. Eisenhower", points: 16 },
+        { answerText: "George H.W. Bush", points: 12 },
+        { answerText: "Gerald Ford", points: 4 },
+        { answerText: "Harry S. Truman", points: 8 },
+        { answerText: "Jimmy Carter", points: 12 },
+        { answerText: "John F. Kennedy", points: 37 },
+        { answerText: "Lyndon B. Johnson", points: 11 },
+        { answerText: "Richard Nixon", points: 19 },
+        { answerText: "Ronald Reagan", points: 18 },
+        { answerText: "Georgy Malenkov", points: 0 },
+        { answerText: "Joseph Stalin", points: 23 },
+        { answerText: "Konstantin Chernenko", points: 1 },
+        { answerText: "Leonid Brezhnev", points: 10 },
+        { answerText: "Mikhail Gorbachev", points: 12 },
+        { answerText: "Nikita Khruschev", points: 29 },
+        { answerText: "Yuri Andropov", points: 8 },
+        { answerText: "Helmut Kohl", points: 11 },
+        { answerText: "Helmut Schmidt", points: 2 },
+        { answerText: "Konrad Adenauer", points: 11 },
+        { answerText: "Kurt Georg Kiesinger", points: 0 },
+        { answerText: "Ludwig Erhard", points: 0 },
+        { answerText: "Willy Brandt", points: 14 },
       ],
     },
   ],
@@ -651,7 +695,8 @@ const questions: { [key in GameRound]: Question[] } = {
     },
     {
       questionText: "Islands of the world",
-      explanation: "Here is a list of clues to well-known islands around the worlds. We would like you to tell us the name of the island described by each clue please. In the case of islands which are part of a country, we are looking for the name of the island itself rather than the name of the country, although some of the islands may be countries in their own right.",
+      explanation:
+        "Here is a list of clues to well-known islands around the worlds. We would like you to tell us the name of the island described by each clue please. In the case of islands which are part of a country, we are looking for the name of the island itself rather than the name of the country, although some of the islands may be countries in their own right.",
       possibleAnswers: [
         {
           clue: "French island, birthplace of Napoleon Bonaparte",
@@ -687,7 +732,8 @@ const questions: { [key in GameRound]: Question[] } = {
     },
     {
       questionText: "Cover versions",
-      explanation: "We are going to show you twelve pairs of artists. The second one of each pair has reached the Top 40 in the UK with a cover version of the first artist's song. We would like you to give us the name of the song. We have given you the year in which the cover version charted in brackets.",
+      explanation:
+        "We are going to show you twelve pairs of artists. The second one of each pair has reached the Top 40 in the UK with a cover version of the first artist's song. We would like you to give us the name of the song. We have given you the year in which the cover version charted in brackets.",
       possibleAnswers: [
         {
           clue: "Paul McCartney and Wings/Guns N' Roses (1991)",
@@ -723,7 +769,8 @@ const questions: { [key in GameRound]: Question[] } = {
     },
     {
       questionText: "Celebrities with double initials",
-      explanation: "We are going to show you clues about actors and musicians, who all have first names and surnames that start with the same letter. We would like you to use the facts to try and name the celebrities. We want the names the celebrities are most commonly known by.",
+      explanation:
+        "We are going to show you clues about actors and musicians, who all have first names and surnames that start with the same letter. We would like you to use the facts to try and name the celebrities. We want the names the celebrities are most commonly known by.",
       possibleAnswers: [
         {
           clue: "Model, married Richard Gere in 1991",
@@ -756,7 +803,7 @@ const questions: { [key in GameRound]: Question[] } = {
           points: 21,
         },
       ],
-    }
+    },
   ],
   linked_category: [
     {
