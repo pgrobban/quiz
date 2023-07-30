@@ -4,7 +4,7 @@ const questions: { [key in GameRound]: Question[] } = {
   "open-ended": [
     {
       questionText: "US states ending in 'A'",
-      possibleAnswers: [
+      acceptableAnswers: [
         { answerText: "Alabama", points: 53 },
         { answerText: "Alaska", points: 40 },
         { answerText: "Arizona", points: 35 },
@@ -30,14 +30,14 @@ const questions: { [key in GameRound]: Question[] } = {
     },
     {
       questionText: "Countries finishing last in Eurovision Song Contest",
-      possibleAnswers: [
+      acceptableAnswers: [
         { answerText: "A", points: 70 },
         { answerText: "B", points: 23 },
       ],
     },
     {
       questionText: "Capital cities of Europe",
-      possibleAnswers: [
+      acceptableAnswers: [
         { answerText: "Amsterdam", points: 37 },
         { answerText: "Andorra La Vella", points: 1 },
         { answerText: "Ankara", points: 1 },
@@ -64,17 +64,19 @@ const questions: { [key in GameRound]: Question[] } = {
       questionText:
         "Any country (other than UK) that uses any of the following currencies: franc, peso, pound, rupee, shilling",
       explanation: "",
-      possibleAnswers: [
-        { answerText: "Benin", points: 0 },
-        { answerText: "Burkina Faso", points: 0 },
-        { answerText: "Burundi", points: 0 },
-        { answerText: "Cameroon", points: 0 },
-        { answerText: "Central African Republic", points: 0 },
-      ],
+      acceptableAnswers: {
+        Franc: [
+          { answerText: "Benin", points: 0 },
+          { answerText: "Burkina Faso", points: 0 },
+          { answerText: "Burundi", points: 0 },
+          { answerText: "Cameroon", points: 0 },
+          { answerText: "Central African Republic", points: 0 },
+        ],
+      },
     },
     {
       questionText: "Countries that won Eurovision Song Contest",
-      possibleAnswers: [
+      acceptableAnswers: [
         { answerText: "Austria", points: 1 },
         { answerText: "Azerbaijan", points: 4 },
         { answerText: "Belgium", points: 1 },
@@ -84,7 +86,7 @@ const questions: { [key in GameRound]: Question[] } = {
       questionText: "Words ending with -oo",
       explanation:
         "We are looking for any word that has its own entry in the 'Oxford Dictionary of English' ending with the letters 'oo'. As usual, we will not accept acronyms, proper nouns, trademarks, or hyphenated words. Nor will we accept any words marked as being 'offensive' by the dictionary.",
-      possibleAnswers: [
+      acceptableAnswers: [
         { answerText: "Aloo", points: 0 },
         { answerText: "Ballyhoo", points: 0 },
         { answerText: "Bamboo", points: 0 },
@@ -101,7 +103,7 @@ const questions: { [key in GameRound]: Question[] } = {
       questionText: "US states smaller than England",
       explanation:
         "We are looking for any of the twenty-two US states that are smaller than England in terms of total land area. We are only counting land area, so are not including water areas a state may possess including inland, coastal, Great Lakes, and territorial waters. To give you an idea, the smallest state that is larger than the total land area of England is Alabama, so we're essentially looking for any US state smaller than Alabama.",
-      possibleAnswers: [
+        acceptableAnswers: [
         { answerText: "Connecticut", points: 15 },
         { answerText: "Delaware", points: 9 },
         { answerText: "Hawaii", points: 30 },
@@ -129,7 +131,7 @@ const questions: { [key in GameRound]: Question[] } = {
       questionText: "Sister acts",
       explanation:
         "We are looking for act which is either a group or duo that featured the word 'sister' or 'sisters' and has had a UK Top 40 hit up to the start of May 2012.",
-      possibleAnswers: [
+        acceptableAnswers: [
         { answerText: "Beverley Sisters", points: 28 },
         { answerText: "De Castro Sisters", points: 0 },
         { answerText: "Hannah & Her Sisters", points: 0 },
@@ -154,7 +156,7 @@ const questions: { [key in GameRound]: Question[] } = {
       questionText: "Surnames of presidents that end in 'N'",
       explanation:
         "We are looking for surnames of any US Presidents which end in the letter 'n', prior to Barack Obama. Where more than one President shared the same surname, that surname will only be accepted once..",
-      possibleAnswers: [
+        acceptableAnswers: [
         { answerText: "Buchanan", points: 1 },
         { answerText: "Clinton", points: 47 },
         { answerText: "Harrison", points: 1 },
@@ -175,7 +177,7 @@ const questions: { [key in GameRound]: Question[] } = {
       questionText: "Berries",
       explanation:
         "We are looking for the names of any plant, or fruit of a plant, that has its own entry in the Oxford Dictionary of English, whose name ends in the letters 'B-E-R-R-Y'. We are only looking for one-word answers. So we will not accept 'Goji berry' for example. The berries do not have to be edible ones. Obviously we will not be accepting 'berry' itself.",
-      possibleAnswers: [
+        acceptableAnswers: [
         { answerText: "Baneberry", points: 0 },
         { answerText: "Barberry", points: 1 },
         { answerText: "Bayberry", points: 0 },
@@ -235,51 +237,62 @@ const questions: { [key in GameRound]: Question[] } = {
       questionText: "Cold War Leaders",
       explanation:
         "We are going to show you five countries (along with the title of their leader) - we would like you to name any leader of any of these countries throughout the Cold War. For avoidance of doubt, the 'Cold War' took place between 1946-1989 (inclusive). We will not accept interim leaders or leaders of provisional governments. USA (president). UK (Prime Minister). West Germany (Chancellor). USSR (Chairman or First Secretary of the Communist Party). France (President)",
-      possibleAnswers: [
-        { answerText: "Charles de Gaulle", points: 41 },
-        { answerText: "François Mitterrand", points: 12 },
-        { answerText: "Georges Pompidou", points: 5 },
-        { answerText: "René Coty", points: 0 },
-        { answerText: "Valéry Giscard d’Estaing", points: 5 },
-        { answerText: "Vincent Auriol", points: 0 },
-        { answerText: "Alec Douglas-Home", points: 10 },
-        { answerText: "Anthony Eden", points: 21 },
-        { answerText: "Clement Attlee", points: 20 },
-        { answerText: "Edward Heath", points: 25 },
-        { answerText: "Harold Macmillan", points: 29 },
-        { answerText: "Harold Wilson", points: 40 },
-        { answerText: "James Callaghan", points: 20 },
-        { answerText: "Margaret Thatcher", points: 46 },
-        { answerText: "Winston Churchill", points: 50 },
-        { answerText: "Dwight D. Eisenhower", points: 16 },
-        { answerText: "George H.W. Bush", points: 12 },
-        { answerText: "Gerald Ford", points: 4 },
-        { answerText: "Harry S. Truman", points: 8 },
-        { answerText: "Jimmy Carter", points: 12 },
-        { answerText: "John F. Kennedy", points: 37 },
-        { answerText: "Lyndon B. Johnson", points: 11 },
-        { answerText: "Richard Nixon", points: 19 },
-        { answerText: "Ronald Reagan", points: 18 },
-        { answerText: "Georgy Malenkov", points: 0 },
-        { answerText: "Joseph Stalin", points: 23 },
-        { answerText: "Konstantin Chernenko", points: 1 },
-        { answerText: "Leonid Brezhnev", points: 10 },
-        { answerText: "Mikhail Gorbachev", points: 12 },
-        { answerText: "Nikita Khruschev", points: 29 },
-        { answerText: "Yuri Andropov", points: 8 },
-        { answerText: "Helmut Kohl", points: 11 },
-        { answerText: "Helmut Schmidt", points: 2 },
-        { answerText: "Konrad Adenauer", points: 11 },
-        { answerText: "Kurt Georg Kiesinger", points: 0 },
-        { answerText: "Ludwig Erhard", points: 0 },
-        { answerText: "Willy Brandt", points: 14 },
-      ],
+        acceptableAnswers: {
+        "France (President)": [
+          { answerText: "Charles de Gaulle", points: 41 },
+          { answerText: "François Mitterrand", points: 12 },
+          { answerText: "Georges Pompidou", points: 5 },
+          { answerText: "René Coty", points: 0 },
+          { answerText: "Valéry Giscard d’Estaing", points: 5 },
+          { answerText: "Vincent Auriol", points: 0 },
+        ],
+        "UK (Prime Minister)": [
+          { answerText: "Alec Douglas-Home", points: 10 },
+          { answerText: "Anthony Eden", points: 21 },
+          { answerText: "Clement Attlee", points: 20 },
+          { answerText: "Edward Heath", points: 25 },
+          { answerText: "Harold Macmillan", points: 29 },
+          { answerText: "Harold Wilson", points: 40 },
+          { answerText: "James Callaghan", points: 20 },
+          { answerText: "Margaret Thatcher", points: 46 },
+          { answerText: "Winston Churchill", points: 50 },
+        ],
+        "USA (President)": [
+          { answerText: "Dwight D. Eisenhower", points: 16 },
+          { answerText: "George H.W. Bush", points: 12 },
+          { answerText: "Gerald Ford", points: 4 },
+          { answerText: "Harry S. Truman", points: 8 },
+          { answerText: "Jimmy Carter", points: 12 },
+          { answerText: "John F. Kennedy", points: 37 },
+          { answerText: "Lyndon B. Johnson", points: 11 },
+          { answerText: "Richard Nixon", points: 19 },
+          { answerText: "Ronald Reagan", points: 18 },
+        ],
+        "USSR (General Secretary of the central committee of the Communist Party":
+          [
+            { answerText: "Georgy Malenkov", points: 0 },
+            { answerText: "Joseph Stalin", points: 23 },
+            { answerText: "Konstantin Chernenko", points: 1 },
+            { answerText: "Leonid Brezhnev", points: 10 },
+            { answerText: "Mikhail Gorbachev", points: 12 },
+            { answerText: "Nikita Khruschev", points: 29 },
+            { answerText: "Yuri Andropov", points: 8 },
+          ],
+        "West Germany (Chancellor)": [
+          { answerText: "Helmut Kohl", points: 11 },
+          { answerText: "Helmut Schmidt", points: 2 },
+          { answerText: "Konrad Adenauer", points: 11 },
+          { answerText: "Kurt Georg Kiesinger", points: 0 },
+          { answerText: "Ludwig Erhard", points: 0 },
+          { answerText: "Willy Brandt", points: 14 },
+        ],
+      },
     },
   ],
   clues_and_answers: [
     {
       questionText: "Monkeys",
-      possibleAnswers: [
+      acceptableAnswers: [
         {
           clue: "In slang terminology, a 'monkey' refers to this amount of sterling",
           answerText: "£500",
@@ -309,7 +322,7 @@ const questions: { [key in GameRound]: Question[] } = {
     },
     {
       questionText: "Famous Richards",
-      possibleAnswers: [
+      acceptableAnswers: [
         {
           clue: "Author of 'The God Delusion'",
           answerText: "Richard Dawkins",
@@ -344,7 +357,7 @@ const questions: { [key in GameRound]: Question[] } = {
     },
     {
       questionText: "Milk",
-      possibleAnswers: [
+      acceptableAnswers: [
         {
           clue: "Egyptian queen famously said to have taken regular baths in donkey milk",
           answerText: "Cleopatra",
@@ -374,7 +387,7 @@ const questions: { [key in GameRound]: Question[] } = {
     },
     {
       questionText: "Philosophers and their first names",
-      possibleAnswers: [
+      acceptableAnswers: [
         {
           clue: "N. Chomsky (1928)",
           answerText: "Noah",
@@ -409,7 +422,7 @@ const questions: { [key in GameRound]: Question[] } = {
     },
     {
       questionText: "Philosophers and their first names (II)",
-      possibleAnswers: [
+      acceptableAnswers: [
         {
           clue: "J-P. Sartre (1905)",
           answerText: "Jean-Paul",
@@ -446,7 +459,7 @@ const questions: { [key in GameRound]: Question[] } = {
       questionText: "People named Alex",
       explanation:
         "We are looking for famous people, past and present - each person commonly known by a first name that could be shortened to 'Alex'. We would like you to tell us who they are (full name).",
-      possibleAnswers: [
+      acceptableAnswers: [
         {
           clue: "Widely credited as the 'inventor' of the telephone",
           answerText: "Alexander Graham Bell",
@@ -478,7 +491,7 @@ const questions: { [key in GameRound]: Question[] } = {
       questionText: "Wines and their regions",
       explanation:
         "The following are all wines or wine regions. We want to know the name of the countries with which they are the most associated.",
-      possibleAnswers: [
+      acceptableAnswers: [
         {
           clue: "Champagne",
           answerText: "France",
@@ -515,7 +528,7 @@ const questions: { [key in GameRound]: Question[] } = {
       questionText: "Wines and their regions (II)",
       explanation:
         "The following are all wines or wine regions. We want to know the name of the countries with which they are the most associated.",
-      possibleAnswers: [
+      acceptableAnswers: [
         {
           clue: "Sancerre",
           answerText: "France",
@@ -552,7 +565,7 @@ const questions: { [key in GameRound]: Question[] } = {
       questionText: "Studio albums by The Beatles",
       explanation:
         "We will show you five sets of initials that represent titles of some studio albums released by The Beatles. We would like you to tell us what the initials stand for.",
-      possibleAnswers: [
+      acceptableAnswers: [
         {
           clue: "R",
           answerText: "Revolver",
@@ -583,7 +596,7 @@ const questions: { [key in GameRound]: Question[] } = {
     {
       questionText: "Literary villains and their works of fiction",
       explanation: "In which novel or play do these villains feature?",
-      possibleAnswers: [
+      acceptableAnswers: [
         {
           clue: "Mrs. Davies",
           answerText: "Rebecca",
@@ -620,7 +633,7 @@ const questions: { [key in GameRound]: Question[] } = {
       questionText: "Famous bass players",
       explanation:
         "We are about to show you a list of 14 bass players. We would like you to tell us the name of the band of which they were members, with which they had their greates chart success.",
-      possibleAnswers: [
+      acceptableAnswers: [
         {
           clue: "Sting",
           answerText: "The Police",
@@ -655,7 +668,7 @@ const questions: { [key in GameRound]: Question[] } = {
     },
     {
       questionText: "Famous bass players (II)",
-      possibleAnswers: [
+      acceptableAnswers: [
         {
           clue: "Geddy Lee",
           answerText: "Rush",
@@ -697,7 +710,7 @@ const questions: { [key in GameRound]: Question[] } = {
       questionText: "Islands of the world",
       explanation:
         "Here is a list of clues to well-known islands around the worlds. We would like you to tell us the name of the island described by each clue please. In the case of islands which are part of a country, we are looking for the name of the island itself rather than the name of the country, although some of the islands may be countries in their own right.",
-      possibleAnswers: [
+      acceptableAnswers: [
         {
           clue: "French island, birthplace of Napoleon Bonaparte",
           answerText: "Corsica",
@@ -734,7 +747,7 @@ const questions: { [key in GameRound]: Question[] } = {
       questionText: "Cover versions",
       explanation:
         "We are going to show you twelve pairs of artists. The second one of each pair has reached the Top 40 in the UK with a cover version of the first artist's song. We would like you to give us the name of the song. We have given you the year in which the cover version charted in brackets.",
-      possibleAnswers: [
+      acceptableAnswers: [
         {
           clue: "Paul McCartney and Wings/Guns N' Roses (1991)",
           answerText: "Live and Let Die",
@@ -771,7 +784,7 @@ const questions: { [key in GameRound]: Question[] } = {
       questionText: "Celebrities with double initials",
       explanation:
         "We are going to show you clues about actors and musicians, who all have first names and surnames that start with the same letter. We would like you to use the facts to try and name the celebrities. We want the names the celebrities are most commonly known by.",
-      possibleAnswers: [
+      acceptableAnswers: [
         {
           clue: "Model, married Richard Gere in 1991",
           answerText: "Cindy Crawford",
@@ -804,11 +817,47 @@ const questions: { [key in GameRound]: Question[] } = {
         },
       ],
     },
+    {
+      questionText: "UK number one albums with one-word titles",
+      explanation: "We are about to show you twelve UK number one albums along with the year in which they first reached number one -- we would like you to tell us who released them please.",
+      acceptableAnswers: [
+        {
+          clue: "Arrival (1997)",
+          answerText: "ABBA",
+          points: 12,
+        },
+        {
+          clue: "Rudebox (2006)",
+          answerText: "Robbie Williams",
+          points: 16,
+        },
+        {
+          clue: "Lovesexy (1988)",
+          answerText: "Prince",
+          points: 6,
+        },
+        {
+          clue: "Graceland (1986)",
+          answerText: "Paul Simon",
+          points: 28,
+        },
+        {
+          clue: "Paranoid (1970)",
+          answerText: "Black Sabbath",
+          points: 10,
+        },
+        {
+          clue: "Rumours (1978)",
+          answerText: "Fleetwood Mac",
+          points: 31,
+        },
+      ],
+    },
   ],
   linked_category: [
     {
       questionText: "LA1",
-      possibleAnswers: [
+      acceptableAnswers: [
         { answerText: "A", points: 70 },
         { answerText: "B", points: 23 },
       ],
@@ -817,7 +866,7 @@ const questions: { [key in GameRound]: Question[] } = {
   part_identification: [
     {
       questionText: "PI1",
-      possibleAnswers: [
+      acceptableAnswers: [
         { answerText: "A", points: 70 },
         { answerText: "B", points: 23 },
       ],
@@ -826,7 +875,7 @@ const questions: { [key in GameRound]: Question[] } = {
   possible_answers: [
     {
       questionText: "Picasso Paintings",
-      possibleAnswers: [
+      acceptableAnswers: [
         {
           answerText: "Cervantes",
           points: 100,
@@ -857,7 +906,7 @@ const questions: { [key in GameRound]: Question[] } = {
       questionText: "Fictional Bears",
       explanation:
         "The correct answers here are all fictional bears featured in books, comics, films and television. And all the incorrect answers are not bears at all.",
-      possibleAnswers: [
+      acceptableAnswers: [
         {
           answerText: "Fozzie",
           points: 3,
@@ -892,7 +941,7 @@ const questions: { [key in GameRound]: Question[] } = {
   fill_in_blank: [
     {
       questionText: "'Best Original Song' Oscar winners",
-      possibleAnswers: [
+      acceptableAnswers: [
         {
           clue: "A Whole New __",
           answerText: "A Whole New World",
@@ -922,7 +971,7 @@ const questions: { [key in GameRound]: Question[] } = {
     },
     {
       questionText: "Space abbreviations",
-      possibleAnswers: [
+      acceptableAnswers: [
         {
           clue: "Low __ Orbit",
           answerText: "Low Earth Orbit",

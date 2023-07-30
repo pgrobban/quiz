@@ -30,24 +30,34 @@ export interface TeamAndPoints {
   points: number;
 }
 
-interface PossibleAnswer {
+interface AcceptableAnswer {
   clue?: string;
   answerText: string;
   points: number;
 };
 
+type GroupedAcceptableAnswers = { [key: string]: AcceptableAnswer[] };
+export type GroupedAcceptableAnswersInGame = { [key: string]: AcceptableAnswerInGame[] };
+
+export type AcceptableOrGroupedAcceptableAnswers = AcceptableAnswer[] | GroupedAcceptableAnswers;
+export type AcceptableOrGroupedAcceptableAnswersInGame = AcceptableAnswerInGame[] | GroupedAcceptableAnswersInGame;
+
+export function isGroupedAcceptableAnswers(possibleAnswers: AcceptableOrGroupedAcceptableAnswers): possibleAnswers is GroupedAcceptableAnswers {
+  return !Array.isArray(possibleAnswers);
+}
+
 export interface Question {
   questionText: string;
   explanation?: string;
-  possibleAnswers: PossibleAnswer[];
+  acceptableAnswers: AcceptableOrGroupedAcceptableAnswers;
 }
 
-export type AnswersInGame = (PossibleAnswer & {
+export type AcceptableAnswerInGame = (AcceptableAnswer & {
   answered: boolean;
-})[];
+});
 
 export interface QuestionInGame extends Question {
-  possibleAnswers: AnswersInGame;
+  acceptableAnswers: AcceptableOrGroupedAcceptableAnswersInGame;
 }
 
 export interface Game {

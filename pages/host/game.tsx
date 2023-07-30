@@ -6,6 +6,7 @@ import {
   NON_VERIFIED_ANSWER,
   NO_OR_INVALID_ANSWER,
   QuestionStatus,
+  isGroupedAcceptableAnswers,
 } from "../../models/types";
 import styles from "../../styles/Home.module.css";
 import QuestionPicker from "./QuestionPicker";
@@ -19,6 +20,7 @@ function Game() {
   }
 
   const { questionStatus, round, currentQuestion } = gameState;
+  const { acceptableAnswers } = currentQuestion?.question || {};
 
   return (
     <>
@@ -50,17 +52,23 @@ function Game() {
                   )}
 
                   {questionStatus === QuestionStatus.waitingForTeamAnswer &&
-                    currentQuestion.orderedTeamsLeftToAnswer && (
+                    currentQuestion.orderedTeamsLeftToAnswer &&
+                    acceptableAnswers && (
                       <>
                         Requesting answer from{" "}
                         {currentQuestion.orderedTeamsLeftToAnswer[0]}
                         <>
                           <h4>Verified accepted answers</h4>
-                          <div>
-                            {currentQuestion.question.possibleAnswers.map(
-                              (possibleAnswer) => {
+                        <div>
+                          {
+                            isGroupedAcceptableAnswers(acceptableAnswers) && (
+                              <></>
+                            )
+                          }
+                    {!isGroupedAcceptableAnswers(acceptableAnswers) && acceptableAnswers.map(
+                              (acceptableAnswer) => {
                                 const { answerText, points, answered } =
-                                  possibleAnswer;
+                                  acceptableAnswer;
                                 return (
                                   <Button
                                     key={answerText}
@@ -80,6 +88,7 @@ function Game() {
                                 );
                               }
                             )}
+                           
                           </div>
 
                           <Button

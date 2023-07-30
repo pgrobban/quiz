@@ -1,7 +1,10 @@
+import { AcceptableOrGroupedAcceptableAnswersInGame, GroupedAcceptableAnswersInGame } from './../models/types';
 import { orderBy, shuffle } from "lodash";
 import { v4 as uuid } from "uuid";
 import questions from "../models/questions";
 import {
+  AcceptableAnswerInGame,
+  AcceptableOrGroupedAcceptableAnswers,
   Game,
   GameRound,
   GameStatus,
@@ -9,7 +12,9 @@ import {
   NO_OR_INVALID_ANSWER,
   QuestionStatus,
   TeamAndPoints,
+  isGroupedAcceptableAnswers,
 } from "../models/types";
+import { findAcceptableAnswer } from './helpers';
 
 const NUMBER_OF_TURNS_FOR_ROUND: Record<GameRound, number> = {
   [GameRound.openEnded]: 3,
@@ -17,8 +22,8 @@ const NUMBER_OF_TURNS_FOR_ROUND: Record<GameRound, number> = {
   [GameRound.fillInBlank]: 3,
   [GameRound.linkedCategories]: 3,
   [GameRound.partIdentification]: 3,
-  [GameRound.possibleAnswers]: 3
-}
+  [GameRound.possibleAnswers]: 3,
+};
 
 const NUMBER_OF_QUESTIONS_FOR_ROUND: Record<GameRound, number> = {
   [GameRound.openEnded]: 3,
@@ -26,8 +31,8 @@ const NUMBER_OF_QUESTIONS_FOR_ROUND: Record<GameRound, number> = {
   [GameRound.fillInBlank]: 3,
   [GameRound.linkedCategories]: 3,
   [GameRound.partIdentification]: 3,
-  [GameRound.possibleAnswers]: 3
-}
+  [GameRound.possibleAnswers]: 3,
+};
 
 export default class GameHandler {
   private games: Game[];
@@ -75,7 +80,7 @@ export default class GameHandler {
   requestSetActiveRound(gameId: string, gameRound: GameRound) {
     const game = this.getGameById(gameId);
     if (game.gameStatus !== GameStatus.inProgress) {
-      throw new Error("*** requstSetActiveRound Assertion error");
+      throw new Error("*** requestSetActiveRound Assertion error");
     }
 
     game.round = gameRound;
@@ -83,8 +88,27 @@ export default class GameHandler {
     return game;
   }
 
+  private getAcceptableAnswersInGame(
+    acceptableAnswers: AcceptableOrGroupedAcceptableAnswers
+  ): AcceptableOrGroupedAcceptableAnswersInGame {
+    if (isGroupedAcceptableAnswers(acceptableAnswers)) {
+      const result: GroupedAcceptableAnswersInGame = {};
+      Object.keys(acceptableAnswers).forEach((key) => {
+        result[key] = acceptableAnswers[key].map((acceptableAnswer) => ({
+          ...acceptableAnswer,
+          answered: false,
+        }));
+      })
+      return result;
+    }
+    return acceptableAnswers.map((acceptableAnswer) => ({
+      ...acceptableAnswer,
+      answered: false,
+    }));
+  }
+
   requestSetActiveQuestion(gameId: string, questionText: string) {
-    console.log("*** requestSetActiveQuestion")
+    console.log("*** requestSetActiveQuestion");
     const game = this.getGameById(gameId);
     const { round, gameStatus } = game;
     if (gameStatus !== GameStatus.inProgress || !round) {
@@ -106,7 +130,9 @@ export default class GameHandler {
 
     const questionWithAnswerStatuses = {
       ...questionModel,
-      possibleAnswers: questionModel.possibleAnswers.map((answer) => ({...answer, answered: false })),
+      acceptableAnswers: this.getAcceptableAnswersInGame(
+        questionModel.acceptableAnswers
+      ),
     };
     game.currentQuestion = {
       question: questionWithAnswerStatuses,
@@ -114,7 +140,7 @@ export default class GameHandler {
         ? game.currentQuestion.questionInRound + 1
         : 1,
       answeredTeams: [],
-      turn: 0
+      turn: 0,
     };
     game.questionStatus = QuestionStatus.receivedQuestion;
     this.requestSetTurnNumber(game.id);
@@ -124,18 +150,23 @@ export default class GameHandler {
   requestSetTurnNumber(gameId: string) {
     const game = this.getGameById(gameId);
     const { round, gameStatus } = game;
-    if (gameStatus !== GameStatus.inProgress || !round || game.questionStatus !== QuestionStatus.receivedQuestion || !game.currentQuestion) {
+    if (
+      gameStatus !== GameStatus.inProgress ||
+      !round ||
+      game.questionStatus !== QuestionStatus.receivedQuestion ||
+      !game.currentQuestion
+    ) {
       throw new Error("*** requestSetTurnNumber Assertion error");
     }
 
     game.currentQuestion.turn++;
-    console.log("*** after requestSetTurnNumber", game)
+    console.log("*** after requestSetTurnNumber", game);
     return game;
   }
 
   requestTeamAnswer(gameId: string) {
     const game = this.getGameById(gameId);
-    console.log("*** in requestTeamAnswer", game)
+    console.log("*** in requestTeamAnswer", game);
 
     if (
       !game.currentQuestion ||
@@ -147,11 +178,15 @@ export default class GameHandler {
         QuestionStatus.waitingForTeamAnswer,
       ].includes(game.questionStatus)
     ) {
-      console.log("***", game)
+      console.log("***", game);
       throw new Error("requestTeamAnswer Assertion error");
     }
 
-    if (game.questionStatus === QuestionStatus.receivedQuestion && (!game.currentQuestion.lastAnswer || game.currentQuestion.orderedTeamsLeftToAnswer?.length === 0)) {
+    if (
+      game.questionStatus === QuestionStatus.receivedQuestion &&
+      (!game.currentQuestion.lastAnswer ||
+        game.currentQuestion.orderedTeamsLeftToAnswer?.length === 0)
+    ) {
       game.currentQuestion.orderedTeamsLeftToAnswer =
         this.getOrderedTeamsToAnswer(
           game.teamsAndPoints,
@@ -161,14 +196,14 @@ export default class GameHandler {
       game.currentQuestion.lastAnswer = undefined;
     } else {
       if (!game.currentQuestion.orderedTeamsLeftToAnswer) {
-        console.log("***", game)
+        console.log("***", game);
         throw new Error("requestTeamAnswer Assertion error");
       }
     }
 
     game.questionStatus = QuestionStatus.waitingForTeamAnswer;
 
-    console.log("*** after requestTeamAnswer", game)
+    console.log("*** after requestTeamAnswer", game);
     return game;
   }
 
@@ -202,12 +237,12 @@ export default class GameHandler {
     game.questionStatus = QuestionStatus.awardingPoints;
 
     if (![NON_VERIFIED_ANSWER, NO_OR_INVALID_ANSWER].includes(answerText)) {
-      const foundPossibleAnswer =
-        game.currentQuestion.question.possibleAnswers.find(
-          (possibleAnswer) => possibleAnswer.answerText === answerText
-        );
-      if (foundPossibleAnswer) {
-        foundPossibleAnswer.answered = true;
+      const foundAcceptableAnswer = findAcceptableAnswer(
+        game.currentQuestion.question.acceptableAnswers,
+        answerText
+      );
+      if (foundAcceptableAnswer) {
+        foundAcceptableAnswer.answered = true;
       } else {
         console.log(game);
         throw new Error("requestVerificationOfAnswer Assertion error");
@@ -224,7 +259,8 @@ export default class GameHandler {
       !game.currentQuestion ||
       !game.currentQuestion?.orderedTeamsLeftToAnswer ||
       !game.teamsAndPoints ||
-      game.questionStatus !== QuestionStatus.awardingPoints
+      game.questionStatus !== QuestionStatus.awardingPoints ||
+      !game.currentQuestion.lastAnswer
     ) {
       console.log(game);
       throw new Error("requestAddingOfScore Assertion error");
@@ -245,15 +281,11 @@ export default class GameHandler {
     } else if (lastAnswer === NON_VERIFIED_ANSWER) {
       // nothing
     } else {
-      const foundPossibleAnswer =
-        game.currentQuestion.question.possibleAnswers.find(
-          (possibleAnswer) => possibleAnswer.answerText === lastAnswer
-        );
-      if (!foundPossibleAnswer) {
-        throw new Error("requestVerificationOfAnswer Assertion error");
-      } else {
-        t.points += foundPossibleAnswer.points;
-      }
+      const foundAcceptableAnswer = findAcceptableAnswer(
+        game.currentQuestion.question.acceptableAnswers,
+        lastAnswer
+      );
+      t.points += foundAcceptableAnswer.points;
     }
 
     game.questionStatus = QuestionStatus.pointsAdded;
@@ -272,7 +304,7 @@ export default class GameHandler {
       console.log(game);
       throw new Error("requestContinueGame Assertion error");
     }
-    
+
     game.currentQuestion.answeredTeams.push(
       game.currentQuestion.orderedTeamsLeftToAnswer[0]
     );
@@ -291,7 +323,10 @@ export default class GameHandler {
     }
 
     game.currentQuestion.questionInRound++;
-    if (game.currentQuestion.questionInRound < NUMBER_OF_QUESTIONS_FOR_ROUND[game.round]) {
+    if (
+      game.currentQuestion.questionInRound <
+      NUMBER_OF_QUESTIONS_FOR_ROUND[game.round]
+    ) {
       game.questionStatus = QuestionStatus.waitingForQuestion;
     }
     return game;

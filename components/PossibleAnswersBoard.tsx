@@ -1,7 +1,7 @@
-import { AnswersInGame } from "../models/types";
+import { AcceptableAnswerInGame } from "../models/types";
 
 interface Props {
-  answersInGame: AnswersInGame;
+  answersInGame: AcceptableAnswerInGame[];
 }
 
 export default function PossibleAnswersBoard({ answersInGame }: Props) {
