@@ -13,7 +13,7 @@ function NewGame() {
 
   useEffect(() => {
     gameHandler.getActiveGame(); 
-  }, [])
+  }, [gameHandler])
 
   const updateTeamName = (index: number, newName: string) => {
     setTeamNames((teamNames) =>

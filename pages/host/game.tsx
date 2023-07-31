@@ -3,6 +3,7 @@ import ScoreList from "../../components/ScoreList";
 import withReconnect from "../../components/WithReconnect";
 import { useAppContext } from "../../controllers/AppWrapper";
 import {
+  AcceptableAnswerInGame,
   NON_VERIFIED_ANSWER,
   NO_OR_INVALID_ANSWER,
   QuestionStatus,
@@ -21,6 +22,35 @@ function Game() {
 
   const { questionStatus, round, currentQuestion } = gameState;
   const { acceptableAnswers } = currentQuestion?.question || {};
+
+  function getAcceptableAnswerButton(
+    answerText: string,
+    points: number,
+    answered: boolean
+  ) {
+    return (
+      <Button
+        key={answerText}
+        variant="contained"
+        color="primary"
+        style={{ margin: 10 }}
+        onClick={() => gameHandler.requestVerificationOfAnswer(answerText)}
+        disabled={answered}
+      >
+        {answerText}
+        <br />({points} pts)
+      </Button>
+    );
+  }
+
+  function getAcceptableAnswerButtons(
+    acceptableAnswers: AcceptableAnswerInGame[]
+  ) {
+    return acceptableAnswers.map((acceptableAnswer) => {
+      const { answerText, points, answered } = acceptableAnswer;
+      return getAcceptableAnswerButton(answerText, points, answered);
+    });
+  }
 
   return (
     <>
@@ -59,36 +89,23 @@ function Game() {
                         {currentQuestion.orderedTeamsLeftToAnswer[0]}
                         <>
                           <h4>Verified accepted answers</h4>
-                        <div>
-                          {
-                            isGroupedAcceptableAnswers(acceptableAnswers) && (
-                              <></>
-                            )
-                          }
-                    {!isGroupedAcceptableAnswers(acceptableAnswers) && acceptableAnswers.map(
-                              (acceptableAnswer) => {
-                                const { answerText, points, answered } =
-                                  acceptableAnswer;
-                                return (
-                                  <Button
-                                    key={answerText}
-                                    variant="contained"
-                                    color="primary"
-                                    style={{ margin: 10 }}
-                                    onClick={() =>
-                                      gameHandler.requestVerificationOfAnswer(
-                                        answerText
-                                      )
-                                    }
-                                    disabled={answered}
-                                  >
-                                    {answerText}
-                                    <br />({points} pts)
-                                  </Button>
-                                );
-                              }
+                          <div>
+                            {isGroupedAcceptableAnswers(acceptableAnswers) && (
+                              <>
+                                {Object.keys(acceptableAnswers).map((key) => {
+                                  return (
+                                    <>
+                                      <h3>{key}</h3>
+                                      {getAcceptableAnswerButtons(
+                                        acceptableAnswers[key]
+                                      )}
+                                    </>
+                                  );
+                                })}
+                              </>
                             )}
-                           
+                            {!isGroupedAcceptableAnswers(acceptableAnswers) &&
+                              getAcceptableAnswerButtons(acceptableAnswers)}
                           </div>
 
                           <Button

@@ -2,7 +2,12 @@ import CountdownBar from "../../components/CountdownBar";
 import ScoreList from "../../components/ScoreList";
 import withReconnect from "../../components/WithReconnect";
 import { useAppContext } from "../../controllers/AppWrapper";
-import { GameRound, GameStatus, QuestionStatus } from "../../models/types";
+import {
+  GameRound,
+  GameStatus,
+  QuestionStatus,
+  isGroupedAcceptableAnswers,
+} from "../../models/types";
 import styles from "../../styles/Home.module.css";
 import { NON_VERIFIED_ANSWER, NO_OR_INVALID_ANSWER } from "../../models/types";
 import { useState } from "react";
@@ -19,12 +24,14 @@ function Game() {
     return null;
   }
 
+  const { acceptableAnswers } = currentQuestion?.question || {};
+
   const countdownTo = getScoreFromLatestAnswer(gameHandler);
 
   const onFinishedAnimatingScore = () => {
     setIsAnimatingScore(false);
     gameHandler.requestAddingScore();
-  }
+  };
 
   return (
     <>
@@ -48,7 +55,7 @@ function Game() {
                 QuestionStatus.waitingForTeamAnswer,
                 QuestionStatus.announcingResults,
                 QuestionStatus.awardingPoints,
-                QuestionStatus.pointsAdded
+                QuestionStatus.pointsAdded,
               ].includes(questionStatus) &&
               currentQuestion && (
                 <>
@@ -56,7 +63,11 @@ function Game() {
                   <h2>{currentQuestion.question.questionText}</h2>
                   <p>{currentQuestion.question.explanation}</p>
 
-                  {gameState.round === GameRound.cluesAndAnswers && <CluesAndAnswersBoard question={currentQuestion.question} />}
+                  {gameState.round === GameRound.cluesAndAnswers &&
+                    acceptableAnswers &&
+                    !isGroupedAcceptableAnswers(acceptableAnswers) && (
+                      <CluesAndAnswersBoard answersInGame={acceptableAnswers} />
+                    )}
 
                   {questionStatus === QuestionStatus.waitingForTeamAnswer &&
                     currentQuestion.orderedTeamsLeftToAnswer && (
@@ -77,7 +88,10 @@ function Game() {
                           ].includes(currentQuestion.lastAnswer) &&
                             currentQuestion.lastAnswer}
                         </h4>
-                        <CountdownBar to={countdownTo} callback={() => setIsAnimatingScore(true)} />
+                        <CountdownBar
+                          to={countdownTo}
+                          callback={() => setIsAnimatingScore(true)}
+                        />
                       </>
                     )}
                 </>
@@ -85,7 +99,10 @@ function Game() {
           </>
         )}
 
-        <ScoreList animate={isAnimatingScore} callback={() => onFinishedAnimatingScore()} />
+        <ScoreList
+          animate={isAnimatingScore}
+          callback={() => onFinishedAnimatingScore()}
+        />
       </main>
     </>
   );

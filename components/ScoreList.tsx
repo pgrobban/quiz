@@ -15,6 +15,10 @@ export default function ScoreList(props: Props) {
   const { gameHandler } = appContext;
   const activeGame = gameHandler.getActiveGame();
 
+  if (!activeGame) {
+    return null;
+  }
+
   const { teamsAndPoints, questionStatus, currentQuestion } = activeGame || {};
   const sortedTeamsAndPoints = teamsAndPoints?.sort(
     (teamA, teamB) => teamB.points - teamA.points
@@ -29,7 +33,7 @@ export default function ScoreList(props: Props) {
       currentQuestion?.orderedTeamsLeftToAnswer?.[0]) ||
     null;
 
-  const pointsToAdd = getScoreFromLatestAnswer(gameHandler);
+  const pointsToAdd = getScoreFromLatestAnswer(activeGame);
   const [pointsLeftToAdd, setPointsLeftToAdd] = useState(
     animate ? pointsToAdd : 0
   );

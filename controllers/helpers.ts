@@ -1,4 +1,4 @@
-import { AcceptableAnswerInGame, AcceptableOrGroupedAcceptableAnswers, NON_VERIFIED_ANSWER, NO_OR_INVALID_ANSWER, QuestionStatus, isGroupedAcceptableAnswers } from "../models/types";
+import { AcceptableAnswerInGame, AcceptableOrGroupedAcceptableAnswers, Game, NON_VERIFIED_ANSWER, NO_OR_INVALID_ANSWER, QuestionStatus, isGroupedAcceptableAnswers } from "../models/types";
 import ClientGameHandler from "./ClientGameHandler";
 
 export function findAcceptableAnswer(
@@ -25,9 +25,12 @@ export function findAcceptableAnswer(
   return ret;
 }
 
-export function getScoreFromLatestAnswer(gameHandler: ClientGameHandler) {
-  const game = gameHandler.getActiveGame();
-  if (!game?.currentQuestion?.lastAnswer || game.questionStatus !== QuestionStatus.awardingPoints) {
+export function getScoreFromLatestAnswer(game: Game) {
+  if (game.questionStatus !== QuestionStatus.awardingPoints) {
+    return 0;
+  }
+
+  if (!game.currentQuestion?.lastAnswer) {
     throw new Error('getScoreFromLatestAnswer assertion error');
   }
 

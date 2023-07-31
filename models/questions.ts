@@ -268,7 +268,7 @@ const questions: { [key in GameRound]: Question[] } = {
           { answerText: "Richard Nixon", points: 19 },
           { answerText: "Ronald Reagan", points: 18 },
         ],
-        "USSR (General Secretary of the central committee of the Communist Party":
+        "USSR (General Secretary of the central committee of the Communist Party)":
           [
             { answerText: "Georgy Malenkov", points: 0 },
             { answerText: "Joseph Stalin", points: 23 },
