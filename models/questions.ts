@@ -853,6 +853,78 @@ const questions: { [key in GameRound]: Question[] } = {
         },
       ],
     },
+    {
+      questionText: "First names of fashion designers",
+      explanation: "We're going to show you the surnames of famous fashion designers, along with their year of birth. We would like you to give us their first names please.",
+      acceptableAnswers: [
+        {
+          clue: "Dior (1905)",
+          answerText: "Christian",
+          points: 74,
+        },
+        {
+          clue: "Wang (1949)",
+          answerText: "Vera",
+          points: 34,
+        },
+        {
+          clue: "Saint Laurent (1936)",
+          answerText: "Yves",
+          points: 91,
+        },
+        {
+          clue: "Lagerfeld (1938)",
+          answerText: "Karl",
+          points: 45,
+        },
+        {
+          clue: "Cavalli (1940)",
+          answerText: "Roberto",
+          points: 6,
+        },
+        {
+          clue: "Chanel (1883)",
+          answerText: "Coco",
+          points: 75,
+        },
+      ],
+    },
+    {
+      questionText: "Capital cities and their rivers",
+      explanation: "We're going to show you the names of some rivers which flow through national capital cities. We want you to name the capital city which they flow through.",
+      acceptableAnswers: [
+        {
+          clue: "Kifissos",
+          answerText: "Athens",
+          points: 21,
+        },
+        {
+          clue: "Spree",
+          answerText: "Berlin",
+          points: 34,
+        },
+        {
+          clue: "Han",
+          answerText: "Seoul",
+          points: 3,
+        },
+        {
+          clue: "Vistula",
+          answerText: "Warsaw",
+          points: 4,
+        },
+        {
+          clue: "Tiber",
+          answerText: "Rome",
+          points: 38,
+        },
+        {
+          clue: "Seine",
+          answerText: "Paris",
+          points: 84,
+        },
+      ],
+    }
   ],
   linked_category: [
     {
@@ -934,6 +1006,41 @@ const questions: { [key in GameRound]: Question[] } = {
         {
           answerText: "Shardik",
           points: 1,
+        },
+      ],
+    },
+    {
+      questionText: "Greek food",
+      explanation:
+        "The correct answers here are all dishes or ingredients typically associated with Greek cuisine. The incorrect answers will not be foods at all.",
+      acceptableAnswers: [
+        {
+          answerText: "Tzatziki",
+          points: 15,
+        },
+        {
+          answerText: "Stifado",
+          points: 4,
+        },
+        {
+          answerText: "Sirtaki",
+          points: 100,
+        },
+        {
+          answerText: "Dolmathakia",
+          points: 0,
+        },
+        {
+          answerText: "Yemista",
+          points: 0,
+        },
+        {
+          answerText: "Souvlaki",
+          points: 6,
+        },
+        {
+          answerText: "Moussaka",
+          points: 40,
         },
       ],
     },
