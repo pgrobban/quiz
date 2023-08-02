@@ -924,7 +924,49 @@ const questions: { [key in GameRound]: Question[] } = {
           points: 84,
         },
       ],
-    }
+    },
+    {
+      questionText: "19th & 20th century events and their decades",
+      explanation:
+        "These events all occurred in either the nineteenth or twentieth century. We are looking for the decades in which these events took place.",
+      acceptableAnswers: [
+        {
+          clue: "Fall of the Berlin Wall",
+          answerText: "1980s",
+          points: 49,
+        },
+        {
+          clue: "Napoleon dies on St Helena",
+          answerText: "1820s",
+          points: 4,
+        },
+        {
+          clue: "California gold rush begins",
+          answerText: "1840s",
+          points: 9,
+        },
+        {
+          clue: "Hong Kong returned to China",
+          answerText: "1990s",
+          points: 50,
+        },
+        {
+          clue: "Howard Carter discovered Tutankhamun's tomb",
+          answerText: "1920s",
+          points: 14,
+        },
+        {
+          clue: "Krakatoa's major eruption",
+          answerText: "1880s",
+          points: 4,
+        },
+        {
+          clue: "Neil Armstrong landed on the moon",
+          answerText: "1960s",
+          points: 37,
+        },
+      ],
+    },
   ],
   linked_category: [
     {
@@ -1043,7 +1085,7 @@ const questions: { [key in GameRound]: Question[] } = {
           points: 40,
         },
       ],
-    },
+    }
   ],
   fill_in_blank: [
     {
