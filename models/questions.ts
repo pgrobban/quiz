@@ -999,6 +999,77 @@ const questions: { [key in GameRound]: Question[] } = {
         },
       ],
     },
+    {
+      questionText: "Cheeses of the world",
+      explanation: "We are going to show you the names of twelve types of cheese. We would like you to tell us the country where that cheese was originally made, or with which it is most commonly associated.",
+      acceptableAnswers: [
+        {
+          clue: "Brie",
+          answerText: "France",
+          points: 94,
+        },
+        {
+          clue: "Rabaçal",
+          answerText: "Portugal",
+          points: 2,
+        },
+        {
+          clue: "Manchego",
+          answerText: "Spain",
+          points: 22,
+        },
+        {
+          clue: "Jarlsberg",
+          answerText: "Norway",
+          points: 12,
+        },
+        {
+          clue: "Gorgonzola",
+          answerText: "Italy",
+          points: 63,
+        },
+        {
+          clue: "Asadero",
+          answerText: "Mexico",
+          points: 3,
+        },
+      ],
+    },
+    {
+      questionText: "Cheeses of the world",
+      acceptableAnswers: [
+        {
+          clue: "Harzer Käse",
+          answerText: "Germany",
+          points: 14,
+        },
+        {
+          clue: "Monterey Jack",
+          answerText: "USA",
+          points: 41,
+        },
+        {
+          clue: "Gouda",
+          answerText: "Netherlands",
+          points: 67,
+        },
+        {
+          clue: "Balaton",
+          answerText: "Hungary",
+          points: 3,
+        },
+        {
+          clue: "Emmental",
+          answerText: "Switzerland",
+          points: 45,
+        },
+        {
+          clue: "Havarti",
+          answerText: "Denmark",
+          points: 0,
+        },
+      ],
+    },
   ],
   possible_answers: [
     {
