@@ -18,11 +18,12 @@ import { findAcceptableAnswer } from './helpers';
 
 const NUMBER_OF_TURNS_FOR_ROUND: Record<GameRound, number> = {
   [GameRound.openEnded]: 3,
-  [GameRound.cluesAndAnswers]: 3,
-  [GameRound.fillInBlank]: 3,
-  [GameRound.linkedCategories]: 3,
-  [GameRound.partIdentification]: 3,
-  [GameRound.possibleAnswers]: 3,
+  [GameRound.cluesAndAnswers]: 1,
+  [GameRound.fillInBlank]: 1,
+  [GameRound.linkedCategories]: 1,
+  [GameRound.partIdentification]: 1,
+  [GameRound.possibleAnswers]: 1,
+  [GameRound.pictureBoard]: 1
 };
 
 const NUMBER_OF_QUESTIONS_FOR_ROUND: Record<GameRound, number> = {

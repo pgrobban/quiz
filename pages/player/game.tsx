@@ -13,6 +13,7 @@ import { NON_VERIFIED_ANSWER, NO_OR_INVALID_ANSWER } from "../../models/types";
 import { useState } from "react";
 import { getScoreFromLatestAnswer } from "../../controllers/helpers";
 import CluesAndAnswersBoard from "../../components/CluesAndAnswersBoard";
+import PossibleAnswersBoard from "../../components/PossibleAnswersBoard";
 
 function Game() {
   const appContext = useAppContext();
@@ -25,8 +26,9 @@ function Game() {
   }
 
   const { acceptableAnswers } = currentQuestion?.question || {};
+  const awardingPointsInProgress = questionStatus === QuestionStatus.awardingPoints;
 
-  const countdownTo = getScoreFromLatestAnswer(gameHandler);
+  const countdownTo = getScoreFromLatestAnswer(gameState);
 
   const onFinishedAnimatingScore = () => {
     setIsAnimatingScore(false);
@@ -66,7 +68,13 @@ function Game() {
                   {gameState.round === GameRound.cluesAndAnswers &&
                     acceptableAnswers &&
                     !isGroupedAcceptableAnswers(acceptableAnswers) && (
-                      <CluesAndAnswersBoard answersInGame={acceptableAnswers} />
+                      <CluesAndAnswersBoard awardingPointsInProgress={awardingPointsInProgress} answersInGame={acceptableAnswers} />
+                  )}
+                
+                {gameState.round === GameRound.possibleAnswers &&
+                    acceptableAnswers &&
+                    !isGroupedAcceptableAnswers(acceptableAnswers) && (
+                      <PossibleAnswersBoard awardingPointsInProgress={awardingPointsInProgress} answersInGame={acceptableAnswers} />
                     )}
 
                   {questionStatus === QuestionStatus.waitingForTeamAnswer &&

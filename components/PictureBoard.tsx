@@ -7,10 +7,13 @@ const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 interface Props {
   questionInGame: QuestionInGame;
+  awardingPointsInProgress: boolean;
 }
 
-export default function PictureBoard({ questionInGame }: Props) {
+export default function PictureBoard(props: Props) {
+  const { awardingPointsInProgress, questionInGame } = props;
   const { questionText, acceptableAnswers } = questionInGame;
+
   if (isGroupedAcceptableAnswers(acceptableAnswers)) {
     throw new Error("Only support for non-grouped acceptable answers");
   }
@@ -46,7 +49,7 @@ export default function PictureBoard({ questionInGame }: Props) {
                       {answerText}
                     </div>
                     <div className={styles.pictureBoardPointsContainer}>
-                      <span>{points}</span>
+                      <span>{awardingPointsInProgress ? '' : points}</span>
                     </div>
                   </>
                 )}

@@ -3,9 +3,12 @@ import BaseGameBoard from "./BaseGameBoard";
 
 interface Props {
   answersInGame: AcceptableAnswerInGame[];
+  awardingPointsInProgress: boolean;
 }
 
-export default function PossibleAnswersBoard({ answersInGame }: Props) {
+export default function PossibleAnswersBoard(props: Props) {
+  const { answersInGame, awardingPointsInProgress } = props;
+  
   return (
     <BaseGameBoard>
       <div>
@@ -64,7 +67,7 @@ export default function PossibleAnswersBoard({ answersInGame }: Props) {
                     color: "#FEFD1D",
                   }}
                 >
-                  <span>{answered ? (points === 100 ? "X" : points) : ""}</span>
+                  <span>{(answered && !awardingPointsInProgress) ? (points === 100 ? "X" : points) : ""}</span>
                 </div>
               </div>
             </div>
