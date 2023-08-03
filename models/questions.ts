@@ -288,6 +288,35 @@ const questions: { [key in GameRound]: Question[] } = {
         ],
       },
     },
+    {
+      questionText: "ABBA Gold",
+      explanation:
+        "We are looking for the title of any track on 'ABBA Gold', which, in October 2012, was declared by the Official Charts Company to be the best-selling CD of all time in the UK. We are only including tracks on the original release UK/Swedish of the album, not releases elsewhere or later bonus CDs.",
+      acceptableAnswers: [
+        { answerText: "Chiquitita", points: 2 },
+        { answerText: "Dancing Queen", points: 44 },
+        { answerText: "Does Your Mother Know", points: 2 },
+        { answerText: "Fernando", points: 16 },
+        {
+          answerText: "Gimme! Gimme! Gimme! (A Man After Midnight)",
+          points: 5,
+        },
+        { answerText: "I Have A Dream", points: 0 },
+        { answerText: "Knowing Me, Knowing You", points: 9 },
+        { answerText: "Lay All Your Love On Me", points: 0 },
+        { answerText: "Mamma Mia", points: 47 },
+        { answerText: "Money, Money, Money", points: 16 },
+        { answerText: "One Of Us", points: 0 },
+        { answerText: "S.O.S", points: 9 },
+        { answerText: "Super Trouper", points: 4 },
+        { answerText: "Take A Chance On Me", points: 3 },
+        { answerText: "Thank You For The Music", points: 5 },
+        { answerText: "The Name Of The Game", points: 0 },
+        { answerText: "The Winner Takes It All", points: 13 },
+        { answerText: "Voulez-vous", points: 3 },
+        { answerText: "Waterloo", points: 56 },
+      ],
+    },
   ],
   clues_and_answers: [
     {
@@ -819,7 +848,8 @@ const questions: { [key in GameRound]: Question[] } = {
     },
     {
       questionText: "UK number one albums with one-word titles",
-      explanation: "We are about to show you twelve UK number one albums along with the year in which they first reached number one -- we would like you to tell us who released them please.",
+      explanation:
+        "We are about to show you twelve UK number one albums along with the year in which they first reached number one -- we would like you to tell us who released them please.",
       acceptableAnswers: [
         {
           clue: "Arrival (1997)",
@@ -855,7 +885,8 @@ const questions: { [key in GameRound]: Question[] } = {
     },
     {
       questionText: "First names of fashion designers",
-      explanation: "We're going to show you the surnames of famous fashion designers, along with their year of birth. We would like you to give us their first names please.",
+      explanation:
+        "We're going to show you the surnames of famous fashion designers, along with their year of birth. We would like you to give us their first names please.",
       acceptableAnswers: [
         {
           clue: "Dior (1905)",
@@ -891,7 +922,8 @@ const questions: { [key in GameRound]: Question[] } = {
     },
     {
       questionText: "Capital cities and their rivers",
-      explanation: "We're going to show you the names of some rivers which flow through national capital cities. We want you to name the capital city which they flow through.",
+      explanation:
+        "We're going to show you the names of some rivers which flow through national capital cities. We want you to name the capital city which they flow through.",
       acceptableAnswers: [
         {
           clue: "Kifissos",
@@ -1067,7 +1099,7 @@ const questions: { [key in GameRound]: Question[] } = {
           points: 40,
         },
       ],
-    }
+    },
   ],
   fill_in_blank: [
     {
@@ -1140,57 +1172,70 @@ const questions: { [key in GameRound]: Question[] } = {
   part_identification: [],
   picture_board: [
     {
-      questionText: 'French buildings',
-      explanation: "We're going to show you pictures of famous French buildings. You just need to tell us the most obscure.",
+      questionText: "French buildings",
+      explanation:
+        "We're going to show you pictures of famous French buildings. You just need to tell us the most obscure.",
       acceptableAnswers: [
         {
           answerText: "Panthéon",
-          clue: 'pantheon.jpg',
-          points: 2
-        }, {
+          clue: "pantheon.jpg",
+          points: 2,
+        },
+        {
           answerText: "European Parliament",
-          clue: 'european parliament.jpg',
-          points: 6
-        }, {
+          clue: "european parliament.jpg",
+          points: 6,
+        },
+        {
           answerText: "Notre Dame cathedral",
-          clue: 'notre dame.jpg',
-          points: 29
-        }, {
+          clue: "notre dame.jpg",
+          points: 29,
+        },
+        {
           answerText: "Arc de Triomphe",
-          clue: 'arc de triomphe.jpg',
-          points: 30
-        }, {
+          clue: "arc de triomphe.jpg",
+          points: 30,
+        },
+        {
           answerText: "Louvre",
-          clue: 'louvre.jpg',
-          points: 55
-        }]
+          clue: "louvre.jpg",
+          points: 55,
+        },
+      ],
     },
     {
       questionText: "Car logos",
-      explanation: "We're going to show you logotypes of famous car brands. We would like you to tell us the most obscure brand.",
+      explanation:
+        "We're going to show you logotypes of famous car brands. We would like you to tell us the most obscure brand.",
       acceptableAnswers: [
         {
           answerText: "Audi",
-          clue: 'audi.png',
-          points: 42
-        }, {
+          clue: "audi.png",
+          points: 42,
+        },
+        {
           answerText: "Mercedes",
-          clue: 'mercedes.png',
-          points: 45
-        }, {
+          clue: "mercedes.png",
+          points: 45,
+        },
+        {
           answerText: "Citroen",
-          clue: 'citroen.png',
-          points: 22
-        }, {
+          clue: "citroen.png",
+          points: 22,
+        },
+        {
           answerText: "Mazda",
-          clue: 'mazda.png',
-          points: 17
-        }, {
+          clue: "mazda.png",
+          points: 17,
+        },
+        {
           answerText: "Daihatsu",
-          clue: 'daihatsu.png',
-          points: 7
-        }]
-    }]
+          clue: "daihatsu.png",
+          points: 7,
+        },
+      ],
+    },
+  ],
 };
 
 export default questions;
