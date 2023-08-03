@@ -145,6 +145,10 @@
   color: "#FEFD1D";
 }
 
+.pictureBoardPictureContainer {
+  background-size: cover;
+}
+
 .pictureBoardAnswerText {
   font-size: 12px;
   text-align: center;

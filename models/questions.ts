@@ -103,7 +103,7 @@ const questions: { [key in GameRound]: Question[] } = {
       questionText: "US states smaller than England",
       explanation:
         "We are looking for any of the twenty-two US states that are smaller than England in terms of total land area. We are only counting land area, so are not including water areas a state may possess including inland, coastal, Great Lakes, and territorial waters. To give you an idea, the smallest state that is larger than the total land area of England is Alabama, so we're essentially looking for any US state smaller than Alabama.",
-        acceptableAnswers: [
+      acceptableAnswers: [
         { answerText: "Connecticut", points: 15 },
         { answerText: "Delaware", points: 9 },
         { answerText: "Hawaii", points: 30 },
@@ -131,7 +131,7 @@ const questions: { [key in GameRound]: Question[] } = {
       questionText: "Sister acts",
       explanation:
         "We are looking for act which is either a group or duo that featured the word 'sister' or 'sisters' and has had a UK Top 40 hit up to the start of May 2012.",
-        acceptableAnswers: [
+      acceptableAnswers: [
         { answerText: "Beverley Sisters", points: 28 },
         { answerText: "De Castro Sisters", points: 0 },
         { answerText: "Hannah & Her Sisters", points: 0 },
@@ -156,7 +156,7 @@ const questions: { [key in GameRound]: Question[] } = {
       questionText: "Surnames of presidents that end in 'N'",
       explanation:
         "We are looking for surnames of any US Presidents which end in the letter 'n', prior to Barack Obama. Where more than one President shared the same surname, that surname will only be accepted once..",
-        acceptableAnswers: [
+      acceptableAnswers: [
         { answerText: "Buchanan", points: 1 },
         { answerText: "Clinton", points: 47 },
         { answerText: "Harrison", points: 1 },
@@ -177,7 +177,7 @@ const questions: { [key in GameRound]: Question[] } = {
       questionText: "Berries",
       explanation:
         "We are looking for the names of any plant, or fruit of a plant, that has its own entry in the Oxford Dictionary of English, whose name ends in the letters 'B-E-R-R-Y'. We are only looking for one-word answers. So we will not accept 'Goji berry' for example. The berries do not have to be edible ones. Obviously we will not be accepting 'berry' itself.",
-        acceptableAnswers: [
+      acceptableAnswers: [
         { answerText: "Baneberry", points: 0 },
         { answerText: "Barberry", points: 1 },
         { answerText: "Bayberry", points: 0 },
@@ -237,7 +237,7 @@ const questions: { [key in GameRound]: Question[] } = {
       questionText: "Cold War Leaders",
       explanation:
         "We are going to show you five countries (along with the title of their leader) - we would like you to name any leader of any of these countries throughout the Cold War. For avoidance of doubt, the 'Cold War' took place between 1946-1989 (inclusive). We will not accept interim leaders or leaders of provisional governments. USA (president). UK (Prime Minister). West Germany (Chancellor). USSR (Chairman or First Secretary of the Communist Party). France (President)",
-        acceptableAnswers: {
+      acceptableAnswers: {
         "France (President)": [
           { answerText: "Charles de Gaulle", points: 41 },
           { answerText: "François Mitterrand", points: 12 },
@@ -1136,34 +1136,61 @@ const questions: { [key in GameRound]: Question[] } = {
       ],
     },
   ],
-    linked_category: [  ],
-  part_identification: [  ],
-  picture_board: [{
-    questionText: 'French buildings',
-    explanation: "We're going to show you pictures of famous French buildings. You just need to tell us the most obscure.",
-    acceptableAnswers: [
-      {
-      answerText: "Panthéon",
-      clue: 'pantheon.jpg',
-      points: 2
-    }, {
-      answerText: "European Parliament",
-      clue: 'european parliament.jpg',
-      points: 6
-    }, {
-      answerText: "Notre Dame cathedral",
-      clue: 'notre dame.jpg',
-      points: 29
-    }, {
-      answerText: "Arc de Triomphe",
-      clue: 'arc de triomphe.jpg',
-      points: 30
-    }, {
-      answerText: "Louvre",
-      clue: 'louvre.jpg',
-      points: 55
+  linked_category: [],
+  part_identification: [],
+  picture_board: [
+    {
+      questionText: 'French buildings',
+      explanation: "We're going to show you pictures of famous French buildings. You just need to tell us the most obscure.",
+      acceptableAnswers: [
+        {
+          answerText: "Panthéon",
+          clue: 'pantheon.jpg',
+          points: 2
+        }, {
+          answerText: "European Parliament",
+          clue: 'european parliament.jpg',
+          points: 6
+        }, {
+          answerText: "Notre Dame cathedral",
+          clue: 'notre dame.jpg',
+          points: 29
+        }, {
+          answerText: "Arc de Triomphe",
+          clue: 'arc de triomphe.jpg',
+          points: 30
+        }, {
+          answerText: "Louvre",
+          clue: 'louvre.jpg',
+          points: 55
+        }]
+    },
+    {
+      questionText: "Car logos",
+      explanation: "We're going to show you logotypes of famous car brands. We would like you to tell us the most obscure brand.",
+      acceptableAnswers: [
+        {
+          answerText: "Audi",
+          clue: 'audi.png',
+          points: 42
+        }, {
+          answerText: "Mercedes",
+          clue: 'mercedes.png',
+          points: 45
+        }, {
+          answerText: "Citroen",
+          clue: 'citroen.png',
+          points: 22
+        }, {
+          answerText: "Mazda",
+          clue: 'mazda.png',
+          points: 17
+        }, {
+          answerText: "Daihatsu",
+          clue: 'daihatsu.png',
+          points: 7
+        }]
     }]
-  }]
 };
 
 export default questions;
