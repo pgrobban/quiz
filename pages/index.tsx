@@ -4,10 +4,6 @@ import Image from "next/image";
 import CountdownBar from "../components/CountdownBar";
 import { useAppContext } from "../controllers/AppWrapper";
 import styles from "../styles/Home.module.css";
-import PossibleAnswersBoard from "../components/PossibleAnswersBoard";
-import questions from "../models/questions";
-import { AcceptableAnswer } from "../models/types";
-import CluesAndAnswersBoard from "../components/CluesAndAnswersBoard";
 
 function Home() {
   const appContext = useAppContext();
