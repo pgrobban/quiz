@@ -22,7 +22,8 @@ export enum GameRound {
   cluesAndAnswers = 'clues_and_answers',
   linkedCategories = 'linked_category',
   partIdentification = 'part_identification',
-  fillInBlank = 'fill_in_blank'
+  fillInBlank = 'fill_in_blank',
+  pictureBoard = 'picture_board'
 }
 
 export interface TeamAndPoints {
@@ -30,7 +31,7 @@ export interface TeamAndPoints {
   points: number;
 }
 
-interface AcceptableAnswer {
+export interface AcceptableAnswer {
   clue?: string;
   answerText: string;
   points: number;

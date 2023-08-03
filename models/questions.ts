@@ -968,24 +968,6 @@ const questions: { [key in GameRound]: Question[] } = {
       ],
     },
   ],
-  linked_category: [
-    {
-      questionText: "LA1",
-      acceptableAnswers: [
-        { answerText: "A", points: 70 },
-        { answerText: "B", points: 23 },
-      ],
-    },
-  ],
-  part_identification: [
-    {
-      questionText: "PI1",
-      acceptableAnswers: [
-        { answerText: "A", points: 70 },
-        { answerText: "B", points: 23 },
-      ],
-    },
-  ],
   possible_answers: [
     {
       questionText: "Picasso Paintings",
@@ -1154,6 +1136,34 @@ const questions: { [key in GameRound]: Question[] } = {
       ],
     },
   ],
+    linked_category: [  ],
+  part_identification: [  ],
+  picture_board: [{
+    questionText: 'French buildings',
+    explanation: "We're going to show you pictures of famous French buildings. You just need to tell us the most obscure.",
+    acceptableAnswers: [
+      {
+      answerText: "Panthéon",
+      clue: 'pantheon.jpg',
+      points: 2
+    }, {
+      answerText: "European Parliament",
+      clue: 'european parliament.jpg',
+      points: 6
+    }, {
+      answerText: "Notre Dame cathedral",
+      clue: 'notre dame.jpg',
+      points: 29
+    }, {
+      answerText: "Arc de Triomphe",
+      clue: 'arc de triomphe.jpg',
+      points: 30
+    }, {
+      answerText: "Louvre",
+      clue: 'louvre.jpg',
+      points: 55
+    }]
+  }]
 };
 
 export default questions;
