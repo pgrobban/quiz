@@ -1122,6 +1122,37 @@ const questions: { [key in GameRound]: Question[] } = {
         },
       ],
     },
+    {
+      questionText: "Cocktails",
+      explanation: "We will give you the initial letters of the names of cocktails, and a list of some of the main ingredients typically used to make them according to the International Bartenders Association. What we ant you to do is to name the cocktail.",
+      acceptableAnswers: [
+        {
+          clue: "PC - white rum, coconut cream, pineapple juice",
+          answerText: "Piña colada",
+          points: 57,
+        },
+        {
+          clue: "CL - rum, cola, lime",
+          answerText: "Cuba Libre",
+          points: 15,
+        },
+        {
+          clue: "M - rum, mint, sugar, lime juice",
+          answerText: "Mojito",
+          points: 20,
+        },
+        {
+          clue: "SB - vodka, cranberry juice, grapefruit juice",
+          answerText: "Sea breeze",
+          points: 3,
+        },
+        {
+          clue: "KR - crème de cassis, champagne",
+          answerText: "Kir royale",
+          points: 24,
+        },
+      ],
+    },
   ],
   possible_answers: [
     {
