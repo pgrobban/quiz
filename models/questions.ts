@@ -4,6 +4,7 @@ const questions: { [key in GameRound]: Question[] } = {
   "open-ended": [
     {
       questionText: "US states ending in 'A'",
+      tags: ["Geography"],
       acceptableAnswers: [
         { answerText: "Alabama", points: 53 },
         { answerText: "Alaska", points: 40 },
@@ -30,6 +31,7 @@ const questions: { [key in GameRound]: Question[] } = {
     },
     {
       questionText: "Countries finishing last in Eurovision Song Contest",
+      tags: ["Music"],
       acceptableAnswers: [
         { answerText: "A", points: 70 },
         { answerText: "B", points: 23 },
@@ -37,6 +39,7 @@ const questions: { [key in GameRound]: Question[] } = {
     },
     {
       questionText: "Capital cities of Europe",
+      tags: ["Geography"],
       acceptableAnswers: [
         { answerText: "Amsterdam", points: 37 },
         { answerText: "Andorra La Vella", points: 1 },
@@ -64,6 +67,7 @@ const questions: { [key in GameRound]: Question[] } = {
       questionText:
         "Any country (other than UK) that uses any of the following currencies: franc, peso, pound, rupee, shilling",
       explanation: "",
+      tags: ["Currencies"],
       acceptableAnswers: {
         Franc: [
           { answerText: "Benin", points: 0 },
@@ -76,6 +80,7 @@ const questions: { [key in GameRound]: Question[] } = {
     },
     {
       questionText: "Countries that won Eurovision Song Contest",
+      tags: ["Music"],
       acceptableAnswers: [
         { answerText: "Austria", points: 1 },
         { answerText: "Azerbaijan", points: 4 },
@@ -83,7 +88,85 @@ const questions: { [key in GameRound]: Question[] } = {
       ],
     },
     {
+      questionText: "Words that begin with a vowel and end with ...ology",
+      tags: ["Words"],
+      explanation: "We are looking for any word that has its own entry in the Oxford Dictionary of English that begins with A, E, I, O, or U, and that ends with the letters '...ology'. And we will not accept the answer 'ology'. As ever we will not allow hyphenated words, trademarks or abbreviations, and where a word has two variant spellings, such as a US and a UK spelling, we will accept either, but we will not accept that answer more than once.",
+      acceptableAnswers: [
+        { answerText: "acarology", points: 0 },
+        { answerText: "aerobiology", points: 0 },
+        { answerText: "aerology", points: 1 },
+        { answerText: "aetiology", points: 1 },
+        { answerText: "agrobiology", points: 0 },
+        { answerText: "agrology", points: 0 },
+        { answerText: "agrostology", points: 0 },
+        { answerText: "algology", points: 0 },
+        { answerText: "amphibiology", points: 0 },
+        { answerText: "anaesthesiology", points: 0 },
+        { answerText: "andrology", points: 0 },
+        { answerText: "angelology", points: 0 },
+        { answerText: "anthology", points: 12 },
+        { answerText: "anthropology", points: 15 },
+        { answerText: "apology", points: 17 },
+        { answerText: "archaeology", points: 23 },
+        { answerText: "arcology", points: 0 },
+        { answerText: "areology", points: 0 },
+        { answerText: "Assyrology", points: 0 },
+        { answerText: "astrobiology", points: 0 },
+        { answerText: "astrology", points: 20 },
+        { answerText: "audiology", points: 7 },
+        { answerText: "autecology", points: 0 },
+        { answerText: "ecclesiology", points: 0 },
+        { answerText: "ecology", points: 22 },
+        { answerText: "ecophysiology", points: 0 },
+        { answerText: "ecotoxicology", points: 0 },
+        { answerText: "Egyptology", points: 4 },
+        { answerText: "electrophysiology", points: 0 },
+        { answerText: "electrotechnology", points: 0 },
+        { answerText: "embryology", points: 0 },
+        { answerText: "endocrinology", points: 2 },
+        { answerText: "entomology", points: 13 },
+        { answerText: "enzymology", points: 0 },
+        { answerText: "epidemiology", points: 3 },
+        { answerText: "epistemology", points: 1 },
+        { answerText: "erotology", points: 0 },
+        { answerText: "escapology", points: 8 },
+        { answerText: "eschatology", points: 1 },
+        { answerText: "ethnoarchaeology", points: 0 },
+        { answerText: "ethnology", points: 0 },
+        { answerText: "ethnomethodology", points: 0 },
+        { answerText: "ethnomusicology", points: 0 },
+        { answerText: "ethology", points: 1 },
+        { answerText: "etymology", points: 9 },
+        { answerText: "exobiology", points: 0 },
+        { answerText: "ichthyology", points: 0 },
+        { answerText: "iconology", points: 0 },
+        { answerText: "ideology", points: 12 },
+        { answerText: "immunology", points: 3 },
+        { answerText: "indology", points: 0 },
+        { answerText: "iridology", points: 1 },
+        { answerText: "oceanology", points: 0 },
+        { answerText: "odontology", points: 0 },
+        { answerText: "oenology", points: 1 },
+        { answerText: "oncology", points: 16 },
+        { answerText: "onomasiology", points: 0 },
+        { answerText: "ontology", points: 2 },
+        { answerText: "oology", points: 0 },
+        { answerText: "ophiology", points: 0 },
+        { answerText: "ophthamology", points: 4 },
+        { answerText: "orchidology", points: 0 },
+        { answerText: "ornithology", points: 24 },
+        { answerText: "orthokeratology", points: 0 },
+        { answerText: "osteology", points: 0 },
+        { answerText: "otolaryngology", points: 0 },
+        { answerText: "otology", points: 1 },
+        { answerText: "otorhinolaryngology", points: 0 },
+        { answerText: "ufology", points: 4 },
+        { answerText: "urology", points: 20 },
+      ],
+    },
+    {
       questionText: "Words ending with -oo",
+      tags: ["Words"],
       explanation:
         "We are looking for any word that has its own entry in the 'Oxford Dictionary of English' ending with the letters 'oo'. As usual, we will not accept acronyms, proper nouns, trademarks, or hyphenated words. Nor will we accept any words marked as being 'offensive' by the dictionary.",
       acceptableAnswers: [
@@ -101,6 +184,7 @@ const questions: { [key in GameRound]: Question[] } = {
     },
     {
       questionText: "US states smaller than England",
+      tags: ["Geography"],
       explanation:
         "We are looking for any of the twenty-two US states that are smaller than England in terms of total land area. We are only counting land area, so are not including water areas a state may possess including inland, coastal, Great Lakes, and territorial waters. To give you an idea, the smallest state that is larger than the total land area of England is Alabama, so we're essentially looking for any US state smaller than Alabama.",
       acceptableAnswers: [
@@ -129,6 +213,7 @@ const questions: { [key in GameRound]: Question[] } = {
     },
     {
       questionText: "Sister acts",
+      tags: ["Music"],
       explanation:
         "We are looking for act which is either a group or duo that featured the word 'sister' or 'sisters' and has had a UK Top 40 hit up to the start of May 2012.",
       acceptableAnswers: [
@@ -154,6 +239,7 @@ const questions: { [key in GameRound]: Question[] } = {
     },
     {
       questionText: "Surnames of presidents that end in 'N'",
+      tags: ["Political leaders", "Names"],
       explanation:
         "We are looking for surnames of any US Presidents which end in the letter 'n', prior to Barack Obama. Where more than one President shared the same surname, that surname will only be accepted once..",
       acceptableAnswers: [
@@ -175,6 +261,7 @@ const questions: { [key in GameRound]: Question[] } = {
     },
     {
       questionText: "Berries",
+      tags: ["Nature", "Words"],
       explanation:
         "We are looking for the names of any plant, or fruit of a plant, that has its own entry in the Oxford Dictionary of English, whose name ends in the letters 'B-E-R-R-Y'. We are only looking for one-word answers. So we will not accept 'Goji berry' for example. The berries do not have to be edible ones. Obviously we will not be accepting 'berry' itself.",
       acceptableAnswers: [
@@ -235,6 +322,7 @@ const questions: { [key in GameRound]: Question[] } = {
     },
     {
       questionText: "Cold War Leaders",
+      tags: ["Political leaders"],
       explanation:
         "We are going to show you five countries (along with the title of their leader) - we would like you to name any leader of any of these countries throughout the Cold War. For avoidance of doubt, the 'Cold War' took place between 1946-1989 (inclusive). We will not accept interim leaders or leaders of provisional governments. USA (president). UK (Prime Minister). West Germany (Chancellor). USSR (Chairman or First Secretary of the Communist Party). France (President)",
       acceptableAnswers: {
@@ -290,6 +378,7 @@ const questions: { [key in GameRound]: Question[] } = {
     },
     {
       questionText: "ABBA Gold",
+      tags: ["Music"],
       explanation:
         "We are looking for the title of any track on 'ABBA Gold', which, in October 2012, was declared by the Official Charts Company to be the best-selling CD of all time in the UK. We are only including tracks on the original release UK/Swedish of the album, not releases elsewhere or later bonus CDs.",
       acceptableAnswers: [
@@ -319,6 +408,7 @@ const questions: { [key in GameRound]: Question[] } = {
     },
     {
       questionText: "Words ending in 'ind'",
+      tags: ["Words"],
       explanation: "Any word that has its own entry in the Oxford Dictionary of English and that ends in the letters 'ind'. We will not allow hyphenated words, trademarks, abbreviations or proper nouns. If a word shares the same spelling as another word, but is pronounced differently, we are treating them as the same word, and we will only count it as an answer once regardless of how you pronounce it.",
       acceptableAnswers: [
         { answerText: "Backwind", points: 0 },
@@ -372,6 +462,7 @@ const questions: { [key in GameRound]: Question[] } = {
   ],
   clues_and_answers: [
     {
+      tags: ["One-word association"],
       questionText: "Monkeys",
       acceptableAnswers: [
         {
@@ -403,6 +494,7 @@ const questions: { [key in GameRound]: Question[] } = {
     },
     {
       questionText: "Famous Richards",
+      tags: ["Names"],
       acceptableAnswers: [
         {
           clue: "Author of 'The God Delusion'",
@@ -438,6 +530,7 @@ const questions: { [key in GameRound]: Question[] } = {
     },
     {
       questionText: "Milk",
+      tags: ["One-word association"],
       acceptableAnswers: [
         {
           clue: "Egyptian queen famously said to have taken regular baths in donkey milk",
@@ -468,6 +561,7 @@ const questions: { [key in GameRound]: Question[] } = {
     },
     {
       questionText: "Philosophers and their first names",
+      tags: ["Names"],
       acceptableAnswers: [
         {
           clue: "N. Chomsky (1928)",
@@ -503,6 +597,7 @@ const questions: { [key in GameRound]: Question[] } = {
     },
     {
       questionText: "Philosophers and their first names (II)",
+      tags: ["Names"],
       acceptableAnswers: [
         {
           clue: "J-P. Sartre (1905)",
@@ -538,6 +633,7 @@ const questions: { [key in GameRound]: Question[] } = {
     },
     {
       questionText: "People named Alex",
+      tags: ["Names"],
       explanation:
         "We are looking for famous people, past and present - each person commonly known by a first name that could be shortened to 'Alex'. We would like you to tell us who they are (full name).",
       acceptableAnswers: [
@@ -570,6 +666,7 @@ const questions: { [key in GameRound]: Question[] } = {
     },
     {
       questionText: "Wines and their regions",
+      tags: ["Food & drinks", "Geography"],
       explanation:
         "The following are all wines or wine regions. We want to know the name of the countries with which they are the most associated.",
       acceptableAnswers: [
@@ -607,6 +704,7 @@ const questions: { [key in GameRound]: Question[] } = {
     },
     {
       questionText: "Wines and their regions (II)",
+      tags: ["Food & drinks", "Geography"],
       explanation:
         "The following are all wines or wine regions. We want to know the name of the countries with which they are the most associated.",
       acceptableAnswers: [
@@ -644,6 +742,7 @@ const questions: { [key in GameRound]: Question[] } = {
     },
     {
       questionText: "Studio albums by The Beatles",
+      tags: ["Music"],
       explanation:
         "We will show you five sets of initials that represent titles of some studio albums released by The Beatles. We would like you to tell us what the initials stand for.",
       acceptableAnswers: [
@@ -676,6 +775,7 @@ const questions: { [key in GameRound]: Question[] } = {
     },
     {
       questionText: "Literary villains and their works of fiction",
+      tags: ["Literature"],
       explanation: "In which novel or play do these villains feature?",
       acceptableAnswers: [
         {
@@ -712,6 +812,7 @@ const questions: { [key in GameRound]: Question[] } = {
     },
     {
       questionText: "Famous bass players",
+      tags: ["Music", "Names"],
       explanation:
         "We are about to show you a list of 14 bass players. We would like you to tell us the name of the band of which they were members, with which they had their greates chart success.",
       acceptableAnswers: [
@@ -749,6 +850,7 @@ const questions: { [key in GameRound]: Question[] } = {
     },
     {
       questionText: "Famous bass players (II)",
+      tags: ["Music", "Names"],
       acceptableAnswers: [
         {
           clue: "Geddy Lee",
@@ -789,6 +891,7 @@ const questions: { [key in GameRound]: Question[] } = {
     },
     {
       questionText: "Islands of the world",
+      tags: ["Geography"],
       explanation:
         "Here is a list of clues to well-known islands around the worlds. We would like you to tell us the name of the island described by each clue please. In the case of islands which are part of a country, we are looking for the name of the island itself rather than the name of the country, although some of the islands may be countries in their own right.",
       acceptableAnswers: [
@@ -826,6 +929,7 @@ const questions: { [key in GameRound]: Question[] } = {
     },
     {
       questionText: "Cover versions",
+      tags: ["Music"],
       explanation:
         "We are going to show you twelve pairs of artists. The second one of each pair has reached the Top 40 in the UK with a cover version of the first artist's song. We would like you to give us the name of the song. We have given you the year in which the cover version charted in brackets.",
       acceptableAnswers: [
@@ -863,6 +967,7 @@ const questions: { [key in GameRound]: Question[] } = {
     },
     {
       questionText: "Celebrities with double initials",
+      tags: ["Celebrities", "Names"],
       explanation:
         "We are going to show you clues about actors and musicians, who all have first names and surnames that start with the same letter. We would like you to use the facts to try and name the celebrities. We want the names the celebrities are most commonly known by.",
       acceptableAnswers: [
@@ -900,6 +1005,7 @@ const questions: { [key in GameRound]: Question[] } = {
     },
     {
       questionText: "UK number one albums with one-word titles",
+      tags: ["Music"],
       explanation:
         "We are about to show you twelve UK number one albums along with the year in which they first reached number one -- we would like you to tell us who released them please.",
       acceptableAnswers: [
@@ -937,6 +1043,7 @@ const questions: { [key in GameRound]: Question[] } = {
     },
     {
       questionText: "First names of fashion designers",
+      tags: ["Fashion", "Names"],
       explanation:
         "We're going to show you the surnames of famous fashion designers, along with their year of birth. We would like you to give us their first names please.",
       acceptableAnswers: [
@@ -974,6 +1081,7 @@ const questions: { [key in GameRound]: Question[] } = {
     },
     {
       questionText: "Capital cities and their rivers",
+      tags: ["Geography"],
       explanation:
         "We're going to show you the names of some rivers which flow through national capital cities. We want you to name the capital city which they flow through.",
       acceptableAnswers: [
@@ -1011,6 +1119,7 @@ const questions: { [key in GameRound]: Question[] } = {
     },
     {
       questionText: "19th & 20th century events and their decades",
+      tags: ["Political leaders"],
       explanation:
         "These events all occurred in either the nineteenth or twentieth century. We are looking for the decades in which these events took place.",
       acceptableAnswers: [
@@ -1053,6 +1162,7 @@ const questions: { [key in GameRound]: Question[] } = {
     },
     {
       questionText: "Cheeses of the world",
+      tags: ["Food & drinks"],
       explanation: "We are going to show you the names of twelve types of cheese. We would like you to tell us the country where that cheese was originally made, or with which it is most commonly associated.",
       acceptableAnswers: [
         {
@@ -1089,6 +1199,7 @@ const questions: { [key in GameRound]: Question[] } = {
     },
     {
       questionText: "Cheeses of the world (II)",
+      tags: ["Food & drinks"],
       acceptableAnswers: [
         {
           clue: "Harzer Käse",
@@ -1124,6 +1235,7 @@ const questions: { [key in GameRound]: Question[] } = {
     },
     {
       questionText: "Cocktails",
+      tags: ["Food & drinks"],
       explanation: "We will give you the initial letters of the names of cocktails, and a list of some of the main ingredients typically used to make them according to the International Bartenders Association. What we ant you to do is to name the cocktail.",
       acceptableAnswers: [
         {
@@ -1157,6 +1269,7 @@ const questions: { [key in GameRound]: Question[] } = {
   possible_answers: [
     {
       questionText: "Picasso Paintings",
+      tags: ["Art"],
       acceptableAnswers: [
         {
           answerText: "Cervantes",
@@ -1186,6 +1299,7 @@ const questions: { [key in GameRound]: Question[] } = {
     },
     {
       questionText: "Fictional Bears",
+      tags: ["Names", "Animals"],
       explanation:
         "The correct answers here are all fictional bears featured in books, comics, films and television. And all the incorrect answers are not bears at all.",
       acceptableAnswers: [
@@ -1221,6 +1335,7 @@ const questions: { [key in GameRound]: Question[] } = {
     },
     {
       questionText: "Greek food",
+      tags: ['Food & drinks'],
       explanation:
         "The correct answers here are all dishes or ingredients typically associated with Greek cuisine. The incorrect answers will not be foods at all.",
       acceptableAnswers: [
@@ -1258,6 +1373,7 @@ const questions: { [key in GameRound]: Question[] } = {
   fill_in_blank: [
     {
       questionText: "'Best Original Song' Oscar winners",
+      tags: ["Music"],
       acceptableAnswers: [
         {
           clue: "A Whole New __",
@@ -1288,6 +1404,7 @@ const questions: { [key in GameRound]: Question[] } = {
     },
     {
       questionText: "Space abbreviations",
+      tags: ['Space', "Words"],
       acceptableAnswers: [
         {
           clue: "Low __ Orbit",

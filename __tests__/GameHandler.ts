@@ -76,10 +76,10 @@ describe('#ClientGameHandler', () => {
       gameHandler.getGameById = jest.fn((_: string) => game);
   
       gameHandler.requestSetActiveQuestion(game.id, 'US states ending in \'A\'');
-      expect(game.currentQuestion?.question.possibleAnswers).toHaveLength(21);
+      expect(game.currentQuestion?.question.acceptableAnswers).toHaveLength(21);
       expect(game.currentQuestion?.questionInRound).toBe(1);
       expect(game.currentQuestion?.answeredTeams).toHaveLength(0);
-      expect(game.currentQuestion?.turn).toBe(1);
+      expect(game.currentQuestion?.pass).toBe(1);
       expect(game.questionStatus).toBe(QuestionStatus.waitingForTeamAnswer);
     });
   })
@@ -95,11 +95,11 @@ describe('#ClientGameHandler', () => {
         currentQuestion: {
           question: {
             questionText: 'Some question',
-            possibleAnswers: []
+            acceptableAnswers: []
           },
           questionInRound: 1,
           answeredTeams: ['teamA', 'teamB'],
-          turn: 1
+          pass: 1
         }
       };
       gameHandler.getGameById = jest.fn((_: string) => game);

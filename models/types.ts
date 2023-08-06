@@ -47,10 +47,13 @@ export function isGroupedAcceptableAnswers(possibleAnswers: AcceptableOrGroupedA
   return !Array.isArray(possibleAnswers);
 }
 
+type QuestionTag = 'Geography' | 'Music' | 'Words' | 'Currencies' | 'Chemistry' | 'Political leaders' | 'Nature' | 'One-word association' | 'Names' | 'Food & drinks' | "Space" | "Animals" | "Art" | "Fashion" | "Celebrities" | "Literature";
+
 export interface Question {
   questionText: string;
-  explanation?: string;
   acceptableAnswers: AcceptableOrGroupedAcceptableAnswers;
+  explanation?: string;
+  tags?: QuestionTag[];
 }
 
 export type AcceptableAnswerInGame = (AcceptableAnswer & {
@@ -73,7 +76,7 @@ export interface Game {
     answeredTeams: string[];
     orderedTeamsLeftToAnswer?: string[];
     lastAnswer?: string;
-    turn: number;
+    pass: number;
   }
 }
 

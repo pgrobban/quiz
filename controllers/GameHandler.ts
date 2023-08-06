@@ -16,7 +16,7 @@ import {
 } from "../models/types";
 import { findAcceptableAnswer } from './helpers';
 
-const NUMBER_OF_TURNS_FOR_ROUND: Record<GameRound, number> = {
+const NUMBER_OF_PASSES_FOR_ROUND: Record<GameRound, number> = {
   [GameRound.openEnded]: 3,
   [GameRound.cluesAndAnswers]: 1,
   [GameRound.fillInBlank]: 1,
@@ -141,7 +141,7 @@ export default class GameHandler {
         ? game.currentQuestion.questionInRound + 1
         : 1,
       answeredTeams: [],
-      turn: 0,
+      pass: 0,
     };
     game.questionStatus = QuestionStatus.receivedQuestion;
     this.requestSetTurnNumber(game.id);
@@ -160,7 +160,7 @@ export default class GameHandler {
       throw new Error("*** requestSetTurnNumber Assertion error");
     }
 
-    game.currentQuestion.turn++;
+    game.currentQuestion.pass++;
     console.log("*** after requestSetTurnNumber", game);
     return game;
   }
@@ -191,7 +191,7 @@ export default class GameHandler {
       game.currentQuestion.orderedTeamsLeftToAnswer =
         this.getOrderedTeamsToAnswer(
           game.teamsAndPoints,
-          game.currentQuestion.turn
+          game.currentQuestion.pass
         );
       game.currentQuestion.answeredTeams = [];
       game.currentQuestion.lastAnswer = undefined;
@@ -210,10 +210,10 @@ export default class GameHandler {
 
   private getOrderedTeamsToAnswer(
     teamsAndPoints: TeamAndPoints[],
-    turn: number
+    pass: number
   ) {
     let orderedTeamsAndPoints;
-    switch (turn) {
+    switch (pass) {
       case 1:
         orderedTeamsAndPoints = shuffle(teamsAndPoints);
       case 2:
@@ -317,7 +317,7 @@ export default class GameHandler {
       return this.requestTeamAnswer(gameId);
     }
 
-    if (game.currentQuestion.turn < NUMBER_OF_TURNS_FOR_ROUND[game.round]) {
+    if (game.currentQuestion.pass < NUMBER_OF_PASSES_FOR_ROUND[game.round]) {
       game.questionStatus = QuestionStatus.receivedQuestion;
       this.requestSetTurnNumber(gameId);
       return this.requestTeamAnswer(gameId);

@@ -30,15 +30,17 @@ export default function QuestionPicker() {
             </TableCell>
           </TableRow>
           <TableRow>
+            <TableCell>Tags</TableCell>
             <TableCell>Question</TableCell>
             <TableCell align="right">Pick</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {questions[round].map((question) => {
-            const { questionText } = question;
+            const { tags, questionText } = question;
             return (
               <TableRow key={questionText}>
+                <TableCell>{tags?.sort().join(", ") || ''}</TableCell>
                 <TableCell>{questionText}</TableCell>
                 <TableCell align="right">
                   <Button
