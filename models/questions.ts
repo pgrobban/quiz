@@ -675,6 +675,43 @@ const questions: { [key in GameRound]: Question[] } = {
       ],
     },
     {
+      questionText: "Famous Joes",
+      explanation: "The following clues each describe a famous person either born or famously known as Joe or Joseph. Can you name the person described by each clue?",
+      tags: ["Names"],
+      acceptableAnswers: [
+        {
+          clue: "Author of 'Catch-22'",
+          answerText: "Joseph Heller",
+          points: 17,
+        },
+        {
+          clue: "Vice President under the Obama administration",
+          answerText: "Joe Biden",
+          points: 13,
+        },
+        {
+          clue: "Frontman of The Clash'",
+          answerText: "Joe Strummer",
+          points: 17,
+        },
+        {
+          clue: "Given name of Pope Benedict XVI",
+          answerText: "Joseph Ratzinger",
+          points: 4,
+        },
+        {
+          clue: "The Soviet Union's 'Man of Steel'",
+          answerText: "Joseph Stalin",
+          points: 20,
+        },
+        {
+          clue: "Guitar virtuoso famous for albums such as 'Surfing with the Alien'",
+          answerText: "Joe Satriani",
+          points: 17,
+        },
+      ],
+    },
+    {
       questionText: "Milk",
       tags: ["One-word association"],
       acceptableAnswers: [
