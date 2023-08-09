@@ -1514,6 +1514,38 @@ const questions: { [key in GameRound]: Question[] } = {
         },
       ],
     },
+    {
+      questionText: "President Kennedy",
+      tags: ["History"],
+      explanation: "Here are some questions about the 35th President of the United States. We want you to tell us the answers.",
+      acceptableAnswers: [
+        {
+          clue: "City where he ied",
+          answerText: "Dallas",
+          points: 37,
+        },
+        {
+          clue: "His political party",
+          answerText: "The Democratic Party",
+          points: 27,
+        },
+        {
+          clue: "Middle name",
+          answerText: "Fitzgerald",
+          points: 15,
+        },
+        {
+          clue: "US state of birth",
+          answerText: "Massachusetts",
+          points: 8,
+        },
+        {
+          clue: "Wife's first name",
+          answerText: "Jacqueline",
+          points: 49,
+        },
+      ],
+    },
   ],
   possible_answers: [
     {
