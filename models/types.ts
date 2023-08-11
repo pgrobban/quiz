@@ -47,7 +47,7 @@ export function isGroupedAcceptableAnswers(possibleAnswers: AcceptableOrGroupedA
   return !Array.isArray(possibleAnswers);
 }
 
-type QuestionTag = 'Geography' | 'Music' | 'Words' | 'Currencies' | 'Chemistry' | 'Political leaders' | 'Nature' | 'One-word association' | 'Names' | 'Food & drinks' | "Space" | "Animals" | "Art" | "Fashion" | "Celebrities" | "Literature";
+type QuestionTag = 'Geography' | 'Music' | 'Words' | 'Currencies' | 'Chemistry' | 'Political leaders' | 'Nature' | 'One-word association' | 'Names' | 'Food & drinks' | "Space" | "Animals" | "Art" | "Fashion" | "Celebrities" | "Literature" | "History" | "Movies";
 
 export interface Question {
   questionText: string;
