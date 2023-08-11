@@ -1720,6 +1720,48 @@ const questions: { [key in GameRound]: Question[] } = {
         },
       ],
     },
+    {
+      questionText: "French names for countries",
+      tags: ["Words"],
+      explanation: "We are going to show you seven countries on the board. You just have to tell us the English names of those countries.",
+      acceptableAnswers: [
+        {
+          clue: "Royaume-Uni",
+          answerText: "United Kingdom",
+          points: 37,
+        },
+        {
+          clue: "Maurice",
+          answerText: "Mauritius",
+          points: 15,
+        },
+        {
+          clue: "Allemagne",
+          answerText: "Germany",
+          points: 67,
+        },
+        {
+          clue: "Pologne",
+          answerText: "Poland",
+          points: 66,
+        },
+        {
+          clue: "L'Autriche",
+          answerText: "Austria",
+          points: 32,
+        },
+        {
+          clue: "Saint-Marin",
+          answerText: "San Marino",
+          points: 13,
+        },
+        {
+          clue: "Espagne",
+          answerText: "Spain",
+          points: 95,
+        },
+      ],
+    },
   ],
   possible_answers: [
     {
