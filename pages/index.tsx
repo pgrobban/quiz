@@ -2,9 +2,7 @@ import { Button } from "@mui/material";
 import Head from "next/head";
 import Image from "next/image";
 import CountdownBar from "../components/CountdownBar";
-import PictureBoard from "../components/PictureBoard";
 import { useAppContext } from "../controllers/AppWrapper";
-import questions from "../models/questions";
 import styles from "../styles/Home.module.css";
 
 function Home() {

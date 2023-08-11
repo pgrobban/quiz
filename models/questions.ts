@@ -705,7 +705,7 @@ const questions: { [key in GameRound]: Question[] } = {
         { answerText: "Tunisia", points: 4 },
         { answerText: "Vanuatu", points: 0 }
       ],
-    }
+    },
     {
       questionText: "Cold War Leaders",
       tags: ["Political leaders"],
@@ -911,6 +911,43 @@ const questions: { [key in GameRound]: Question[] } = {
           clue: "President of the United States 1969-74",
           answerText: "Nixon",
           points: 51,
+        },
+      ],
+    },
+    {
+      questionText: "Disney Characters",
+      tags: ["Movies"],
+      explanation: "We are going to show you descriptions of characters from Disney animation films and the year the film was made in brackets. You just have to tell us who the character is.",
+      acceptableAnswers: [
+        {
+          clue: "Little dragon who helps Mulan (1998)",
+          answerText: "Mushu",
+          points: 3,
+        },
+        {
+          clue: "The elephant who could fly thanks to large ears (1941)",
+          answerText: "Dumbo",
+          points: 82,
+        },
+        {
+          clue: "Ariel's pet crab who almost gets cooked (1989)",
+          answerText: "Sebastian",
+          points: 18,
+        },
+        {
+          clue: "Experiment 626, lives in Hawaii (2002)",
+          answerText: "Stitch",
+          points: 20,
+        },
+        {
+          clue: "Little grey rabbit, best friend of Bambi (1942)",
+          answerText: "Thumper (Stampe)",
+          points: 65,
+        },
+        {
+          clue: "Villainess who wants to make a fur coat out of Pongo's puppies (1961)",
+          answerText: "Cruella de Vil",
+          points: 1961,
         },
       ],
     },
@@ -2000,6 +2037,37 @@ const questions: { [key in GameRound]: Question[] } = {
           answerText: "Daihatsu",
           clue: "daihatsu.png",
           points: 7,
+        },
+      ],
+    },
+    {
+      questionText: "Five-letter animal names",
+      explanation: "",
+      acceptableAnswers: [
+        {
+          answerText: "Okapi",
+          clue: "okapi.jpg",
+          points: 42,
+        },
+        {
+          answerText: "Hyena",
+          clue: "hyena.jpg",
+          points: 45,
+        },
+        {
+          answerText: "Eagle",
+          clue: "eagle.webp",
+          points: 37,
+        },
+        {
+          answerText: "Otter",
+          clue: "otter.jpg",
+          points: 65,
+        },
+        {
+          answerText: "Tiger",
+          clue: "tiger.jpg",
+          points: 95,
         },
       ],
     },
