@@ -57,7 +57,7 @@ const questions: { [key in GameRound]: Question[] } = {
       ],
     },
     {
-      questionText: "Landlocked countries of the world'",
+      questionText: "Landlocked countries of the world",
       explanation: "We are looking for any country which has no coastline on any sea or ocean. Countries which border only inland seas and lakes will be accepted.\nBy 'country' we mean any sovereign state that is a member of the UN in its own right as of the beginning of May 2011.\n\nWe will not accept 'South Sudan' as an answer as it did not become an independent country until July 2011, after we had polled our 100 people.",
       tags: ["Geography"],
       acceptableAnswers: [
@@ -104,6 +104,44 @@ const questions: { [key in GameRound]: Question[] } = {
         { answerText: "Zambia", points: 6 },
         { answerText: "Zimbabwe", points: 6 },
       ],
+    },
+    {
+      questionText: "Olympics multi-event disciplines",
+      explanation: "We are going to show you a list of four different multi-event sports as featured in the Summer Olympic Games. We'd like you to name any individual event (or discipline) which forms part of at least one of these Olympic sports. We will accept distances alone for running events; however, we will require the name of the discipline and wherever necessary a distance for anything else.\n\nAny discipline which features in more than one of these sports, we will only accept as an answer once.\n\nDecathlon - 10 disciplines\nHeptathlon - 7 disciplines\nModern pentathlon - 5 disciplines\nTriathlon - 3 disciplines",
+      tags: ["Geography"],
+      acceptableAnswers: {
+        Decathlon: [
+          { answerText: '100m', points: 44 },
+          { answerText: '110m hurdles', points: 15 },
+          { answerText: '1500m', points: 18 },
+          { answerText: '400m', points: 32 },
+          { answerText: 'Discus throw', points: 35 },
+          { answerText: 'Pole vault', points: 29 }
+        ],
+        'Decathlon & heptathlon': [
+          { answerText: 'High jump', points: 55 },
+          { answerText: 'Javelin throw', points: 58 },
+          { answerText: 'Long jump', points: 61 },
+          { answerText: 'Shot put', points: 34 },
+        ],
+        Heptathlon: [
+          { answerText: '100m hurdles', points: 6 },
+          { answerText: '200m', points: 9 },
+          { answerText: '800m', points: 24 },
+        ],
+        'Modern pentathlon': [
+          { answerText: '200m swim', points: 1 },
+          { answerText: '3km run', points: 0 },
+          { answerText: 'Fencing', points: 11 },
+          { answerText: 'Riding', points: 9 },
+          { answerText: 'Shooting', points: 26 },
+        ],
+        'Triathlon': [
+          { answerText: '10km run', points: 1 },
+          { answerText: '1500m swim', points: 1 },
+          { answerText: '40km cycle', points: 0 },
+        ]
+      }
     },
     {
       questionText: "Madonna singles with three-word titles'",
