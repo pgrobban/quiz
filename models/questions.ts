@@ -883,6 +883,48 @@ const questions: { [key in GameRound]: Question[] } = {
         { answerText: "Wunderkind", points: 0 },
       ],
     },
+    {
+      questionText: "Members of famous quartets'",
+      tags: ["Music"],
+      explanation: "Here are the names of six bands that are made up of four members.\nWe would like you to name any band member from any of the bands. We are looking for the band members with which the band had the majority of hits. We will accept their stage names.\n\nThe bands are: Talking Heads, Queen, Led Zeppelin, Coldplay, The Beatles, McFly",
+      acceptableAnswers: {
+        "Coldplay": [
+          { answerText: 'Chris Martin', points: 29 },
+          { answerText: 'Guy Berryman', points: 1 },
+          { answerText: 'Jonny Buckland', points: 1 },
+          { answerText: 'Will Champion', points: 1 },
+        ],
+        "Led Zeppelin": [
+          { answerText: 'Jimmy Page', points: 12 },
+          { answerText: 'John Bonham', points: 9 },
+          { answerText: 'John Paul Jones', points: 6 },
+          { answerText: 'Robert Plant', points: 17 },
+        ],
+        "McFly": [
+          { answerText: 'Danny Jones', points: 3 },
+          { answerText: 'Dougie Poynter', points: 7 },
+          { answerText: 'Harry Judd', points: 4 },
+          { answerText: 'Tom Fletcher', points: 1 },
+        ],
+        "Queen": [
+          { answerText: 'Brian May', points: 43 },
+          { answerText: 'Freddie Mercury', points: 64 },
+          { answerText: 'John Deacon', points: 9 },
+          { answerText: 'Roger Taylor', points: 13 },
+        ],
+        "Talking Heads": [
+          { answerText: 'Christ Frantz', points: 2 },
+          { answerText: 'David Byrne', points: 10 },
+          { answerText: 'Jerry Harrison', points: 2 },
+          { answerText: 'Tina Weymouth', points: 2 },
+        ],
+        "The Beatles": [
+          { answerText: 'George Harrison', points: 56 },
+          { answerText: 'John Lennon', points: 83 },
+          { answerText: 'Paul McCartney', points: 80 },
+          { answerText: 'Ringo Starr', points: 71 },
+        ],
+      }
   ],
   clues_and_answers: [
     {
