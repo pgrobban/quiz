@@ -959,6 +959,43 @@ const questions: { [key in GameRound]: Question[] } = {
       ],
     },
     {
+      tags: ["Food & drinks"],
+      questionText: "'Q' foods",
+      explanation: "We are going to show you a list of clues to types of food and drink whose names either begin with, or contain, the letter Q. We would like you to say what food or drink each clue describes.",
+      acceptableAnswers: [
+        {
+          clue: "Blue cheese made from shee's milk and aged in limestone caverns",
+          answerText: "Roquefort",
+          points: 9,
+        },
+        {
+          clue: "Small Asian citrus fruit",
+          answerText: "Kumquat",
+          points: 17,
+        },
+        {
+          clue: "Classic French dish of chicken braised in red wine",
+          answerText: "Coq au vin",
+          points: 38,
+        },
+        {
+          clue: "Cocktail of rum, lime juice and sugar",
+          answerText: "Daiquiri",
+          points: 8,
+        },
+        {
+          clue: "Mexican dish, tortilla filled with cheese",
+          answerText: "Quesadilla",
+          points: 42,
+        },
+        {
+          clue: "Grain-like seed, staple food in the Andes",
+          answerText: "Quinoa",
+          points: 16,
+        },
+      ],
+    },
+    {
       questionText: "Famous Richards",
       tags: ["Names"],
       acceptableAnswers: [
