@@ -30,9 +30,32 @@ const questions: { [key in GameRound]: Question[] } = {
       ],
     },
     {
+      questionText: "Steven Spielberg films 1990-2012",
+      explanation: "We are looking for any full-length feature film made for cinema release for which Steven Spielberg was credited as 'director', according to IMDb, that had its first release from the beginning of 1990 to the end of 2012.",
+      tags: ["Geography"],
+      acceptableAnswers: [
+        { answerText: "A.I. Artificial Intelligence", points: 4 },
+        { answerText: "Amistad", points: 0 },
+        { answerText: "Catch Me If You Can", points: 2 },
+        { answerText: "Hook", points: 1 },
+        { answerText: "Indiana Jones and the Kingdom of the Crystal Skull", points: 4 },
+        { answerText: "Jurassic Park", points: 21 },
+        { answerText: "Lincoln", points: 12 },
+        { answerText: "Minority Report", points: 1 },
+        { answerText: "Munich", points: 0 },
+        { answerText: "Saving Private Ryan", points: 19 },
+        { answerText: "Schindler's List", points: 27 },
+        { answerText: "The Adventures of Tintin", points: 1 },
+        { answerText: "The Lost World: Jurassic Park", points: 2 },
+        { answerText: "The Terminal", points: 0 },
+        { answerText: "War Horse", points: 6 },
+        { answerText: "War of the Worlds", points: 5 }
+      ],
+    },
+    {
       questionText: "Keira Knightley films",
       explanation: "Any feature film made for general cinema release, for which Keira Knightley received an acting credit, prior to May 2011. No short films, TV films, documentaries or anything where she has played herself. Voice performances, however, do count.",
-      tags: ["Movies"],
+      tags: ["Films"],
       acceptableAnswers: [
         { answerText: "Atonement", points: 34 },
         { answerText: "Bend It Like Beckham", points: 30 },
@@ -1033,7 +1056,7 @@ const questions: { [key in GameRound]: Question[] } = {
     },
     {
       questionText: "Disney Characters",
-      tags: ["Movies"],
+      tags: ["Films"],
       explanation: "We are going to show you descriptions of characters from Disney animation films and the year the film was made in brackets. You just have to tell us who the character is.",
       acceptableAnswers: [
         {
