@@ -33,6 +33,7 @@ const NUMBER_OF_QUESTIONS_FOR_ROUND: Record<GameRound, number> = {
   [GameRound.linkedCategories]: 3,
   [GameRound.partIdentification]: 3,
   [GameRound.possibleAnswers]: 3,
+  [GameRound.pictureBoard]: 1
 };
 
 export default class GameHandler {

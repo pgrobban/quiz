@@ -14,14 +14,11 @@ export default function ScoreList(props: Props) {
   const appContext = useAppContext();
   const { gameHandler } = appContext;
   const activeGame = gameHandler.getActiveGame();
-
-  if (!activeGame) {
-    return null;
-  }
-
   const { teamsAndPoints, questionStatus, currentQuestion } = activeGame || {};
-  const sortedTeamsAndPoints = teamsAndPoints?.sort(
-    (teamA, teamB) => teamB.points - teamA.points
+
+  const pointsToAdd = activeGame ? getScoreFromLatestAnswer(activeGame) : 0;
+  const [pointsLeftToAdd, setPointsLeftToAdd] = useState(
+    animate ? pointsToAdd : 0
   );
 
   const currentTeamAnswering =
@@ -32,11 +29,6 @@ export default function ScoreList(props: Props) {
       ].includes(questionStatus) &&
       currentQuestion?.orderedTeamsLeftToAnswer?.[0]) ||
     null;
-
-  const pointsToAdd = getScoreFromLatestAnswer(activeGame);
-  const [pointsLeftToAdd, setPointsLeftToAdd] = useState(
-    animate ? pointsToAdd : 0
-  );
 
   useEffect(() => {
     if (!animate) {
@@ -72,6 +64,14 @@ export default function ScoreList(props: Props) {
 
     return () => clearInterval(i);
   }, [animate, currentTeamAnswering, pointsLeftToAdd, callback]);
+
+  if (!activeGame) {
+    return null;
+  }
+
+  const sortedTeamsAndPoints = teamsAndPoints?.sort(
+    (teamA, teamB) => teamB.points - teamA.points
+  );
 
   if (!activeGame) {
     return null;
