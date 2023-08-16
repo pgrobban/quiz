@@ -887,7 +887,7 @@ const questions: { [key in GameRound]: Question[] } = {
         { answerText: "Paraguay", points: 14 },
         { answerText: "Seychelles", points: 0 },
         { answerText: "Swaziland", points: 3 },
-        { answerText: "Swaziland", points: 6 },
+        { answerText: "Switzerland", points: 6 },
         { answerText: "Syria", points: 2 },
         { answerText: "Tanzania", points: 19 },
         { answerText: "The Former Yugoslav Republic of Macedonia", points: 0 },
@@ -995,6 +995,7 @@ const questions: { [key in GameRound]: Question[] } = {
           { answerText: 'Ringo Starr', points: 71 },
         ],
       }
+    }
   ],
   clues_and_answers: [
     {
@@ -1023,7 +1024,7 @@ const questions: { [key in GameRound]: Question[] } = {
         },
         {
           clue: "In this city state, the doge was the highest official for over a thousand years",
-          answerText: "Ross",
+          answerText: "Venice",
           points: 10,
         },
         {
