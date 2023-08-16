@@ -1092,6 +1092,116 @@ const questions: { [key in GameRound]: Question[] } = {
       ],
     },
     {
+      questionText: "UK number one singles with one-word titles",
+      tags: ["Music"],
+      explanation: "We are going to show you UK number one singles that have one-word titles. We'd like you to tell us the artists that had the hits in the year shown.",
+      acceptableAnswers: [
+        {
+          clue: "Hello (1984)",
+          answerText: "Lionel Richie",
+          points: 38,
+        },
+        {
+          clue: "Goodbye (1998)",
+          answerText: "Spice Girls",
+          points: 4,
+        },
+        {
+          clue: "Cars (1979)",
+          answerText: "Gary Numan",
+          points: 20,
+        },
+        {
+          clue: "Help! (1965)",
+          answerText: "The Beatles",
+          points: 70,
+        },
+        {
+          clue: "Vogue (1990)",
+          answerText: "Madonna",
+          points: 53,
+        },
+        {
+          clue: "Stan (2000)",
+          answerText: "Eminem",
+          points: 29,
+        },
+      ],
+    },
+    {
+      questionText: "Volcanoes and their countries",
+      tags: ["Geography"],
+      explanation: "Here is a list of volcanoes. Can you tell us in which country they are located?\nAs always, by 'country' we mean a sovereign state that is a member of the UN in its own right.",
+      acceptableAnswers: [
+        {
+          clue: "Eyjafjallajökull",
+          answerText: "Iceland",
+          points: 37,
+        },
+        {
+          clue: "Cotopaxi",
+          answerText: "Ecuador",
+          points: 0,
+        },
+        {
+          clue: "Krakatoa",
+          answerText: "Indonesia",
+          points: 12,
+        },
+        {
+          clue: "Mount Meager",
+          answerText: "Canada",
+          points: 0,
+        },
+        {
+          clue: "Mount Ararat",
+          answerText: "Turkey",
+          points: 5,
+        },
+        {
+          clue: "Mount Etna",
+          answerText: "Italy",
+          points: 46,
+        },
+      ],
+    },
+    {
+      questionText: "Volcanoes and their countries II",
+      tags: ["Geography"],
+      acceptableAnswers: [
+        {
+          clue: "Mount Fuji",
+          answerText: "Japan",
+          points: 35,
+        },
+        {
+          clue: "Mount Rainier",
+          answerText: "USA",
+          points: 5,
+        },
+        {
+          clue: "Mount St. Helens",
+          answerText: "USA",
+          points: 5,
+        },
+        {
+          clue: "Popocatepetl",
+          answerText: "Mexico",
+          points: 11,
+        },
+        {
+          clue: "Santorini",
+          answerText: "Greece",
+          points: 15,
+        },
+        {
+          clue: "Vesuvius",
+          answerText: "Italy",
+          points: 40,
+        },
+      ],
+    },
+    {
       questionText: "Famous Joes",
       explanation: "The following clues each describe a famous person either born or famously known as Joe or Joseph. Can you name the person described by each clue?",
       tags: ["Names"],
