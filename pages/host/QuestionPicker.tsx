@@ -56,6 +56,10 @@ export default function QuestionPicker() {
           })}
         </TableBody>
       </Table>
+
+      <Button variant="contained" onClick={() => gameHandler.requestUndoRoundSelection()}>
+        Back to round selection
+      </Button>
     </>
   );
 }

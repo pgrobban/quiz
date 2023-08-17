@@ -63,6 +63,11 @@ const SocketHandler = (_: NextApiRequest, res: NextApiResponseWithSocket) => {
       io.to(game.id).emit('active-round-set', game);
     });
 
+    socket.on('request-undo-active-round', (gameId) => {
+      const game = gameHandler.requestUndoActiveRound(gameId);
+      io.to(game.id).emit('active-round-undone', game);
+    });
+
     socket.on('request-set-active-question', ({ gameId, questionText }) => {
       const game = gameHandler.requestSetActiveQuestion(gameId, questionText);
       io.to(game.id).emit('active-question-set', game);

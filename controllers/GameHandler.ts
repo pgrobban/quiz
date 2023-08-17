@@ -90,6 +90,18 @@ export default class GameHandler {
     return game;
   }
 
+  requestUndoActiveRound(gameId: string) {
+    const game = this.getGameById(gameId);
+    if (game.gameStatus !== GameStatus.inProgress || game.questionStatus !== QuestionStatus.waitingForQuestion) {
+      console.log(game);
+      throw new Error("*** requestUndoActiveRound assertion error");
+    }
+
+    game.round = undefined;
+    game.questionStatus = QuestionStatus.waitingForRound;
+    return game;
+  }
+
   private getAcceptableAnswersInGame(
     acceptableAnswers: AcceptableOrGroupedAcceptableAnswers
   ): AcceptableOrGroupedAcceptableAnswersInGame {
@@ -110,10 +122,10 @@ export default class GameHandler {
   }
 
   requestSetActiveQuestion(gameId: string, questionText: string) {
-    console.log("*** requestSetActiveQuestion");
     const game = this.getGameById(gameId);
     const { round, gameStatus } = game;
     if (gameStatus !== GameStatus.inProgress || !round) {
+      console.log(game);
       throw new Error("*** requestSetActiveQuestion Assertion error");
     }
 

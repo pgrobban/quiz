@@ -54,6 +54,10 @@ export default function AppWrapper({
         gameHandler.onActiveRoundSet(game);
         setGameState(game);
       });
+      socket.on("active-round-undone", (game: Game) => {
+        gameHandler.onActiveRoundUndone(game);
+        setGameState(game);
+      })
       socket.on("active-question-set", (game: Game) => {
         gameHandler.onActiveQuestionSet(game);
         setGameState(game);

@@ -44,6 +44,10 @@ export default class ClientGameHandler {
     this.socket.emit('request-set-active-round', { gameId: this.activeGame?.id, gameRound });
   }
 
+  requestUndoRoundSelection() {
+    this.socket.emit('request-undo-active-round', this.activeGame?.id);
+  }
+
   requestSetActiveQuestion(questionText: string) {
     this.socket.emit('request-set-active-question', { gameId: this.activeGame?.id, questionText });
   }
@@ -103,7 +107,6 @@ export default class ClientGameHandler {
   }
 
   onNewGameCreated(game: Game) {
-    console.log("*** on new game")
     this.activeGame = game;
     localStorage.setItem('gameId', game.id);
     Router.push('/player/new-game');
@@ -150,6 +153,10 @@ export default class ClientGameHandler {
   }
 
   onAddedScore(game: Game) {
+    this.activeGame = game;
+  }
+
+  onActiveRoundUndone(game: Game) {
     this.activeGame = game;
   }
 }
