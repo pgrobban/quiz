@@ -14,13 +14,14 @@ import { useState } from "react";
 import { getScoreFromLatestAnswer } from "../../controllers/helpers";
 import CluesAndAnswersBoard from "../../components/CluesAndAnswersBoard";
 import PossibleAnswersBoard from "../../components/PossibleAnswersBoard";
+import PictureBoard from "../../components/PictureBoard";
 
 function Game() {
   const appContext = useAppContext();
   const { gameHandler, gameState } = appContext;
   const [isAnimatingScore, setIsAnimatingScore] = useState<boolean>(false);
 
-  const { gameStatus, questionStatus, currentQuestion } = gameState || {};
+  const { gameStatus, questionStatus, currentQuestion, round } = gameState || {};
   if (!gameState) {
     return null;
   }
@@ -34,6 +35,33 @@ function Game() {
     setIsAnimatingScore(false);
     gameHandler.requestAddingScore();
   };
+
+  const getGameBoard = () => {
+    if (!round || !acceptableAnswers || !currentQuestion?.question) {
+      return null;
+    }
+
+    switch (gameState.round) {
+      case GameRound.cluesAndAnswers:
+        if (isGroupedAcceptableAnswers(acceptableAnswers)) {
+          return null;
+        }
+        return <CluesAndAnswersBoard awardingPointsInProgress={awardingPointsInProgress} answersInGame={acceptableAnswers} />
+      case GameRound.possibleAnswers:
+        if (isGroupedAcceptableAnswers(acceptableAnswers)) {
+          return null;
+        }
+        return <PossibleAnswersBoard awardingPointsInProgress={awardingPointsInProgress} answersInGame={acceptableAnswers} />;
+      case GameRound.pictureBoard:
+        if (isGroupedAcceptableAnswers(acceptableAnswers)) {
+          return null;
+        }
+        return <PictureBoard awardingPointsInProgress={awardingPointsInProgress} questionInGame={currentQuestion.question} />;
+      default:
+        return null;
+    }
+  }
+  
 
   return (
     <>
@@ -65,17 +93,7 @@ function Game() {
                   <h2>{currentQuestion.question.questionText}</h2>
                   <p>{currentQuestion.question.explanation}</p>
 
-                  {gameState.round === GameRound.cluesAndAnswers &&
-                    acceptableAnswers &&
-                    !isGroupedAcceptableAnswers(acceptableAnswers) && (
-                      <CluesAndAnswersBoard awardingPointsInProgress={awardingPointsInProgress} answersInGame={acceptableAnswers} />
-                  )}
-                
-                {gameState.round === GameRound.possibleAnswers &&
-                    acceptableAnswers &&
-                    !isGroupedAcceptableAnswers(acceptableAnswers) && (
-                      <PossibleAnswersBoard awardingPointsInProgress={awardingPointsInProgress} answersInGame={acceptableAnswers} />
-                    )}
+                  {getGameBoard()}
 
                   {questionStatus === QuestionStatus.waitingForTeamAnswer &&
                     currentQuestion.orderedTeamsLeftToAnswer && (
