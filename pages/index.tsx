@@ -4,6 +4,9 @@ import Image from "next/image";
 import CountdownBar from "../components/CountdownBar";
 import { useAppContext } from "../controllers/AppWrapper";
 import styles from "../styles/Home.module.css";
+import PictureBoard from "../components/PictureBoard";
+import { GameRound } from "../models/types";
+import questions from "../models/questions";
 
 function Home() {
   const appContext = useAppContext();
@@ -37,6 +40,7 @@ function Home() {
         </div>
       </main>
       <CountdownBar to={0} callback={() => {}} />
+      <PictureBoard questionInGame={questions[GameRound.pictureBoard][3]} />
     </>
   );
 }

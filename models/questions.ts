@@ -2304,27 +2304,27 @@ const questions: { [key in GameRound]: Question[] } = {
       acceptableAnswers: [
         {
           clue: "A Whole New __",
-          answerText: "A Whole New World",
+          answerText: "World",
           points: 78,
         },
         {
           clue: "__ River",
-          answerText: "Moon River",
+          answerText: "Moon",
           points: 49,
         },
         {
           clue: "Over the __",
-          answerText: "Over the Rainbow",
+          answerText: "Rainbow",
           points: 74,
         },
         {
           clue: "Let __ Go",
-          answerText: "Let It Go",
+          answerText: "It",
           points: 58,
         },
         {
           clue: "Talk to the __",
-          answerText: "Talk to the Animals",
+          answerText: "Animals",
           points: 25,
         },
       ],
@@ -2335,32 +2335,27 @@ const questions: { [key in GameRound]: Question[] } = {
       acceptableAnswers: [
         {
           clue: "Low __ Orbit",
-          answerText: "Low Earth Orbit",
+          answerText: "Earth",
           points: 23,
         },
         {
           clue: "__ Aerial Vehicle",
-          answerText: "Unmanned Aerial Vehicle",
+          answerText: "Unmanned",
           points: 10,
         },
         {
           clue: "__ Space Station",
-          answerText: "International Space Station",
+          answerText: "International",
           points: 60,
         },
         {
-          clue: "Let __ Go",
-          answerText: "Let It Go",
-          points: 58,
-        },
-        {
           clue: "__ Express",
-          answerText: "Mars Express",
+          answerText: "Mars",
           points: 8,
         },
         {
           clue: "Hubble Space __",
-          answerText: "Hubble Space Telescope",
+          answerText: "Telescope",
           points: 49,
         },
       ],
@@ -2460,6 +2455,38 @@ const questions: { [key in GameRound]: Question[] } = {
           answerText: "Tesla",
           clue: "tesla.webp",
           points: 37,
+        },
+      ],
+    },
+    {
+      questionText: "Film aliens",
+      explanation:
+        "We're going to show you five images of alien life forms from various films. We need you to tell us the name of the film these first appeared in.",
+      acceptableAnswers: [
+        {
+          answerText: "Coneheads",
+          clue: "coneheads.jpg",
+          points: 20,
+        },
+        {
+          answerText: "The Hitchhiker's Guide To The Galaxyt",
+          clue: "vogon.jpg",
+          points: 6,
+        },
+        {
+          answerText: "Paul",
+          clue: "paul.jpg",
+          points: 19,
+        },
+        {
+          answerText: "Lilo & Stitch",
+          clue: "stitch.jpg",
+          points: 10,
+        },
+        {
+          answerText: "E.T. The Extra-Terrestrial",
+          clue: "et.jpg",
+          points: 96,
         },
       ],
     },
