@@ -2434,6 +2434,36 @@ const questions: { [key in GameRound]: Question[] } = {
       ],
     },
     {
+      questionText: "Car logos (II)",
+      acceptableAnswers: [
+        {
+          answerText: "Subaru",
+          clue: "subaru.jpg",
+          points: 17,
+        },
+        {
+          answerText: "Mitsubishi",
+          clue: "mitsubishi.png",
+          points: 39,
+        },
+        {
+          answerText: "Koenigsegg",
+          clue: "koenigsegg.png",
+          points: 1,
+        },
+        {
+          answerText: "Peugeot",
+          clue: "peugeot.png",
+          points: 27,
+        },
+        {
+          answerText: "Tesla",
+          clue: "tesla.webp",
+          points: 37,
+        },
+      ],
+    },
+    {
       questionText: "Five-letter animal names",
       explanation: "",
       acceptableAnswers: [
@@ -2461,6 +2491,37 @@ const questions: { [key in GameRound]: Question[] } = {
           answerText: "Tiger",
           clue: "tiger.jpg",
           points: 95,
+        },
+      ],
+    },
+    {
+      questionText: "Stringed instruments",
+      explanation: "",
+      acceptableAnswers: [
+        {
+          answerText: "Lute",
+          clue: "lute.webp",
+          points: 21,
+        },
+        {
+          answerText: "Sitar",
+          clue: "sitar.jpg",
+          points: 36,
+        },
+        {
+          answerText: "Banjo",
+          clue: "banjo.jpg",
+          points: 72,
+        },
+        {
+          answerText: "Balalaika",
+          clue: "balalaika.webp",
+          points: 3,
+        },
+        {
+          answerText: "Electric guitar",
+          clue: "electric_guitar.jpg",
+          points: 89,
         },
       ],
     },
