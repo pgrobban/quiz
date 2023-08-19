@@ -3,7 +3,6 @@ import { orderBy, shuffle } from "lodash";
 import { v4 as uuid } from "uuid";
 import questions from "../models/questions";
 import {
-  AcceptableAnswerInGame,
   AcceptableOrGroupedAcceptableAnswers,
   Game,
   GameRound,
@@ -14,7 +13,7 @@ import {
   TeamAndPoints,
   isGroupedAcceptableAnswers,
 } from "../models/types";
-import { findAcceptableAnswer } from './helpers';
+import { findAcceptableAnswer, markAnswerAsAccepted } from './helpers';
 
 const NUMBER_OF_PASSES_FOR_ROUND: Record<GameRound, number> = {
   [GameRound.openEnded]: 3,
@@ -256,7 +255,7 @@ export default class GameHandler {
         answerText
       );
       if (foundAcceptableAnswer) {
-        foundAcceptableAnswer.answered = true;
+        markAnswerAsAccepted(game.currentQuestion.question.acceptableAnswers, answerText);
       } else {
         console.log(game);
         throw new Error("requestVerificationOfAnswer Assertion error");
