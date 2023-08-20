@@ -37,26 +37,14 @@ function Game() {
   };
 
   const getGameBoard = () => {
-    if (!round || !acceptableAnswers || !currentQuestion?.question) {
-      return null;
-    }
 
     switch (gameState.round) {
       case GameRound.cluesAndAnswers:
-        if (isGroupedAcceptableAnswers(acceptableAnswers)) {
-          return null;
-        }
-        return <CluesAndAnswersBoard awardingPointsInProgress={awardingPointsInProgress} answersInGame={acceptableAnswers} />
+        return <CluesAndAnswersBoard game={gameState} />
       case GameRound.possibleAnswers:
-        if (isGroupedAcceptableAnswers(acceptableAnswers)) {
-          return null;
-        }
-        return <PossibleAnswersBoard awardingPointsInProgress={awardingPointsInProgress} answersInGame={acceptableAnswers} />;
+        return <PossibleAnswersBoard game={gameState} />;
       case GameRound.pictureBoard:
-        if (isGroupedAcceptableAnswers(acceptableAnswers)) {
-          return null;
-        }
-        return <PictureBoard awardingPointsInProgress={awardingPointsInProgress} questionInGame={currentQuestion.question} />;
+        return <PictureBoard game={gameState} />;
       default:
         return null;
     }

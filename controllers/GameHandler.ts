@@ -153,14 +153,13 @@ export default class GameHandler {
         ? game.currentQuestion.questionInRound + 1
         : 1,
       answeredTeams: [],
-      pass: 0,
+      pass: 1,
     };
     game.questionStatus = QuestionStatus.receivedQuestion;
-    this.requestSetTurnNumber(game.id);
     return this.requestTeamAnswer(game.id);
   }
 
-  requestSetTurnNumber(gameId: string) {
+  requestIncrementPassNumber(gameId: string) {
     const game = this.getGameById(gameId);
     const { round, gameStatus } = game;
     if (
@@ -173,7 +172,6 @@ export default class GameHandler {
     }
 
     game.currentQuestion.pass++;
-    console.log("*** after requestSetTurnNumber", game);
     return game;
   }
 
@@ -331,17 +329,11 @@ export default class GameHandler {
 
     if (game.currentQuestion.pass < NUMBER_OF_PASSES_FOR_ROUND[game.round]) {
       game.questionStatus = QuestionStatus.receivedQuestion;
-      this.requestSetTurnNumber(gameId);
+      this.requestIncrementPassNumber(gameId);
       return this.requestTeamAnswer(gameId);
     }
 
-    game.currentQuestion.questionInRound++;
-    if (
-      game.currentQuestion.questionInRound <
-      NUMBER_OF_QUESTIONS_FOR_ROUND[game.round]
-    ) {
-      game.questionStatus = QuestionStatus.waitingForQuestion;
-    }
+    game.questionStatus = QuestionStatus.announcingResults;
     return game;
   }
 }
