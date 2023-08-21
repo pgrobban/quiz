@@ -1,5 +1,5 @@
 import classnames from "classnames";
-import { Game, GameStatus, QuestionStatus, isGroupedAcceptableAnswers } from "../models/types";
+import { Game, GameRound, GameStatus, QuestionStatus, isGroupedAcceptableAnswers } from "../models/types";
 import styles from "../styles/Home.module.css";
 import BaseGameBoard from "./BaseGameBoard";
 import { useEffect, useState } from "react";
@@ -12,8 +12,8 @@ interface Props {
 
 export default function PictureBoard(props: Props) {
   const { game } = props;
-  if (game.gameStatus !== GameStatus.inProgress || !game.currentQuestion?.question) {
-    throw new Error('Can only show PictureBoard of a game in progress and that has an active question.');
+  if (game.gameStatus !== GameStatus.inProgress || !game.currentQuestion?.question || game.round !== GameRound.pictureBoard) {
+    throw new Error("PictureBoard Assertion Error");
   }
 
   const [answerCache, setAnswerCache] = useState<string[]>([]);

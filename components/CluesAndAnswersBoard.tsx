@@ -1,19 +1,39 @@
-import { AcceptableAnswerInGame } from "../models/types";
+import { Game, GameRound, GameStatus, QuestionStatus, isGroupedAcceptableAnswers } from "../models/types";
 import BaseGameBoard from "./BaseGameBoard";
-
+import { useEffect, useState } from "react";
 interface Props {
-  answersInGame: AcceptableAnswerInGame[];
-  awardingPointsInProgress: boolean;
+  game: Game;
 }
 
 export default function CluesAndAnswersBoard(props: Props) {
-  const { answersInGame, awardingPointsInProgress } = props;
+  const { game } = props;
+  if (game.gameStatus !== GameStatus.inProgress || !game.currentQuestion?.question || game.round !== GameRound.cluesAndAnswers) {
+    throw new Error("PictureBoard Assertion Error");
+  }
+
+  const [answerCache, setAnswerCache] = useState<string[]>([]);
+  const { questionStatus, currentQuestion } = game;
+  const { question, lastAnswer } = currentQuestion;
+  const { acceptableAnswers } = question;
+
+  useEffect(() => {
+    if (lastAnswer && !answerCache.includes(lastAnswer) && questionStatus !== QuestionStatus.awardingPoints) {
+      setAnswerCache([...answerCache, lastAnswer]);
+    }
+  }, [answerCache, lastAnswer, questionStatus]);
+
+  if (isGroupedAcceptableAnswers(acceptableAnswers)) {
+    throw new Error("Only support for non-grouped acceptable answers");
+  }
 
   return (
     <BaseGameBoard>
       <div>
-        {answersInGame.map((answer, index) => {
+        {acceptableAnswers.map((answer, index) => {
           const { clue, answerText, answered, points } = answer;
+          const shouldShowAnswer = answered || (questionStatus === QuestionStatus.announcingResults);
+          const shouldShowScore = answerCache.includes(answerText) || (questionStatus === QuestionStatus.announcingResults);
+
           return (
             <div
               key={index}
@@ -67,7 +87,7 @@ export default function CluesAndAnswersBoard(props: Props) {
                     color: "#FEFD1D",
                   }}
                 >
-                  <span>{(awardingPointsInProgress || !answered) ? "" : points}</span>
+                      <span>{shouldShowScore ? points : ''}</span>
                 </div>
               </div>
 
@@ -86,7 +106,7 @@ export default function CluesAndAnswersBoard(props: Props) {
                   textAlign: "center",
                 }}
               >
-                <span>{answered ? answerText : ""}</span>
+                <span>{shouldShowAnswer ? answerText : ""}</span>
               </div>
             </div>
           );
