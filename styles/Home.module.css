@@ -167,3 +167,58 @@
     background: #82264D;
     font-family: "Arial Black";
 }
+
+.cluesAndAnswersBoardContainer {
+  line-height: 1;
+  height: 55px;
+  border-radius: 50px;
+  border: 2px solid #F9F463;
+  margin: 35px 10px 10px 10px;
+  display: flex;
+  background: radial-gradient(ellipse at top, #660907, transparent), radial-gradient(ellipse at bottom, #200202, transparent);
+}
+
+.cluesAndAnswersBoardClueContainer {
+  font-family: Verdana;
+  text-transform: uppercase;
+  color: #FEFD3C;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-direction: column;
+  position: relative;
+  width: 70%;
+  padding-left: 15px;
+  text-align: center;
+}
+
+.cluesAndAnswersBoardAnswerContainer {
+  font-family: Verdana;
+  font-size: 18;
+  text-transform: uppercase;
+  padding: 10;
+  color: #FEFD3C;
+  width: 150px;
+  display: flex;
+  justify-content: center;
+  align-Content: center;
+  flex-direction: column;
+  text-align: center;
+}
+
+.cluesAndAnswersBoardScoreContainer {
+  width: 65px;
+  height: 65px;
+  border-radius: 75Px;
+  border: 3px solid #FAF7A0;
+  background: #82264D;
+  margin: -8px 0px 10px 10px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-direction: column;
+  text-align: center;
+  font-size: 28px;
+  font-family: "Arial Black";
+  color: #FEFD1D;
+}
