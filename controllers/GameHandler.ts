@@ -336,4 +336,17 @@ export default class GameHandler {
     game.questionStatus = QuestionStatus.announcingResults;
     return game;
   }
+
+  requestEndQuestion(gameId: string) {
+    const game = this.getGameById(gameId);
+    if (game.questionStatus !== QuestionStatus.announcingResults) {
+      console.log(game);
+      throw new Error("requestEndQuestion Assertion error");
+    }
+
+    game.currentQuestion = undefined;
+    game.round = undefined;
+    game.questionStatus = QuestionStatus.waitingForRound;
+    return game;
+  }
 }

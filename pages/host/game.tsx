@@ -16,6 +16,7 @@ import RoundPicker from "./RoundPicker";
 function Game() {
   const appContext = useAppContext();
   const { gameHandler, gameState } = appContext;
+
   if (!gameState) {
     return null;
   }
@@ -145,6 +146,17 @@ function Game() {
                       onClick={() => gameHandler.requestContinueGame()}
                     >
                       Continue game
+                    </Button>
+                  )}
+
+                  {questionStatus === QuestionStatus.announcingResults && (
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      style={{ margin: 10 }}
+                      onClick={() => gameHandler.requestEndQuestion()}
+                    >
+                      End question
                     </Button>
                   )}
                 </>

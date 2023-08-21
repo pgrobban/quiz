@@ -1,4 +1,3 @@
-import { cloneDeep } from "lodash";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import io from "socket.io-client";
 import { Game } from "../models/types";
@@ -72,6 +71,10 @@ export default function AppWrapper({
       });
       socket.on("added-score", (game: Game) => {
         gameHandler.onAddedScore(game);
+        setGameState(game);
+      });
+      socket.on("question-ended", (game: Game) => {
+        gameHandler.onQuestionEnded(game);
         setGameState(game);
       });
     };

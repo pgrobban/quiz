@@ -89,10 +89,13 @@ const SocketHandler = (_: NextApiRequest, res: NextApiResponseWithSocket) => {
     });
 
     socket.on('request-continue-game', (gameId) => {
-      console.log("*** in request continue game", gameId)
       const game = gameHandler.requestContinueGame(gameId);
-      console.log("*** after continue", game)
       io.to(game.id).emit('received-game', game);
+    });
+
+    socket.on('request-end-question', (gameId) => {
+      const game = gameHandler.requestEndQuestion(gameId);
+      io.to(game.id).emit('question-ended', game);
     });
   });
 

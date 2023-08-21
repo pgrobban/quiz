@@ -70,7 +70,7 @@ export default function ScoreList(props: Props) {
   }
 
   const sortedTeamsAndPoints = teamsAndPoints?.sort(
-    (teamA, teamB) => teamB.points - teamA.points
+    (teamA, teamB) => teamA.points - teamB.points
   );
 
   if (!activeGame) {

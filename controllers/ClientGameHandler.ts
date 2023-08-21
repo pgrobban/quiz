@@ -65,8 +65,11 @@ export default class ClientGameHandler {
   }
 
   requestContinueGame() {
-    console.log("*** request continue", this.activeGame?.id)
     this.socket.emit('request-continue-game', this.activeGame?.id);
+  }
+
+  requestEndQuestion() {
+    this.socket.emit('request-end-question', this.activeGame?.id);
   }
 
   getConnectionStatus() {
@@ -157,6 +160,10 @@ export default class ClientGameHandler {
   }
 
   onActiveRoundUndone(game: Game) {
+    this.activeGame = game;
+  }
+
+  onQuestionEnded(game: Game) {
     this.activeGame = game;
   }
 }
