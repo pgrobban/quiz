@@ -19,7 +19,6 @@ export default class ClientGameHandler {
   }
 
   requestStartGame(teamNames: string[]) {
-    console.log("**** requesting start game", this.activeGame)
     if (!this.activeGame) {
       throw new Error('Requested start game while disconnected or no game in progress');
     }

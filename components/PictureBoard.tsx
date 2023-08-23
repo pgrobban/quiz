@@ -1,5 +1,11 @@
 import classnames from "classnames";
-import { Game, GameRound, GameStatus, QuestionStatus, isGroupedAcceptableAnswers } from "../models/types";
+import {
+  Game,
+  GameRound,
+  GameStatus,
+  QuestionStatus,
+  isGroupedAcceptableAnswers,
+} from "../models/types";
 import styles from "../styles/Home.module.css";
 import BaseGameBoard from "./BaseGameBoard";
 import { useEffect, useState } from "react";
@@ -12,7 +18,11 @@ interface Props {
 
 export default function PictureBoard(props: Props) {
   const { game } = props;
-  if (game.gameStatus !== GameStatus.inProgress || !game.currentQuestion?.question || game.round !== GameRound.pictureBoard) {
+  if (
+    game.gameStatus !== GameStatus.inProgress ||
+    !game.currentQuestion?.question ||
+    game.round !== GameRound.pictureBoard
+  ) {
     throw new Error("PictureBoard Assertion Error");
   }
 
@@ -22,7 +32,11 @@ export default function PictureBoard(props: Props) {
   const { questionText, acceptableAnswers } = question;
 
   useEffect(() => {
-    if (lastAnswer && !answerCache.includes(lastAnswer) && questionStatus !== QuestionStatus.awardingPoints) {
+    if (
+      lastAnswer &&
+      !answerCache.includes(lastAnswer) &&
+      questionStatus !== QuestionStatus.awardingPoints
+    ) {
       setAnswerCache([...answerCache, lastAnswer]);
     }
   }, [answerCache, lastAnswer, questionStatus]);
@@ -30,7 +44,7 @@ export default function PictureBoard(props: Props) {
   if (isGroupedAcceptableAnswers(acceptableAnswers)) {
     throw new Error("Only support for non-grouped acceptable answers");
   }
-  
+
   return (
     <BaseGameBoard>
       <div className={styles.pictureBoard}>
@@ -44,20 +58,26 @@ export default function PictureBoard(props: Props) {
         </div>
         {acceptableAnswers.map((acceptableAnswer, index) => {
           const { points, answerText, clue, answered } = acceptableAnswer;
-          const shouldShowAnswer = answered || (questionStatus === QuestionStatus.announcingResults);
-          const shouldShowScore = answerCache.includes(answerText) || (questionStatus === QuestionStatus.announcingResults);
+          const shouldShowAnswer =
+            answered || questionStatus === QuestionStatus.announcingResults;
+          const shouldShowPoints =
+            answerCache.includes(answerText) ||
+            questionStatus === QuestionStatus.announcingResults;
+          const imageUrl = `/images/${clue}`;
 
           return (
             <div key={index}>
-              <div
-                className={classnames(
-                  styles.pictureBoardContainer,
-                  styles.pictureBoardPictureContainer
-                )}
-                style={{
-                  backgroundImage: `url('/images/${clue}')`,
-                }}
-              />
+              <a href={imageUrl}>
+                <div
+                  className={classnames(
+                    styles.pictureBoardContainer,
+                    styles.pictureBoardPictureContainer
+                  )}
+                  style={{
+                    backgroundImage: `url('${imageUrl}')`,
+                  }}
+                />
+              </a>
               <div className={styles.pictureBoardAnswerContainer}>
                 {shouldShowAnswer && (
                   <>
@@ -65,13 +85,14 @@ export default function PictureBoard(props: Props) {
                       {answerText}
                     </div>
                     <div className={styles.pictureBoardPointsContainer}>
-                      <span>{shouldShowScore ? points : ''}</span>
+                      <span>{shouldShowPoints ? points : ""}</span>
                     </div>
                   </>
                 )}
-                {!answered && questionStatus !== QuestionStatus.announcingResults && (
-                  <div style={{ margin: "0 auto" }}>{alphabet[index]}</div>
-                )}
+                {!answered &&
+                  questionStatus !== QuestionStatus.announcingResults && (
+                    <div style={{ margin: "0 auto" }}>{alphabet[index]}</div>
+                  )}
               </div>
             </div>
           );

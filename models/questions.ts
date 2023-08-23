@@ -2195,32 +2195,106 @@ const questions: { [key in GameRound]: Question[] } = {
   ],
   possible_answers: [
     {
-      questionText: "Picasso Paintings",
-      tags: ["Art"],
+      questionText: "Greek food",
+      tags: ['Food & drinks'],
+      explanation:
+        "The correct answers here are all dishes or ingredients typically associated with Greek cuisine. The incorrect answers will not be foods at all.",
       acceptableAnswers: [
         {
-          answerText: "Cervantes",
+          answerText: "Tzatziki",
+          points: 15,
+        },
+        {
+          answerText: "Stifado",
+          points: 4,
+        },
+        {
+          answerText: "Sirtaki",
           points: 100,
         },
         {
-          answerText: "Woman With Pears",
+          answerText: "Dolmathakia",
           points: 0,
         },
         {
-          answerText: "The Modern Lovers",
+          answerText: "Yemista",
+          points: 0,
+        },
+        {
+          answerText: "Souvlaki",
+          points: 6,
+        },
+        {
+          answerText: "Moussaka",
+          points: 40,
+        },
+      ],
+    },
+    {
+      questionText: "Peanuts characters",
+      tags: ['Films'],
+      explanation:
+        "The correct answers here will all be characters featured regularly in Charles Szhultz' 'Peanuts' (Snobben) cartoon strip.",
+      acceptableAnswers: [
+        {
+          answerText: "Shroeder",
+          points: 0,
+        },
+        {
+          answerText: "Max Yasgur",
           points: 100,
         },
         {
-          answerText: "The Accordionist",
+          answerText: "Linus van Pelt",
+          points: 14,
+        },
+        {
+          answerText: "Monroe",
+          points: 100,
+        },
+        {
+          answerText: "Peppermint Patty",
+          points: 6,
+        },
+        {
+          answerText: "Shermy",
+          points: 1,
+        },
+      ],
+    },
+    {
+      questionText: "Batman villains",
+      tags: ["Films"],
+      explanation:
+        "The correct answers here are all enemies of the superhero Batman, either from the films or the 1960s TV series starring Adam West.",
+      acceptableAnswers: [
+        {
+          answerText: "False Face",
           points: 0,
         },
         {
-          answerText: "Science and Charity",
+          answerText: "Sandman",
+          points: 100,
+        },
+        {
+          answerText: "Bookworm",
+          points: 0,
+        },
+        {
+          answerText: "Siren",
           points: 1,
         },
         {
-          answerText: "Les Demoiselles d'Avignon",
-          points: 1,
+          answerText: "Catwoman",
+          points: 37,
+        },
+        {
+          answerText: "Joker",
+          points: 94,
+        },
+        {
+          answerText: "Poison Ivy",
+          points: 14,
         },
       ],
     },
@@ -2257,42 +2331,6 @@ const questions: { [key in GameRound]: Question[] } = {
         {
           answerText: "Shardik",
           points: 1,
-        },
-      ],
-    },
-    {
-      questionText: "Greek food",
-      tags: ['Food & drinks'],
-      explanation:
-        "The correct answers here are all dishes or ingredients typically associated with Greek cuisine. The incorrect answers will not be foods at all.",
-      acceptableAnswers: [
-        {
-          answerText: "Tzatziki",
-          points: 15,
-        },
-        {
-          answerText: "Stifado",
-          points: 4,
-        },
-        {
-          answerText: "Sirtaki",
-          points: 100,
-        },
-        {
-          answerText: "Dolmathakia",
-          points: 0,
-        },
-        {
-          answerText: "Yemista",
-          points: 0,
-        },
-        {
-          answerText: "Souvlaki",
-          points: 6,
-        },
-        {
-          answerText: "Moussaka",
-          points: 40,
         },
       ],
     },

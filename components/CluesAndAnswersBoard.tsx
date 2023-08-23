@@ -20,7 +20,7 @@ export default function CluesAndAnswersBoard(props: Props) {
     !game.currentQuestion?.question ||
     game.round !== GameRound.cluesAndAnswers
   ) {
-    throw new Error("PictureBoard Assertion Error");
+    throw new Error("CluesAndAnswersBoard Assertion Error");
   }
 
   const [answerCache, setAnswerCache] = useState<string[]>([]);
@@ -49,7 +49,7 @@ export default function CluesAndAnswersBoard(props: Props) {
           const { clue, answerText, answered, points } = answer;
           const shouldShowAnswer =
             answered || questionStatus === QuestionStatus.announcingResults;
-          const shouldShowScore =
+          const shouldShowPoints =
             answerCache.includes(answerText) ||
             questionStatus === QuestionStatus.announcingResults;
 
@@ -61,8 +61,8 @@ export default function CluesAndAnswersBoard(props: Props) {
               <div className={styles.cluesAndAnswersBoardClueContainer}>
                 <span>{clue}</span>
               </div>
-              <div className={styles.cluesAndAnswersBoardScoreContainer}>
-                <span>{shouldShowScore ? points : ""}</span>
+              <div className={styles.cluesAndAnswersBoardPointsContainer}>
+                <span>{shouldShowPoints ? points : ""}</span>
               </div>
 
               <div className={styles.cluesAndAnswersBoardAnswerContainer}>
