@@ -1,33 +1,33 @@
+import { useState } from "react";
+import CluesAndAnswersBoard from "../../components/CluesAndAnswersBoard";
 import CountdownBar from "../../components/CountdownBar";
+import PictureBoard from "../../components/PictureBoard";
+import PossibleAnswersBoard from "../../components/PossibleAnswersBoard";
 import ScoreList from "../../components/ScoreList";
-import withReconnect from "../../components/WithReconnect";
 import { useAppContext } from "../../controllers/AppWrapper";
+import { NUMBER_OF_PASSES_FOR_ROUND } from "../../controllers/GameHandler";
+import { getScoreFromLatestAnswer } from "../../controllers/helpers";
 import {
   GameRound,
   GameStatus,
-  QuestionStatus,
-  isGroupedAcceptableAnswers,
+  NON_VERIFIED_ANSWER, NO_OR_INVALID_ANSWER,
+  QuestionStatus
 } from "../../models/types";
 import styles from "../../styles/Home.module.css";
-import { NON_VERIFIED_ANSWER, NO_OR_INVALID_ANSWER } from "../../models/types";
-import { useState } from "react";
-import { getScoreFromLatestAnswer } from "../../controllers/helpers";
-import CluesAndAnswersBoard from "../../components/CluesAndAnswersBoard";
-import PossibleAnswersBoard from "../../components/PossibleAnswersBoard";
-import PictureBoard from "../../components/PictureBoard";
 
 function Game() {
   const appContext = useAppContext();
   const { gameHandler, gameState } = appContext;
   const [isAnimatingScore, setIsAnimatingScore] = useState<boolean>(false);
 
-  const { gameStatus, questionStatus, currentQuestion, round } = gameState || {};
+  const { gameStatus, questionStatus, currentQuestion, round } =
+    gameState || {};
   if (!gameState) {
     return null;
   }
 
-  const { acceptableAnswers } = currentQuestion?.question || {};
-  const awardingPointsInProgress = questionStatus === QuestionStatus.awardingPoints;
+  const { questionInRound, question, lastAnswer, orderedTeamsLeftToAnswer } = currentQuestion || {};
+  const { questionText, explanation } = question || {};
 
   const countdownTo = getScoreFromLatestAnswer(gameState);
 
@@ -37,10 +37,9 @@ function Game() {
   };
 
   const getGameBoard = () => {
-
     switch (gameState.round) {
       case GameRound.cluesAndAnswers:
-        return <CluesAndAnswersBoard game={gameState} />
+        return <CluesAndAnswersBoard game={gameState} />;
       case GameRound.possibleAnswers:
         return <PossibleAnswersBoard game={gameState} />;
       case GameRound.pictureBoard:
@@ -48,8 +47,7 @@ function Game() {
       default:
         return null;
     }
-  }
-  
+  };
 
   return (
     <>
@@ -59,7 +57,7 @@ function Game() {
         {gameStatus === GameStatus.waitingForHost && (
           <h4>Waiting for host...</h4>
         )}
-        {gameStatus === GameStatus.inProgress && (
+        {gameStatus === GameStatus.inProgress && questionStatus && round && (
           <>
             {questionStatus === QuestionStatus.waitingForRound && (
               <h4>Waiting for host to pick a round...</h4>
@@ -67,27 +65,27 @@ function Game() {
             {questionStatus === QuestionStatus.waitingForQuestion && (
               <h4>Waiting for host to pick a question...</h4>
             )}
-            {questionStatus &&
-              [
-                QuestionStatus.receivedQuestion,
-                QuestionStatus.waitingForTeamAnswer,
-                QuestionStatus.announcingResults,
-                QuestionStatus.awardingPoints,
-                QuestionStatus.pointsAdded,
-              ].includes(questionStatus) &&
+            {[
+              QuestionStatus.receivedQuestion,
+              QuestionStatus.waitingForTeamAnswer,
+              QuestionStatus.announcingResults,
+              QuestionStatus.awardingPoints,
+              QuestionStatus.pointsAdded,
+            ].includes(questionStatus) &&
               currentQuestion && (
                 <>
-                  <h4>Question {currentQuestion.questionInRound}</h4>
-                  <h2>{currentQuestion.question.questionText}</h2>
-                  <p>{currentQuestion.question.explanation}</p>
+                  <h4>Question {questionInRound}</h4>
+                  <h2>{questionText}</h2>
+                  <p>{explanation}</p>
+                  {NUMBER_OF_PASSES_FOR_ROUND[round] > 0 && <p>Pass </p>}
 
                   {getGameBoard()}
 
                   {questionStatus === QuestionStatus.waitingForTeamAnswer &&
-                    currentQuestion.orderedTeamsLeftToAnswer && (
+                    orderedTeamsLeftToAnswer && (
                       <h4>
                         Waiting for answer from team{" "}
-                        {currentQuestion.orderedTeamsLeftToAnswer[0]}
+                        {orderedTeamsLeftToAnswer[0]}
                       </h4>
                     )}
 
@@ -96,11 +94,11 @@ function Game() {
                       <>
                         <h4>
                           Checking answer...{" "}
-                          {![
-                            NON_VERIFIED_ANSWER,
-                            NO_OR_INVALID_ANSWER,
-                          ].includes(currentQuestion.lastAnswer) &&
-                            currentQuestion.lastAnswer}
+                          {lastAnswer &&
+                            ![
+                              NON_VERIFIED_ANSWER,
+                              NO_OR_INVALID_ANSWER,
+                            ].includes(lastAnswer)}
                         </h4>
                         <CountdownBar
                           to={countdownTo}

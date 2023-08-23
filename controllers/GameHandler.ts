@@ -15,7 +15,7 @@ import {
 } from "../models/types";
 import { findAcceptableAnswer, markAnswerAsAccepted } from './helpers';
 
-const NUMBER_OF_PASSES_FOR_ROUND: Record<GameRound, number> = {
+export const NUMBER_OF_PASSES_FOR_ROUND: Record<GameRound, number> = {
   [GameRound.openEnded]: 3,
   [GameRound.cluesAndAnswers]: 1,
   [GameRound.fillInBlank]: 1,
