@@ -1,5 +1,5 @@
 import { Button } from "@mui/material";
-import ScoreList from "../../components/ScoreList";
+import PointsList from "../../components/PointsList";
 import withReconnect from "../../components/WithReconnect";
 import { useAppContext } from "../../controllers/AppWrapper";
 import {
@@ -22,7 +22,8 @@ function Game() {
   }
 
   const { questionStatus, round, currentQuestion } = gameState;
-  const { acceptableAnswers } = currentQuestion?.question || {};
+  const { questionInRound, question, orderedTeamsLeftToAnswer } = currentQuestion || {};
+  const { acceptableAnswers, explanation, questionText } = question || {};
 
   function getAcceptableAnswerButton(
     answerText: string,
@@ -67,8 +68,9 @@ function Game() {
             <>
               {currentQuestion && (
                 <>
-                  <h4>Question {currentQuestion.questionInRound}</h4>
-                  <h2>{currentQuestion.question.questionText}</h2>
+                  <h4>Question {questionInRound}</h4>
+                  <h2>{questionText}</h2>
+                  <p>{explanation}</p>
 
                   {questionStatus === QuestionStatus.receivedQuestion && (
                     <>
@@ -83,11 +85,11 @@ function Game() {
                   )}
 
                   {questionStatus === QuestionStatus.waitingForTeamAnswer &&
-                    currentQuestion.orderedTeamsLeftToAnswer &&
+                    orderedTeamsLeftToAnswer &&
                     acceptableAnswers && (
                       <>
                         Requesting answer from{" "}
-                        {currentQuestion.orderedTeamsLeftToAnswer[0]}
+                        {orderedTeamsLeftToAnswer[0]}
                         <>
                           <h4>Verified accepted answers</h4>
                           <div>
@@ -165,7 +167,7 @@ function Game() {
           </>
         )}
 
-        <ScoreList animate />
+        <PointsList animate />
       </main>
     </>
   );

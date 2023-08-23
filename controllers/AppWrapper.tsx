@@ -69,8 +69,8 @@ export default function AppWrapper({
         gameHandler.onAnswerVerified(game);
         setGameState(game);
       });
-      socket.on("added-score", (game: Game) => {
-        gameHandler.onAddedScore(game);
+      socket.on("added-points", (game: Game) => {
+        gameHandler.onAddedPoints(game);
         setGameState(game);
       });
       socket.on("question-ended", (game: Game) => {

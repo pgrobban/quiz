@@ -264,7 +264,7 @@ export default class GameHandler {
     return game;
   }
 
-  requestAddingOfScore(gameId: string) {
+  requestAddingOfPoints(gameId: string) {
     const game = this.getGameById(gameId);
     if (
       !game.currentQuestion ||
@@ -274,7 +274,7 @@ export default class GameHandler {
       !game.currentQuestion.lastAnswer
     ) {
       console.log(game);
-      throw new Error("requestAddingOfScore Assertion error");
+      throw new Error("requestAddingOfPoints Assertion error");
     }
 
     const teamToAwardPoints = game.currentQuestion.orderedTeamsLeftToAnswer[0];
@@ -283,7 +283,7 @@ export default class GameHandler {
     );
     if (!t) {
       console.log(game);
-      throw new Error("requestAddingOfScore Assertion error");
+      throw new Error("requestAddingOfPoints Assertion error");
     }
 
     const lastAnswer = game.currentQuestion.lastAnswer;

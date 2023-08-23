@@ -3,10 +3,10 @@ import CluesAndAnswersBoard from "../../components/CluesAndAnswersBoard";
 import CountdownBar from "../../components/CountdownBar";
 import PictureBoard from "../../components/PictureBoard";
 import PossibleAnswersBoard from "../../components/PossibleAnswersBoard";
-import ScoreList from "../../components/ScoreList";
+import PointsList from "../../components/PointsList";
 import { useAppContext } from "../../controllers/AppWrapper";
 import { NUMBER_OF_PASSES_FOR_ROUND } from "../../controllers/GameHandler";
-import { getScoreFromLatestAnswer } from "../../controllers/helpers";
+import { getPointsFromLatestAnswer } from "../../controllers/helpers";
 import {
   GameRound,
   GameStatus,
@@ -18,7 +18,7 @@ import styles from "../../styles/Home.module.css";
 function Game() {
   const appContext = useAppContext();
   const { gameHandler, gameState } = appContext;
-  const [isAnimatingScore, setIsAnimatingScore] = useState<boolean>(false);
+  const [isAnimatingPoints, setIsAnimatingPoints] = useState<boolean>(false);
 
   const { gameStatus, questionStatus, currentQuestion, round } =
     gameState || {};
@@ -26,14 +26,15 @@ function Game() {
     return null;
   }
 
-  const { questionInRound, question, lastAnswer, orderedTeamsLeftToAnswer } = currentQuestion || {};
+  const { questionInRound, question, lastAnswer, orderedTeamsLeftToAnswer, pass } = currentQuestion || {};
   const { questionText, explanation } = question || {};
+  const numberOfPassesForRound = round ? NUMBER_OF_PASSES_FOR_ROUND[round] : 0;
 
-  const countdownTo = getScoreFromLatestAnswer(gameState);
+  const countdownTo = getPointsFromLatestAnswer(gameState);
 
-  const onFinishedAnimatingScore = () => {
-    setIsAnimatingScore(false);
-    gameHandler.requestAddingScore();
+  const onFinishedAnimatingPoints = () => {
+    setIsAnimatingPoints(false);
+    gameHandler.requestAddingPoints();
   };
 
   const getGameBoard = () => {
@@ -57,7 +58,7 @@ function Game() {
         {gameStatus === GameStatus.waitingForHost && (
           <h4>Waiting for host...</h4>
         )}
-        {gameStatus === GameStatus.inProgress && questionStatus && round && (
+        {gameStatus === GameStatus.inProgress && questionStatus && (
           <>
             {questionStatus === QuestionStatus.waitingForRound && (
               <h4>Waiting for host to pick a round...</h4>
@@ -77,7 +78,7 @@ function Game() {
                   <h4>Question {questionInRound}</h4>
                   <h2>{questionText}</h2>
                   <p>{explanation}</p>
-                  {NUMBER_OF_PASSES_FOR_ROUND[round] > 0 && <p>Pass </p>}
+                  {numberOfPassesForRound > 0 && <p>Pass {pass}/{numberOfPassesForRound}</p>}
 
                   {getGameBoard()}
 
@@ -102,7 +103,7 @@ function Game() {
                         </h4>
                         <CountdownBar
                           to={countdownTo}
-                          callback={() => setIsAnimatingScore(true)}
+                          callback={() => setIsAnimatingPoints(true)}
                         />
                       </>
                     )}
@@ -111,9 +112,9 @@ function Game() {
           </>
         )}
 
-        <ScoreList
-          animate={isAnimatingScore}
-          callback={() => onFinishedAnimatingScore()}
+        <PointsList
+          animate={isAnimatingPoints}
+          callback={() => onFinishedAnimatingPoints()}
         />
       </main>
     </>

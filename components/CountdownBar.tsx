@@ -9,7 +9,7 @@ interface Props {
 
 export default function CountdownBar(props: Props) {
   const { to, callback } = props;
-  const [score, setScore] = useState(100);
+  const [value, setValue] = useState(100);
   if (to > 100 || to < 0) {
     throw new Error('Invalid value for `')
   }
@@ -24,16 +24,16 @@ export default function CountdownBar(props: Props) {
     }
 
     const updateLinesInterval = setInterval(() => {
-      if (score === to) {
+      if (value === to) {
         clearInterval(updateLinesInterval);
         callback();
         return;
       }
-        setScore(score-1);
+        setValue(value-1);
     }, 100);
 
     return () => clearInterval(updateLinesInterval);
-  }, [score, to, callback])
+  }, [value, to, callback])
 
   // for incorrect answers
   useEffect(() => {
@@ -43,12 +43,12 @@ export default function CountdownBar(props: Props) {
   return (
     <div className={styles.countdownBarContainer}>
       <div className={classNames(styles.countdownBarEllipse, styles.background, styles.countdownBarTextContainer)}>
-        <span ref={incorrectAnswerTextRef} className={classNames(styles.countdownBarText, { [styles.incorrectAnswerText]: isIncorrectAnswer})}>{isIncorrectAnswer ? 'X' : score}</span>
+        <span ref={incorrectAnswerTextRef} className={classNames(styles.countdownBarText, { [styles.incorrectAnswerText]: isIncorrectAnswer})}>{isIncorrectAnswer ? 'X' : value}</span>
       </div>
 
-      <div className={classNames(styles.countdownLines, { [styles.incorrectAnswerLines] : isIncorrectAnswer })} style={{ marginTop: 8-(4*(score-100)) }}>
+      <div className={classNames(styles.countdownLines, { [styles.incorrectAnswerLines] : isIncorrectAnswer })} style={{ marginTop: 8-(4*(value-100)) }}>
         {
-          new Array(score).fill(true).map((_, index) => <hr key={index} id={index === 0 ? styles.countdownBarTopLine : ''} />)
+          new Array(value).fill(true).map((_, index) => <hr key={index} id={index === 0 ? styles.countdownBarTopLine : ''} />)
         }
       </div>
     </div>

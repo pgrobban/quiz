@@ -59,8 +59,8 @@ export default class ClientGameHandler {
     this.socket.emit('request-verification-of-answer', { gameId: this.activeGame?.id, answerText });
   }
 
-  requestAddingScore() {
-    this.socket.emit('request-adding-score', this.activeGame?.id);
+  requestAddingPoints() {
+    this.socket.emit('request-adding-points', this.activeGame?.id);
   }
 
   requestContinueGame() {
@@ -154,7 +154,7 @@ export default class ClientGameHandler {
     this.activeGame = game;
   }
 
-  onAddedScore(game: Game) {
+  onAddedPoints(game: Game) {
     this.activeGame = game;
   }
 

@@ -48,13 +48,13 @@ export function markAnswerAsAccepted(
   }
 }
 
-export function getScoreFromLatestAnswer(game: Game) {
+export function getPointsFromLatestAnswer(game: Game) {
   if (game.questionStatus !== QuestionStatus.awardingPoints) {
     return 0;
   }
 
   if (!game.currentQuestion?.lastAnswer) {
-    throw new Error('getScoreFromLatestAnswer assertion error');
+    throw new Error('getPointsFromLatestAnswer assertion error');
   }
 
   switch (game.currentQuestion?.lastAnswer) {

@@ -83,9 +83,9 @@ const SocketHandler = (_: NextApiRequest, res: NextApiResponseWithSocket) => {
       io.to(game.id).emit('answer-verified', game);
     });
 
-    socket.on('request-adding-score', (gameId) => {
-      const game = gameHandler.requestAddingOfScore(gameId);
-      io.to(game.id).emit('added-score', game);
+    socket.on('request-adding-points', (gameId) => {
+      const game = gameHandler.requestAddingOfPoints(gameId);
+      io.to(game.id).emit('added-points', game);
     });
 
     socket.on('request-continue-game', (gameId) => {
