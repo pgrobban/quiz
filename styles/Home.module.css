@@ -44,6 +44,7 @@
   border: 3px solid black;
   text-align: center;
   position: relative;
+  z-index: 9999;
 }
 
 .countdownBarEllipse:before {
@@ -72,7 +73,6 @@
   -webkit-text-stroke: 2px #BCA598;
   animation-name: spinner;
   animation-timing-function: linear;
-  animation-iteration-count: infinite;
   animation-iteration-count: 2;
   animation-duration: 2s;
   transform-style: preserve-3d;
@@ -86,11 +86,29 @@
   }
 }
 
-.countdownLines {
+.countdownLinesColumn {
+  display: flex;
   margin-top: 8px;
+  flex-direction: column-reverse;
 }
 
-.countdownLines hr {
+.animatedTopBar {
+  animation: animateTopBarColor 5s ease;
+}
+
+@keyframes animateTopBarColor {
+	0% {
+    background-position: 0% 50%;
+	}
+	50% {
+    background-position: 100% 50%;
+  	}
+	100% {
+    background-position: 0% 50%;
+	}
+}
+
+.countdownLinesColumn hr {
   margin: 2px 5px 0px 5px;
   border: 0;
   height: 2px;

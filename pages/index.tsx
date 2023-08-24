@@ -36,7 +36,7 @@ function Home() {
           </Button>
         </div>
       </main>
-      <CountdownBar to={0} callback={() => {}} />
+      <CountdownBar to={75} callback={() => {console.log("*** callback")}} />
     </>
   );
 }
