@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef, cloneElement, ReactElement } from "react";
 import styles from "../styles/Home.module.css";
 import classNames from "classnames";
+import confetti from "canvas-confetti";
 
 const LINES_TO_ANIMATE_AFTER_COUNTDOWN = 5;
 const COUNTDOWN_DELAY_MS = 100;
@@ -30,6 +31,7 @@ export default function CountdownBar(props: Props) {
   const isIncorrectAnswer = to === 100;
   const incorrectAnswerTextRef = useRef<HTMLSpanElement>(null);
   const topBarRef = useRef<HTMLHRElement>(null);
+  const pointlessTextRef = useRef<HTMLSpanElement>(null);
 
   // wait until animation has ended for accepted answers
   useEffect(() => {
@@ -69,13 +71,27 @@ export default function CountdownBar(props: Props) {
       } else {
         lines--;
         setRemainingLinesToAnimate(lines);
+        if (lines === 0 && to !== 0) {
+          callback();
+        }
       }
-    }, COUNTDOWN_DELAY_MS/2);
+    }, COUNTDOWN_DELAY_MS / 2);
   }, [remainingLinesAnimationInProgress]);
 
   useEffect(() => {
     incorrectAnswerTextRef.current?.addEventListener("animationend", callback);
-  });
+  }, [incorrectAnswerTextRef.current]);
+
+  useEffect(() => {
+    pointlessTextRef.current?.addEventListener("animationend", async () => {
+      await confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 },
+      });
+      callback();
+    });
+  }, [pointlessTextRef.current]);
 
   useEffect(() => {
     const opacities = [...linesOpacities];
@@ -90,7 +106,8 @@ export default function CountdownBar(props: Props) {
         const lineIndexToAnimate =
           value + lineIndexesToAnimateAfterCountdown[i];
         if (opacities[lineIndexToAnimate] !== undefined) {
-          opacities[lineIndexToAnimate] = 0.2*(lineIndexesToAnimateAfterCountdown.length-i);
+          opacities[lineIndexToAnimate] =
+            0.2 * (lineIndexesToAnimateAfterCountdown.length - i);
         }
       }
     }
@@ -100,12 +117,9 @@ export default function CountdownBar(props: Props) {
         const lineIndexToAnimate =
           value + lineIndexesToAnimateAfterCountdown[i];
         if (opacities[lineIndexToAnimate] !== undefined) {
-          opacities[lineIndexToAnimate] += ((remainingLinesToAnimate-i)*0.2);
+          opacities[lineIndexToAnimate] += (remainingLinesToAnimate - i) * 0.2;
         }
       }
-    }
-    if (remainingLinesToAnimate === 1) {
-      callback();
     }
 
     setLinesOpacities(opacities);
@@ -120,13 +134,8 @@ export default function CountdownBar(props: Props) {
           styles.countdownBarTextContainer
         )}
       >
-        <span
-          ref={incorrectAnswerTextRef}
-          className={classNames(styles.countdownBarText, {
-            [styles.incorrectAnswerText]: isIncorrectAnswer,
-          })}
-        >
-          {isIncorrectAnswer ? "X" : value}
+        <span className={styles.countdownBarText}>
+          {isIncorrectAnswer ? <span className={styles.incorrectAnswerText} ref={incorrectAnswerTextRef}>X</span> : value}
         </span>
       </div>
 
@@ -149,6 +158,11 @@ export default function CountdownBar(props: Props) {
           );
         })}
       </div>
+      {value === 0 && (
+        <span ref={pointlessTextRef} className={styles.pointlessAnswer}>
+          Pointless
+        </span>
+      )}
     </div>
   );
 }

@@ -70,7 +70,7 @@
 .incorrectAnswerText {
   color: red;
   display: block;
-  -webkit-text-stroke: 2px #BCA598;
+  -webkit-text-stroke: 2px #bca598;
   animation-name: spinner;
   animation-timing-function: linear;
   animation-iteration-count: 2;
@@ -97,30 +97,49 @@
 }
 
 @keyframes animateTopBarColor {
-	0% {
+  0% {
     background-position: 0% 50%;
-	}
-	50% {
+  }
+  50% {
     background-position: 100% 50%;
-  	}
-	100% {
+  }
+  100% {
     background-position: 0% 50%;
-	}
+  }
 }
 
 .countdownLinesColumn hr {
   margin: 2px 5px 0px 5px;
   border: 0;
   height: 2px;
-  background-image: linear-gradient(90deg, rgba(211,0,255,1) 0%, rgba(255,255,255,1) 15%, rgba(255,255,255,1) 85%, rgba(211,0,255,1) 100%);
+  background-image: linear-gradient(
+    90deg,
+    rgba(211, 0, 255, 1) 0%,
+    rgba(255, 255, 255, 1) 15%,
+    rgba(255, 255, 255, 1) 85%,
+    rgba(211, 0, 255, 1) 100%
+  );
 }
 
 .incorrectAnswerLines hr {
-  background: linear-gradient(90deg, red, #9C6E57 20%, rgba(255,255,255,1) 50%, #9C6E57 80%, red);
+  background: linear-gradient(
+    90deg,
+    red,
+    #9c6e57 20%,
+    rgba(255, 255, 255, 1) 50%,
+    #9c6e57 80%,
+    red
+  );
 }
 
 #countdownBarTopLine {
-  background-image: linear-gradient(90deg, rgb(111, 0, 255) 0%, rgb(174, 0, 255) 20%, rgb(174, 0, 255) 80%, rgb(111, 0, 255) 100%);;
+  background-image: linear-gradient(
+    90deg,
+    rgb(111, 0, 255) 0%,
+    rgb(174, 0, 255) 20%,
+    rgb(174, 0, 255) 80%,
+    rgb(111, 0, 255) 100%
+  );
   border: 0;
   height: 5px;
 }
@@ -132,12 +151,12 @@
 }
 
 .pictureBoard {
-  font-family: 'Verdana';
+  font-family: "Verdana";
   text-transform: uppercase;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
-  color: #D3C733;
+  color: #d3c733;
   font-weight: bold;
   height: 100%;
   margin-top: 20px;
@@ -153,7 +172,7 @@
 .pictureBoardContainer {
   width: 240px;
   height: 162px;
-  border: 2px solid #CF9F6D;
+  border: 2px solid #cf9f6d;
   border-radius: 10px;
   display: flex;
   background-size: cover;
@@ -162,15 +181,15 @@
 .pictureBoardAnswerContainer {
   display: flex;
   height: 30px;
-  border: 2px solid #CF9F6D;
+  border: 2px solid #cf9f6d;
   border-radius: 10px;
   background-color: #700100;
   text-align: center;
   margin: -15px 10px 20px 10px;
-  color: #F2DC53;
+  color: #f2dc53;
   font-size: 20px;
   align-items: center;
-  justify-content:  space-between;
+  justify-content: space-between;
   color: "#FEFD1D";
 }
 
@@ -189,29 +208,30 @@
 }
 
 .pictureBoardPointsContainer {
-    margin-right: -10px;
-    width: 40px;
-    height: 40px;
-    border-radius: 40px;
-    border: 3px solid #FAF7A0;
-    background: #82264D;
-    font-family: "Arial Black";
+  margin-right: -10px;
+  width: 40px;
+  height: 40px;
+  border-radius: 40px;
+  border: 3px solid #faf7a0;
+  background: #82264d;
+  font-family: "Arial Black";
 }
 
 .cluesAndAnswersBoardContainer {
   line-height: 1;
   height: 55px;
   border-radius: 50px;
-  border: 2px solid #F9F463;
+  border: 2px solid #f9f463;
   margin: 35px 10px 10px 10px;
   display: flex;
-  background: radial-gradient(ellipse at top, #660907, transparent), radial-gradient(ellipse at bottom, #200202, transparent);
+  background: radial-gradient(ellipse at top, #660907, transparent),
+    radial-gradient(ellipse at bottom, #200202, transparent);
 }
 
 .cluesAndAnswersBoardClueContainer {
   font-family: Verdana;
   text-transform: uppercase;
-  color: #FEFD3C;
+  color: #fefd3c;
   display: flex;
   justify-content: center;
   align-content: center;
@@ -227,11 +247,11 @@
   font-size: 18;
   text-transform: uppercase;
   padding: 10;
-  color: #FEFD3C;
+  color: #fefd3c;
   width: 150px;
   display: flex;
   justify-content: center;
-  align-Content: center;
+  align-content: center;
   flex-direction: column;
   text-align: center;
 }
@@ -239,9 +259,9 @@
 .cluesAndAnswersBoardPointsContainer {
   width: 65px;
   height: 65px;
-  border-radius: 75Px;
-  border: 3px solid #FAF7A0;
-  background: #82264D;
+  border-radius: 75px;
+  border: 3px solid #faf7a0;
+  background: #82264d;
   margin: -8px 0px 10px 10px;
   display: flex;
   justify-content: center;
@@ -250,23 +270,24 @@
   text-align: center;
   font-size: 28px;
   font-family: "Arial Black";
-  color: #FEFD1D;
+  color: #fefd1d;
 }
 
 .possibleAnswersBoardContainer {
   line-height: 1;
   height: 55px;
   border-radius: 50px;
-  border: 2px solid #F9F463;
+  border: 2px solid #f9f463;
   margin: 35px 10px 10px 10px;
   display: flex;
-  background: radial-gradient(ellipse at top, #660907, transparent), radial-gradient(ellipse at bottom, #200202, transparent);
+  background: radial-gradient(ellipse at top, #660907, transparent),
+    radial-gradient(ellipse at bottom, #200202, transparent);
 }
 
 .possibleAnswersBoardAnswerContainer {
   font-family: "Verdana";
   text-transform: uppercase;
-  color: #FEFD3C;
+  color: #fefd3c;
   display: flex;
   justify-content: center;
   align-content: center;
@@ -281,12 +302,49 @@
   width: 65px;
   height: 65px;
   border-radius: 75px;
-  border: 3px solid #FAF7A0;
-  background: #82264D;
+  border: 3px solid #faf7a0;
+  background: #82264d;
   margin: -8px 0px 10px 10px;
   display: flex;
   justify-content: center;
   align-content: center;
-  flex-Direction: column;
+  flex-direction: column;
   text-align: center;
+}
+
+.pointlessAnswer {
+  font-variant: small-caps;
+  position: absolute;
+  top: 50%;
+  left: 0%;
+  color: white;
+  -webkit-text-stroke: 2px black;
+  animation: pointlessMoving 3s ease;
+  display: block;
+  transform-style: preserve-3d;
+  animation-fill-mode: forwards; 
+}
+
+@keyframes pointlessMoving {
+  0% {
+    top: 0;
+    left: 25%;
+    font-size: 10px;
+    transform: rotateY(0deg);
+  }
+  25% {
+    transform: rotateY(-360deg);
+  }
+  50% {
+    top: 50%;
+    left: 50%;
+    font-size: 20px;
+    transform: rotateY(0deg);
+  }
+  100% {
+    top: 50%;
+    left: -30%;
+    font-size: 50px;
+    transform: rotateY(-360deg);
+  }
 }

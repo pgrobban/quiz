@@ -78,7 +78,7 @@ function Game() {
                   <h4>Question {questionInRound}</h4>
                   <h2>{questionText}</h2>
                   <p>{explanation}</p>
-                  {numberOfPassesForRound > 0 && <p>Pass {pass}/{numberOfPassesForRound}</p>}
+                  {numberOfPassesForRound > 1 && <p>Pass {pass}/{numberOfPassesForRound}</p>}
 
                   {getGameBoard()}
 
