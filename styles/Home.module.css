@@ -153,12 +153,12 @@
 .pictureBoard {
   font-family: "Verdana";
   text-transform: uppercase;
+  height: 100%;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
   color: #d3c733;
   font-weight: bold;
-  height: 100%;
   margin-top: 20px;
 }
 
@@ -178,6 +178,22 @@
   background-size: cover;
 }
 
+.pictureBoardContainerFull {
+  height: 100%;
+  border: 2px solid #cf9f6d;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  vertical-align: middle;
+  background-size: cover;
+  font-size: 50px;
+}
+
+.pictureBoardContainerFull img {
+  flex-grow: 1;
+}
+
 .pictureBoardAnswerContainer {
   display: flex;
   height: 30px;
@@ -190,7 +206,22 @@
   font-size: 20px;
   align-items: center;
   justify-content: space-between;
-  color: "#FEFD1D";
+  color: #FEFD1D;
+}
+
+.pictureBoardAnswerContainerFull {
+  display: flex;
+  height: 50px;
+  border: 2px solid #cf9f6d;
+  border-radius: 10px;
+  background-color: #700100;
+  text-align: center;
+  margin: -50px 10px 0px 10px;
+  color: #f2dc53;
+  font-size: 20px;
+  align-items: center;
+  justify-content: space-between;
+  color: #FEFD1D;
 }
 
 .pictureBoardPictureContainer {

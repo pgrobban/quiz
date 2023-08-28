@@ -156,6 +156,9 @@ export default class GameHandler {
       pass: 1,
     };
     game.questionStatus = QuestionStatus.receivedQuestion;
+    if (game.round === GameRound.pictureBoard) {
+      return game;
+    }
     return this.requestTeamAnswer(game.id);
   }
 
