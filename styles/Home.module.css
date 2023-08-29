@@ -145,8 +145,8 @@
 }
 
 .animateSize {
-  font-size: 30px;
-  transition-property: font-size;
+  font-size: 30px !important;
+  transition-property: font-size !important;
   transition-duration: 2s;
 }
 

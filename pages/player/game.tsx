@@ -114,7 +114,7 @@ function Game() {
 
         <PointsList
           animate={isAnimatingPoints}
-          callback={() => onFinishedAnimatingPoints()}
+          callback={() => { console.log("*** callback"); onFinishedAnimatingPoints() }}
         />
       </main>
     </>

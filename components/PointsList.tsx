@@ -10,6 +10,7 @@ import { useAppContext } from "../controllers/AppWrapper";
 import { getPointsFromLatestAnswer } from "../controllers/helpers";
 import { QuestionStatus } from "../models/types";
 import styles from "../styles/Home.module.css";
+import classNames from "classnames";
 
 interface Props {
   animate: boolean;
@@ -93,20 +94,18 @@ export default function PointsList(props: Props) {
           {sortedTeamsAndPoints?.map((teamNameAndPoint, index) => {
             const { teamName, points } = teamNameAndPoint;
             const isTeamAnswering = currentTeamAnswering === teamName;
-            const animateThisTeamRow = isTeamAnswering && animate;
+            const animateThisTeamRow = questionStatus === QuestionStatus.awardingPoints && isTeamAnswering && animate;
 
             return (
               <TableRow
                 key={teamName}
                 id={`team-points-${teamName}`}
-                className={
-                  animateThisTeamRow ? styles.animateSize : ""
-                }
+                className={classNames({ [styles.animateSize] : animateThisTeamRow })}
                 style={{ ...(isTeamAnswering && { backgroundColor: 'rgba(255, 255, 255, 0.15)' }) }}
               >
                 <TableCell>{index + 1}</TableCell>
                 <TableCell>{teamName}</TableCell>
-                <TableCell>
+                <TableCell style={{ fontSize: animateThisTeamRow ? 'unset' : undefined }}>
                   {animateThisTeamRow
                     ? points + (pointsToAdd - pointsLeftToAdd)
                     : points}{" "}
