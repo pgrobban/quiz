@@ -135,7 +135,16 @@ export default function CountdownBar(props: Props) {
         )}
       >
         <span className={styles.countdownBarText}>
-          {isIncorrectAnswer ? <span className={styles.incorrectAnswerText} ref={incorrectAnswerTextRef}>X</span> : value}
+          {isIncorrectAnswer ? (
+            <span
+              className={styles.incorrectAnswerText}
+              ref={incorrectAnswerTextRef}
+            >
+              X
+            </span>
+          ) : (
+            value
+          )}
         </span>
       </div>
 

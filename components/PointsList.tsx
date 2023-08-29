@@ -48,7 +48,7 @@ export default function PointsList(props: Props) {
     );
     if (callback) {
       teamAndPointsElementToTransition?.addEventListener(
-        "webkitTransitionEnd",
+        "animationend",
         callback
       );
     }
@@ -60,7 +60,7 @@ export default function PointsList(props: Props) {
         if (callback) {
           setTimeout(() => {
             teamAndPointsElementToTransition?.removeEventListener(
-              "webkitTransitionEnd",
+              "animationend",
               callback
             );
           }, 5000);
@@ -100,7 +100,7 @@ export default function PointsList(props: Props) {
               <TableRow
                 key={teamName}
                 id={`team-points-${teamName}`}
-                className={classNames({ [styles.animateSize] : animateThisTeamRow })}
+                className={classNames({ [styles.animatedSize] : animateThisTeamRow })}
                 style={{ ...(isTeamAnswering && { backgroundColor: 'rgba(255, 255, 255, 0.15)' }) }}
               >
                 <TableCell>{index + 1}</TableCell>

@@ -144,10 +144,20 @@
   height: 5px;
 }
 
-.animateSize {
-  font-size: 30px !important;
-  transition-property: font-size !important;
-  transition-duration: 2s;
+.animatedSize {
+  animation: animateSize 3s ease;
+}
+
+@keyframes animateSize {
+  0% {
+    font-size: 0.875rem;
+  }
+  50% {
+    font-size: 2rem;
+  }
+  100% {
+    font-size: 0.875rem;
+  }
 }
 
 .pictureBoard {
