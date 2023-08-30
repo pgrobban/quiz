@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Button, Table, TableCell, TableRow } from "@mui/material";
 import PointsList from "../../components/PointsList";
 import withReconnect from "../../components/WithReconnect";
 import { useAppContext } from "../../controllers/AppWrapper";
@@ -12,6 +12,9 @@ import {
 import styles from "../../styles/Home.module.css";
 import QuestionPicker from "./QuestionPicker";
 import RoundPicker from "./RoundPicker";
+import { sortBy } from "lodash";
+import CheckIcon from "@mui/icons-material/Check";
+import { getFlatAcceptableAnswers } from "../../controllers/helpers";
 
 function Game() {
   const appContext = useAppContext();
@@ -22,14 +25,11 @@ function Game() {
   }
 
   const { questionStatus, round, currentQuestion } = gameState;
-  const { questionInRound, question, orderedTeamsLeftToAnswer } = currentQuestion || {};
+  const { questionInRound, question, orderedTeamsLeftToAnswer } =
+    currentQuestion || {};
   const { acceptableAnswers, explanation, questionText } = question || {};
 
-  function getAcceptableAnswerButton(
-    answerText: string,
-    points: number,
-    answered: boolean
-  ) {
+  function getAcceptableAnswerButton(answerText: string, answered: boolean) {
     return (
       <Button
         key={answerText}
@@ -40,7 +40,6 @@ function Game() {
         disabled={answered}
       >
         {answerText}
-        <br />({points} pts)
       </Button>
     );
   }
@@ -49,10 +48,14 @@ function Game() {
     acceptableAnswers: AcceptableAnswerInGame[]
   ) {
     return acceptableAnswers.map((acceptableAnswer) => {
-      const { answerText, points, answered } = acceptableAnswer;
-      return getAcceptableAnswerButton(answerText, points, answered);
+      const { answerText, answered } = acceptableAnswer;
+      return getAcceptableAnswerButton(answerText, answered);
     });
   }
+
+  const flatAcceptableAnswers = (
+    acceptableAnswers ? getFlatAcceptableAnswers(acceptableAnswers) : []
+  ) as AcceptableAnswerInGame[];
 
   return (
     <>
@@ -88,27 +91,11 @@ function Game() {
                     orderedTeamsLeftToAnswer &&
                     acceptableAnswers && (
                       <>
-                        Requesting answer from{" "}
-                        {orderedTeamsLeftToAnswer[0]}
+                        Requesting answer from {orderedTeamsLeftToAnswer[0]}
                         <>
                           <h4>Verified accepted answers</h4>
                           <div>
-                            {isGroupedAcceptableAnswers(acceptableAnswers) && (
-                              <>
-                                {Object.keys(acceptableAnswers).map((key) => {
-                                  return (
-                                    <>
-                                      <h3>{key}</h3>
-                                      {getAcceptableAnswerButtons(
-                                        acceptableAnswers[key]
-                                      )}
-                                    </>
-                                  );
-                                })}
-                              </>
-                            )}
-                            {!isGroupedAcceptableAnswers(acceptableAnswers) &&
-                              getAcceptableAnswerButtons(acceptableAnswers)}
+                            {getAcceptableAnswerButtons(flatAcceptableAnswers)}
                           </div>
 
                           <Button
@@ -151,16 +138,39 @@ function Game() {
                     </Button>
                   )}
 
-                  {questionStatus === QuestionStatus.announcingResults && (
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      style={{ margin: 10 }}
-                      onClick={() => gameHandler.requestEndQuestion()}
-                    >
-                      End question
-                    </Button>
-                  )}
+                  {questionStatus === QuestionStatus.announcingResults &&
+                    acceptableAnswers && (
+                      <>
+                        <h3>Acceptable answers</h3>
+
+                        <Table style={{ width: 600 }}>
+                          {sortBy(flatAcceptableAnswers, "points").map(
+                            (acceptableAnswer) => {
+                              const { answerText, points, answered } =
+                                acceptableAnswer;
+                              return (
+                                <TableRow key={answerText}>
+                                  <TableCell>{answerText}</TableCell>
+                                  <TableCell>{points}</TableCell>
+                                  <TableCell>
+                                    {answered && <CheckIcon />}
+                                  </TableCell>
+                                </TableRow>
+                              );
+                            }
+                          )}
+                        </Table>
+
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          style={{ margin: 10 }}
+                          onClick={() => gameHandler.requestEndQuestion()}
+                        >
+                          End question
+                        </Button>
+                      </>
+                    )}
                 </>
               )}
             </>

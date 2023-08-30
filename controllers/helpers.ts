@@ -1,5 +1,12 @@
-import { AcceptableOrGroupedAcceptableAnswersInGame, AcceptableAnswerInGame } from './../models/types';
-import { AcceptableAnswerInGame, AcceptableOrGroupedAcceptableAnswers, Game, NON_VERIFIED_ANSWER, NO_OR_INVALID_ANSWER, QuestionStatus, isGroupedAcceptableAnswers } from "../models/types";
+import { AcceptableOrGroupedAcceptableAnswers, Game, NON_VERIFIED_ANSWER, NO_OR_INVALID_ANSWER, QuestionStatus, isGroupedAcceptableAnswers } from "../models/types";
+import { AcceptableAnswerInGame, AcceptableOrGroupedAcceptableAnswersInGame } from './../models/types';
+
+export function getFlatAcceptableAnswers(acceptableOrGroupedAnswers: AcceptableOrGroupedAcceptableAnswers) {
+  if (isGroupedAcceptableAnswers(acceptableOrGroupedAnswers)) {
+    return Object.values(acceptableOrGroupedAnswers).flat();
+  }
+  return acceptableOrGroupedAnswers;
+}
 
 export function findAcceptableAnswer(
   acceptableOrGroupedAcceptableAnswers: AcceptableOrGroupedAcceptableAnswersInGame,
