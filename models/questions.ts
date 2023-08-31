@@ -2590,6 +2590,37 @@ const questions: { [key in GameRound]: Question[] } = {
         },
       ],
     },
+    {
+      questionText: "Former capitals",
+      explanation: "We're going to show you five pictures of cities which used to be the capitals of their respective countries. We need you to tell us the country they used to be capital of.",
+      acceptableAnswers: [
+        {
+          answerText: "India",
+          clue: "calcutta.jpg",
+          points: 17,
+        },
+        {
+          answerText: "Japan",
+          clue: "kyoto.jpg",
+          points: 16,
+        },
+        {
+          answerText: "Russia",
+          clue: "st petersburg.webp",
+          points: 4,
+        },
+        {
+          answerText: "Nigeria",
+          clue: "lagos.jpg",
+          points: 0,
+        },
+        {
+          answerText: "Brazil",
+          clue: "rio.webp",
+          points: 18,
+        },
+      ],
+    },
   ],
 };
 
