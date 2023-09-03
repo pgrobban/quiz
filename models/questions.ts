@@ -2435,6 +2435,38 @@ const questions: { [key in GameRound]: Question[] } = {
       ],
     },
     {
+      questionText: "Cameron Diaz films",
+      explanation:
+        "We're going to show you five stills of famous Cameron Diaz films. Can you name the most obscure?",
+      acceptableAnswers: [
+        {
+          answerText: "The Mask",
+          clue: "the_mask.webp",
+          points: 7,
+        },
+        {
+          answerText: "Bad Teacher",
+          clue: "bad_teacher.jpeg",
+          points: 28,
+        },
+        {
+          answerText: "There's Something About Mary",
+          clue: "mary.webp",
+          points: 38,
+        },
+        {
+          answerText: "The Box",
+          clue: "the_box.webp",
+          points: 1,
+        },
+        {
+          answerText: "My Best Friend's Wedding",
+          clue: "my_best.webp",
+          points: 29,
+        },
+      ],
+    },
+    {
       questionText: "Car logos",
       explanation:
         "We're going to show you logotypes of famous car brands. We would like you to tell us the most obscure brand.",
