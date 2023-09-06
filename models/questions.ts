@@ -1162,6 +1162,42 @@ const questions: { [key in GameRound]: Question[] } = {
       ],
     },
     {
+      questionText: "Belgium",
+      explanation: "We're going to give you five clues to facts about Belgium. We need you to give us the most obscure fact.",
+      acceptableAnswers: [
+        {
+          clue: "Belgian cartoonist and creator of 'Tintin'",
+          answerText: "Hergé",
+          points: 30,
+        },
+        {
+          clue: "Its monarch since 1993",
+          answerText: "King Albert II",
+          points: 1,
+        },
+        {
+          clue: "Actress, born in Belgium, who played 'Holly Golightly'",
+          answerText: "Audrey Hepburn",
+          points: 15,
+        },
+        {
+          clue: "Manchester City captain and Belgian Defender",
+          answerText: "Vincent Kompany",
+          points: 19,
+        },
+        {
+          clue: "Belgian-born actor often known by the initials 'JCVD'",
+          answerText: "Jean-Claude Van Damme",
+          points: 51,
+        },
+        {
+          clue: "Grain-like seed, staple food in the Andes",
+          answerText: "Quinoa",
+          points: 16,
+        },
+      ],
+    },
+    {
       questionText: "Famous Richards",
       tags: ["Names"],
       acceptableAnswers: [
@@ -2190,6 +2226,43 @@ const questions: { [key in GameRound]: Question[] } = {
           answerText: "Spain",
           points: 95,
         },
+      ],
+    },
+    {
+      questionText: "Famous works of art",
+      tags: ["Art"],
+      explanation: "We are going to show you six famous works of art. and we're giving you the initials of the artist who created them. We need to give you the names of the most obscure artists.",
+      acceptableAnswers: [
+        {
+          clue: "The Great Wave of Kanagawa (H)",
+          answerText: "Hokusai",
+          points: 2,
+        },
+        {
+          clue: "The Scream (EM)",
+          answerText: "Edward Munch",
+          points: 32,
+        },
+        {
+          clue: "The Night Watch (R)",
+          answerText: "Rembrandt",
+          points: 24,
+        },
+        {
+          clue: "The Starry Night (VVG)",
+          answerText: "Vincent van Gogh",
+          points: 55,
+        },
+        {
+          clue: "Creation of Adam (M)",
+          answerText: "Michelangelo",
+          points: 22,
+        },
+        {
+          clue: "The Persistence of Memory (SD)",
+          answerText: "Salvador Dali",
+          points: 13,
+        }
       ],
     },
   ],
