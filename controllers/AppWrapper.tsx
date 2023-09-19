@@ -9,7 +9,10 @@ export interface IAppContext {
 
 const socket = io();
 const gh = new ClientGameHandler(socket);
-export const AppContext = createContext<IAppContext>({ gameHandler: gh, gameState: null });
+export const AppContext = createContext<IAppContext>({
+  gameHandler: gh,
+  gameState: null,
+});
 
 export default function AppWrapper({
   children,
@@ -56,7 +59,7 @@ export default function AppWrapper({
       socket.on("active-round-undone", (game: Game) => {
         gameHandler.onActiveRoundUndone(game);
         setGameState(game);
-      })
+      });
       socket.on("active-question-set", (game: Game) => {
         gameHandler.onActiveQuestionSet(game);
         setGameState(game);
@@ -77,11 +80,15 @@ export default function AppWrapper({
         gameHandler.onQuestionEnded(game);
         setGameState(game);
       });
+      socket.on("head-to-head-enabled", (game: Game) => {
+        gameHandler.onHeadToHeadEnabled(game);
+        setGameState(game);
+      });
     };
     getSocket();
     return () => {
       socket.removeAllListeners();
-    }
+    };
   }, [gameHandler]);
 
   return (

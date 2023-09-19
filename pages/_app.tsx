@@ -7,6 +7,12 @@ import CssBaseline from "@mui/material/CssBaseline";
 const darkTheme = createTheme({
   palette: {
     mode: "dark",
+    primary: {
+      main: "#FFBA00",
+    },
+  },
+  typography: {
+    fontFamily: "Open Sans",
   },
 });
 

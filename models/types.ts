@@ -78,6 +78,7 @@ export interface Game {
     lastAnswer?: string;
     pass: number;
   }
+  headToHeadEnabled?: boolean;
 }
 
 export const NON_VERIFIED_ANSWER = 'NON-VERIFIED-ANSWER';

@@ -97,12 +97,16 @@ const SocketHandler = (_: NextApiRequest, res: NextApiResponseWithSocket) => {
       const game = gameHandler.requestEndQuestion(gameId);
       io.to(game.id).emit('question-ended', game);
     });
+
+    socket.on('request-enable-head-to-head', (gameId) => {
+      const game = gameHandler.requestEnableHeadToHead(gameId);
+      io.to(game.id).emit('head-to-head-enabled', game);
+    });
+
+    socket.on('disconnect', () => {
+      console.log("*** disconnected")
+    })
   });
-
-  io.on('disconnect', () => {
-    console.log("*** disconnected")
-  })
-
   return res.end();
 }
 

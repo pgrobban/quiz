@@ -11,7 +11,7 @@ export default class ClientGameHandler {
   private hostReceivedGames: Game[] = [];
   private role: 'play' | 'host' | null = null;
 
-  constructor(private socket: Socket) {}
+  constructor(private socket: Socket) { }
 
   requestNewGame() {
     this.role = 'play';
@@ -69,6 +69,10 @@ export default class ClientGameHandler {
 
   requestEndQuestion() {
     this.socket.emit('request-end-question', this.activeGame?.id);
+  }
+
+  requestEnableHeadToHead() {
+    this.socket.emit('request-enable-head-to-head', this.activeGame?.id);
   }
 
   getConnectionStatus() {
@@ -163,6 +167,10 @@ export default class ClientGameHandler {
   }
 
   onQuestionEnded(game: Game) {
+    this.activeGame = game;
+  }
+
+  onHeadToHeadEnabled(game: Game) {
     this.activeGame = game;
   }
 }

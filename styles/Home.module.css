@@ -19,6 +19,12 @@
   row-gap: 10px;
 }
 
+.menuButton {
+  min-height: 50px;
+  min-width: 200px;
+  margin-top: 15px;
+}
+
 .background {
   background: rgb(2, 0, 36);
   background: linear-gradient(
@@ -37,6 +43,7 @@
   height: 492px;
   border: 5px solid black;
   background-color: black;
+  font-family: Helvetica;
 }
 
 .countdownBarEllipse {

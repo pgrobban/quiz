@@ -147,15 +147,14 @@ function Game() {
             }}
           />
 
-          {questionStatus === QuestionStatus.awardingPoints && (
-            <CountdownBar
-              to={countdownTo}
-              callback={() => setIsAnimatingPoints(true)}
-            />
-          )}
-          {questionStatus !== QuestionStatus.awardingPoints && (
-            <div style={{ width: 300 }}></div>
-          )}
+          <div style={{ width: 300 }}>
+            {questionStatus === QuestionStatus.awardingPoints && (
+              <CountdownBar
+                to={countdownTo}
+                callback={() => setIsAnimatingPoints(true)}
+              />
+            )}
+          </div>
         </div>
       </main>
     </>

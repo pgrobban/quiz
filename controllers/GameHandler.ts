@@ -1,5 +1,5 @@
 import { AcceptableOrGroupedAcceptableAnswersInGame, GroupedAcceptableAnswersInGame } from './../models/types';
-import { orderBy, shuffle } from "lodash";
+import { orderBy, shuffle, sortBy } from "lodash";
 import { v4 as uuid } from "uuid";
 import questions from "../models/questions";
 import {
@@ -350,6 +350,21 @@ export default class GameHandler {
     game.currentQuestion = undefined;
     game.round = undefined;
     game.questionStatus = QuestionStatus.waitingForRound;
+    return game;
+  }
+
+  requestEnableHeadToHead(gameId: string) {
+    const game = this.getGameById(gameId);
+    if (game.questionStatus !== QuestionStatus.waitingForRound) {
+      console.log(game);
+      throw new Error('requestEnableHeadToHead Assertion error');
+    }
+
+    game.headToHeadEnabled = true;
+    game.teamsAndPoints = sortBy(game.teamsAndPoints, 'points').slice(0, 2);
+    game.teamsAndPoints[0].points = 0;
+    game.teamsAndPoints[1].points = 0;
+
     return game;
   }
 }

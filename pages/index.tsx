@@ -18,30 +18,41 @@ function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={`${styles.main}`}>
-        <h2>Robban&apos;s Pointless Quiz</h2>
-        <Image src="/images/logo.png" alt="Logo" width={384} height={214} />
-        <div className={styles.menu}>
-          <Button
-            variant="contained"
-            style={{ width: 200, height: 50 }}
-            onClick={() => gameHandler.requestNewGame()}
-          >
-            New game
-          </Button>
-          <Button
-            variant="contained"
-            onClick={() => gameHandler.requestToBeHost()}
-          >
-            Host
-          </Button>
+        <div style={{ display: "flex" }}>
+          <div>
+            <h2 style={{ marginBottom: 50 }}>Robban&apos;s Pointless Quiz</h2>
+            <Image
+              src="/images/logo.png"
+              alt="Logo"
+              width={384}
+              height={214}
+              style={{ marginBottom: 50 }}
+            />
+            <div className={styles.menu}>
+              <Button
+                className={styles.menuButton}
+                variant="contained"
+                onClick={() => gameHandler.requestNewGame()}
+              >
+                New game
+              </Button>
+              <Button
+                className={styles.menuButton}
+                variant="contained"
+                onClick={() => gameHandler.requestToBeHost()}
+              >
+                Host
+              </Button>
+            </div>
+          </div>
+          <CountdownBar
+            to={0}
+            callback={() => {
+              console.log("*** callback");
+            }}
+          />
         </div>
       </main>
-      <CountdownBar
-        to={0}
-        callback={() => {
-          console.log("*** callback");
-        }}
-      />
     </>
   );
 }

@@ -31,7 +31,7 @@ function NewGame() {
   return (
     <>
       <main className={styles.main}>
-        <div className={styles.mainFrame}>
+        <div className={styles.mainFrame} style={{ width: 500 }}>
           <h3>New game</h3>
           <h4>
             Enter team names <br />
@@ -46,12 +46,13 @@ function NewGame() {
                     onChange={(e) => updateTeamName(index, e.target.value)}
                     placeholder="Enter a team name..."
                     variant="filled"
+                    fullWidth
                     InputProps={{
                       endAdornment: (
                         <Button
                           variant="contained"
                           color="secondary"
-                          disabled={teamNames.length < 2}
+                          disabled={teamNames.length <= 2}
                           onClick={() => removeTeamName(index)}
                         >
                           <PersonRemoveIcon />
@@ -64,19 +65,17 @@ function NewGame() {
             })}
           </div>
 
-          <Button variant="contained" style={{ marginTop: 10 }}>
+          <Button variant="contained" style={{ marginTop: 15 }}>
             <PersonAddIcon onClick={() => addTeamName()} />
           </Button>
         </div>
-        <div>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => gameHandler.requestStartGame(teamNames)}
-          >
-            Start game
-          </Button>
-        </div>
+        <Button
+          className={styles.menuButton}
+          variant="contained"
+          onClick={() => gameHandler.requestStartGame(teamNames)}
+        >
+          Start game
+        </Button>
       </main>
     </>
   );

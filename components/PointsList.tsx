@@ -87,8 +87,6 @@ export default function PointsList(props: Props) {
 
   return (
     <div className={styles.mainFrame} style={{ minWidth: 400 }}>
-      <Typography align="center">Points</Typography>
-
       <Table>
         <TableBody>
           {sortedTeamsAndPoints?.map((teamNameAndPoint, index) => {
@@ -112,7 +110,7 @@ export default function PointsList(props: Props) {
                   }),
                 }}
               >
-                <TableCell width={20}>{index + 1}</TableCell>
+                <TableCell width={20}>{index + 1}.</TableCell>
                 <TableCell>{teamName}</TableCell>
                 <TableCell
                   width={150}

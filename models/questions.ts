@@ -1224,12 +1224,12 @@ const questions: { [key in GameRound]: Question[] } = {
         },
         {
           clue: "Actor who starred in 'Close Encounters of The Third Kind'",
-          answerText: "Alexander Graham Bell",
+          answerText: "Richard Dreyfuss",
           points: 21,
         },
         {
           clue: "President of the United States 1969-74",
-          answerText: "Nixon",
+          answerText: "Richard Nixon",
           points: 51,
         },
       ],
@@ -1261,13 +1261,13 @@ const questions: { [key in GameRound]: Question[] } = {
         },
         {
           clue: "Little grey rabbit, best friend of Bambi (1942)",
-          answerText: "Thumper (Stampe)",
+          answerText: "Thumper",
           points: 65,
         },
         {
           clue: "Villainess who wants to make a fur coat out of Pongo's puppies (1961)",
           answerText: "Cruella de Vil",
-          points: 1961,
+          points: 31,
         },
       ],
     },

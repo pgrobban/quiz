@@ -23,7 +23,8 @@ function Game() {
     return null;
   }
 
-  const { questionStatus, round, currentQuestion } = gameState;
+  const { questionStatus, round, currentQuestion, headToHeadEnabled } =
+    gameState;
   const { questionInRound, question, orderedTeamsLeftToAnswer } =
     currentQuestion || {};
   const { acceptableAnswers, explanation, questionText } = question || {};
@@ -61,7 +62,21 @@ function Game() {
       <main className={styles.main}>
         <h3>Hosting</h3>
 
-        {!round && <RoundPicker />}
+        {!round && (
+          <div>
+            <RoundPicker />
+
+            {!headToHeadEnabled && (
+              <Button
+                onClick={() => gameHandler.requestEnableHeadToHead()}
+                color="secondary"
+                variant="contained"
+              >
+                Enable head to head
+              </Button>
+            )}
+          </div>
+        )}
         {round && (
           <>
             {questionStatus === QuestionStatus.waitingForQuestion && (
