@@ -7,7 +7,6 @@ import {
   NON_VERIFIED_ANSWER,
   NO_OR_INVALID_ANSWER,
   QuestionStatus,
-  isGroupedAcceptableAnswers,
 } from "../../models/types";
 import styles from "../../styles/Home.module.css";
 import QuestionPicker from "./QuestionPicker";
@@ -143,7 +142,10 @@ function Game() {
                       <>
                         <h3>Acceptable answers</h3>
 
-                        <Table style={{ width: 600 }}>
+                        <Table
+                          className={styles.mainFrame}
+                          style={{ width: 600 }}
+                        >
                           {sortBy(flatAcceptableAnswers, "points").map(
                             (acceptableAnswer) => {
                               const { answerText, points, answered } =

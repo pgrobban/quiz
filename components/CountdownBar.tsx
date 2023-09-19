@@ -126,7 +126,7 @@ export default function CountdownBar(props: Props) {
   }, [value, countdownAnimationInProgress, remainingLinesToAnimate]);
 
   return (
-    <div className={styles.countdownBarContainer}>
+    <div className={classNames(styles.mainFrame, styles.countdownBarContainer)}>
       <div
         className={classNames(
           styles.countdownBarEllipse,

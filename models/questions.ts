@@ -4,6 +4,7 @@ const questions: { [key in GameRound]: Question[] } = {
   "open-ended": [
     {
       questionText: "US states ending in 'A'",
+      explanation: "All of the valid answers are US states ending with the letter 'A'. We need you to give us the most obscure one.",
       tags: ["Geography"],
       acceptableAnswers: [
         { answerText: "Alabama", points: 53 },
@@ -858,7 +859,7 @@ const questions: { [key in GameRound]: Question[] } = {
       tags: ["Geography"],
       explanation:
         "We are looking for the name of any country whose common English name includes the letter 'X' and/or 'Y' and/or 'Z'. By 'country' we mean any sovereign state that is a member of the UN in its own right as of the beginning of April 2011.",
-        acceptableAnswers: [
+      acceptableAnswers: [
         { answerText: "Azerbaijian", points: 1 },
         { answerText: "Belize", points: 1 },
         { answerText: "Bosnia and Herzegovina", points: 0 },

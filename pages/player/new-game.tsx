@@ -4,7 +4,6 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import PersonRemoveIcon from "@mui/icons-material/PersonRemove";
 import { useEffect, useState } from "react";
 import { useAppContext } from "../../controllers/AppWrapper";
-import withReconnect from "../../components/WithReconnect";
 
 function NewGame() {
   const appContext = useAppContext();
@@ -12,8 +11,8 @@ function NewGame() {
   const [teamNames, setTeamNames] = useState(["", ""]);
 
   useEffect(() => {
-    gameHandler.getActiveGame(); 
-  }, [gameHandler])
+    gameHandler.getActiveGame();
+  }, [gameHandler]);
 
   const updateTeamName = (index: number, newName: string) => {
     setTeamNames((teamNames) =>
@@ -32,45 +31,49 @@ function NewGame() {
   return (
     <>
       <main className={styles.main}>
-        <div>
-        <h3>New game</h3>
-        <h4>
-          Enter team names <br />
-          (at least two teams are required)
-        </h4>
-        <div>
-          {teamNames.map((teamName, index) => {
-            return (
-              <div key={index}>
-                <TextField
-                  value={teamName}
-                  onChange={(e) => updateTeamName(index, e.target.value)}
-                  placeholder="Enter a team name..."
-                  variant="filled"
-                  InputProps={{
-                    endAdornment: (
-                      <Button
-                        variant="contained"
-                        color="secondary"
-                        disabled={teamNames.length < 2}
-                        onClick={() => removeTeamName(index)}
-                      >
-                        <PersonRemoveIcon />
-                      </Button>
-                    ),
-                  }}
-                />
-              </div>
-            );
-          })}
-        </div>
+        <div className={styles.mainFrame}>
+          <h3>New game</h3>
+          <h4>
+            Enter team names <br />
+            (at least two teams are required)
+          </h4>
+          <div>
+            {teamNames.map((teamName, index) => {
+              return (
+                <div key={index}>
+                  <TextField
+                    value={teamName}
+                    onChange={(e) => updateTeamName(index, e.target.value)}
+                    placeholder="Enter a team name..."
+                    variant="filled"
+                    InputProps={{
+                      endAdornment: (
+                        <Button
+                          variant="contained"
+                          color="secondary"
+                          disabled={teamNames.length < 2}
+                          onClick={() => removeTeamName(index)}
+                        >
+                          <PersonRemoveIcon />
+                        </Button>
+                      ),
+                    }}
+                  />
+                </div>
+              );
+            })}
+          </div>
 
-        <Button variant="contained" style={{ marginTop: 10 }}>
-          <PersonAddIcon onClick={() => addTeamName()} />
-        </Button>
+          <Button variant="contained" style={{ marginTop: 10 }}>
+            <PersonAddIcon onClick={() => addTeamName()} />
+          </Button>
         </div>
         <div>
-          <Button variant="contained" color="primary" onClick={() => gameHandler.requestStartGame(teamNames)}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => gameHandler.requestStartGame(teamNames)}
+          >
             Start game
           </Button>
         </div>

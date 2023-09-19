@@ -10,8 +10,9 @@ import { getPointsFromLatestAnswer } from "../../controllers/helpers";
 import {
   GameRound,
   GameStatus,
-  NON_VERIFIED_ANSWER, NO_OR_INVALID_ANSWER,
-  QuestionStatus
+  NON_VERIFIED_ANSWER,
+  NO_OR_INVALID_ANSWER,
+  QuestionStatus,
 } from "../../models/types";
 import styles from "../../styles/Home.module.css";
 
@@ -26,7 +27,13 @@ function Game() {
     return null;
   }
 
-  const { questionInRound, question, lastAnswer, orderedTeamsLeftToAnswer, pass } = currentQuestion || {};
+  const {
+    questionInRound,
+    question,
+    lastAnswer,
+    orderedTeamsLeftToAnswer,
+    pass,
+  } = currentQuestion || {};
   const { questionText, explanation } = question || {};
   const numberOfPassesForRound = round ? NUMBER_OF_PASSES_FOR_ROUND[round] : 0;
 
@@ -55,67 +62,101 @@ function Game() {
       <main className={styles.main}>
         <h3>Pointless game in progress</h3>
 
-        {gameStatus === GameStatus.waitingForHost && (
-          <h4>Waiting for host...</h4>
-        )}
-        {gameStatus === GameStatus.inProgress && questionStatus && (
-          <>
-            {questionStatus === QuestionStatus.waitingForRound && (
-              <h4>Waiting for host to pick a round...</h4>
+        <div style={{ display: "flex" }}>
+          <div
+            className={styles.mainFrame}
+            style={{
+              marginRight: 10,
+              minHeight: 800,
+              minWidth: 800,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            {gameStatus === GameStatus.waitingForHost && (
+              <h4>Waiting for host...</h4>
             )}
-            {questionStatus === QuestionStatus.waitingForQuestion && (
-              <h4>Waiting for host to pick a question...</h4>
+            {gameStatus === GameStatus.inProgress && questionStatus && (
+              <>
+                {questionStatus === QuestionStatus.waitingForRound && (
+                  <h4>Waiting for host to pick a round...</h4>
+                )}
+                {questionStatus === QuestionStatus.waitingForQuestion && (
+                  <h4>Waiting for host to pick a question...</h4>
+                )}
+                {[
+                  QuestionStatus.receivedQuestion,
+                  QuestionStatus.waitingForTeamAnswer,
+                  QuestionStatus.announcingResults,
+                  QuestionStatus.awardingPoints,
+                  QuestionStatus.pointsAdded,
+                ].includes(questionStatus) &&
+                  currentQuestion && (
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <h4>Question {questionInRound}</h4>
+                      <h2>{questionText}</h2>
+                      <p>{explanation}</p>
+                      {numberOfPassesForRound > 1 && (
+                        <p>
+                          Pass {pass}/{numberOfPassesForRound}
+                        </p>
+                      )}
+
+                      {getGameBoard()}
+
+                      {questionStatus === QuestionStatus.waitingForTeamAnswer &&
+                        orderedTeamsLeftToAnswer && (
+                          <h4>
+                            Waiting for answer from team{" "}
+                            {orderedTeamsLeftToAnswer[0]}
+                          </h4>
+                        )}
+
+                      {questionStatus === QuestionStatus.awardingPoints &&
+                        currentQuestion.lastAnswer && (
+                          <>
+                            <h4>
+                              Checking answer...{" "}
+                              {lastAnswer &&
+                                ![
+                                  NON_VERIFIED_ANSWER,
+                                  NO_OR_INVALID_ANSWER,
+                                ].includes(lastAnswer)}
+                            </h4>
+                          </>
+                        )}
+                    </div>
+                  )}
+              </>
             )}
-            {[
-              QuestionStatus.receivedQuestion,
-              QuestionStatus.waitingForTeamAnswer,
-              QuestionStatus.announcingResults,
-              QuestionStatus.awardingPoints,
-              QuestionStatus.pointsAdded,
-            ].includes(questionStatus) &&
-              currentQuestion && (
-                <>
-                  <h4>Question {questionInRound}</h4>
-                  <h2>{questionText}</h2>
-                  <p>{explanation}</p>
-                  {numberOfPassesForRound > 1 && <p>Pass {pass}/{numberOfPassesForRound}</p>}
+          </div>
 
-                  {getGameBoard()}
+          <PointsList
+            animate={isAnimatingPoints}
+            callback={() => {
+              console.log("*** callback");
+              onFinishedAnimatingPoints();
+            }}
+          />
 
-                  {questionStatus === QuestionStatus.waitingForTeamAnswer &&
-                    orderedTeamsLeftToAnswer && (
-                      <h4>
-                        Waiting for answer from team{" "}
-                        {orderedTeamsLeftToAnswer[0]}
-                      </h4>
-                    )}
-
-                  {questionStatus === QuestionStatus.awardingPoints &&
-                    currentQuestion.lastAnswer && (
-                      <>
-                        <h4>
-                          Checking answer...{" "}
-                          {lastAnswer &&
-                            ![
-                              NON_VERIFIED_ANSWER,
-                              NO_OR_INVALID_ANSWER,
-                            ].includes(lastAnswer)}
-                        </h4>
-                        <CountdownBar
-                          to={countdownTo}
-                          callback={() => setIsAnimatingPoints(true)}
-                        />
-                      </>
-                    )}
-                </>
-              )}
-          </>
-        )}
-
-        <PointsList
-          animate={isAnimatingPoints}
-          callback={() => { console.log("*** callback"); onFinishedAnimatingPoints() }}
-        />
+          {questionStatus === QuestionStatus.awardingPoints && (
+            <CountdownBar
+              to={countdownTo}
+              callback={() => setIsAnimatingPoints(true)}
+            />
+          )}
+          {questionStatus !== QuestionStatus.awardingPoints && (
+            <div style={{ width: 300 }}></div>
+          )}
+        </div>
       </main>
     </>
   );

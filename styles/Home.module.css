@@ -4,8 +4,10 @@
   justify-content: space-between;
   align-items: center;
   padding: 6rem;
-  min-height: 800px;
+  height: 100vh;
   perspective: 500px;
+  background-image: url("/images/clues-and-answers.avif");
+  background-size: cover;
 }
 
 .menu {
@@ -28,9 +30,9 @@
 }
 
 .countdownBarContainer {
-  position: absolute;
-  right: 50px;
-  top: 100px;
+  position: relative;
+  top: 150px;
+  left: 50px;
   width: 150px;
   height: 492px;
   border: 5px solid black;
@@ -153,7 +155,7 @@
     font-size: 0.875rem;
   }
   50% {
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
   100% {
     font-size: 0.875rem;
@@ -216,7 +218,7 @@
   font-size: 20px;
   align-items: center;
   justify-content: space-between;
-  color: #FEFD1D;
+  color: #fefd1d;
 }
 
 .pictureBoardAnswerContainerFull {
@@ -231,7 +233,7 @@
   font-size: 20px;
   align-items: center;
   justify-content: space-between;
-  color: #FEFD1D;
+  color: #fefd1d;
 }
 
 .pictureBoardPictureContainer {
@@ -363,7 +365,7 @@
   animation: pointlessMoving 3s ease;
   display: block;
   transform-style: preserve-3d;
-  animation-fill-mode: forwards; 
+  animation-fill-mode: forwards;
 }
 
 @keyframes pointlessMoving {
@@ -388,4 +390,11 @@
     font-size: 50px;
     transform: rotateY(-360deg);
   }
+}
+
+.mainFrame {
+  background-color: black;
+  padding: 10px;
+  border: 2px solid #f2dc53;
+  border-radius: 10px;
 }

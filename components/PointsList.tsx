@@ -86,7 +86,7 @@ export default function PointsList(props: Props) {
   }
 
   return (
-    <div>
+    <div className={styles.mainFrame} style={{ minWidth: 400 }}>
       <Typography align="center">Points</Typography>
 
       <Table>
@@ -94,18 +94,30 @@ export default function PointsList(props: Props) {
           {sortedTeamsAndPoints?.map((teamNameAndPoint, index) => {
             const { teamName, points } = teamNameAndPoint;
             const isTeamAnswering = currentTeamAnswering === teamName;
-            const animateThisTeamRow = questionStatus === QuestionStatus.awardingPoints && isTeamAnswering && animate;
+            const animateThisTeamRow =
+              questionStatus === QuestionStatus.awardingPoints &&
+              isTeamAnswering &&
+              animate;
 
             return (
               <TableRow
                 key={teamName}
                 id={`team-points-${teamName}`}
-                className={classNames({ [styles.animatedSize] : animateThisTeamRow })}
-                style={{ ...(isTeamAnswering && { backgroundColor: 'rgba(255, 255, 255, 0.15)' }) }}
+                className={classNames({
+                  [styles.animatedSize]: animateThisTeamRow,
+                })}
+                style={{
+                  ...(isTeamAnswering && {
+                    backgroundColor: "rgba(255, 255, 255, 0.15)",
+                  }),
+                }}
               >
-                <TableCell>{index + 1}</TableCell>
+                <TableCell width={20}>{index + 1}</TableCell>
                 <TableCell>{teamName}</TableCell>
-                <TableCell style={{ fontSize: animateThisTeamRow ? 'unset' : undefined }}>
+                <TableCell
+                  width={150}
+                  style={{ fontSize: animateThisTeamRow ? "unset" : undefined }}
+                >
                   {animateThisTeamRow
                     ? points + (pointsToAdd - pointsLeftToAdd)
                     : points}{" "}

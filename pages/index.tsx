@@ -17,7 +17,7 @@ function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={`${styles.main} ${styles.background}`}>
+      <main className={`${styles.main}`}>
         <h2>Robban&apos;s Pointless Quiz</h2>
         <Image src="/images/logo.png" alt="Logo" width={384} height={214} />
         <div className={styles.menu}>
@@ -36,7 +36,12 @@ function Home() {
           </Button>
         </div>
       </main>
-      <CountdownBar to={0} callback={() => {console.log("*** callback")}} />
+      <CountdownBar
+        to={0}
+        callback={() => {
+          console.log("*** callback");
+        }}
+      />
     </>
   );
 }
