@@ -103,6 +103,11 @@ const SocketHandler = (_: NextApiRequest, res: NextApiResponseWithSocket) => {
       io.to(game.id).emit('head-to-head-enabled', game);
     });
 
+    socket.on('request-head-to-head-answers-submission', ({ gameId, answerTexts }) => {
+      const game = gameHandler.requestHeadToHeadAnswersSubmission(gameId, answerTexts);
+      io.to(game.id).emit('head-to-head-answers-submitted', game);
+    });
+
     socket.on('disconnect', () => {
       console.log("*** disconnected")
     })

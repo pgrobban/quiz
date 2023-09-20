@@ -15,14 +15,21 @@ import {
   QuestionStatus,
 } from "../../models/types";
 import styles from "../../styles/Home.module.css";
+import classNames from "classnames";
+import HeadToHeadAnswers from "../../components/HeadToHeadAnswers";
 
 function Game() {
   const appContext = useAppContext();
   const { gameHandler, gameState } = appContext;
   const [isAnimatingPoints, setIsAnimatingPoints] = useState<boolean>(false);
 
-  const { gameStatus, questionStatus, currentQuestion, round } =
-    gameState || {};
+  const {
+    gameStatus,
+    questionStatus,
+    currentQuestion,
+    round,
+    headToHeadEnabled,
+  } = gameState || {};
   if (!gameState) {
     return null;
   }
@@ -33,6 +40,7 @@ function Game() {
     lastAnswer,
     orderedTeamsLeftToAnswer,
     pass,
+    headToHeadAnswers,
   } = currentQuestion || {};
   const { questionText, explanation } = question || {};
   const numberOfPassesForRound = round ? NUMBER_OF_PASSES_FOR_ROUND[round] : 0;
@@ -56,6 +64,8 @@ function Game() {
         return null;
     }
   };
+
+  const currentTeamName = orderedTeamsLeftToAnswer?.[0];
 
   return (
     <>
@@ -91,6 +101,7 @@ function Game() {
                   QuestionStatus.announcingResults,
                   QuestionStatus.awardingPoints,
                   QuestionStatus.pointsAdded,
+                  QuestionStatus.receivedHeadToHeadAnswers,
                 ].includes(questionStatus) &&
                   currentQuestion && (
                     <div
@@ -103,8 +114,15 @@ function Game() {
                     >
                       <h4>Question {questionInRound}</h4>
                       <h2>{questionText}</h2>
-                      <p>{explanation}</p>
-                      {numberOfPassesForRound > 1 && (
+                      <p style={{ margin: 15 }}>
+                        {explanation?.split("\n").map((explanationChunk) => (
+                          <>
+                            {explanationChunk}
+                            <br />
+                          </>
+                        ))}
+                      </p>
+                      {!headToHeadEnabled && numberOfPassesForRound > 1 && (
                         <p>
                           Pass {pass}/{numberOfPassesForRound}
                         </p>
@@ -114,10 +132,19 @@ function Game() {
 
                       {questionStatus === QuestionStatus.waitingForTeamAnswer &&
                         orderedTeamsLeftToAnswer && (
-                          <h4>
-                            Waiting for answer from team{" "}
-                            {orderedTeamsLeftToAnswer[0]}
-                          </h4>
+                          <>
+                            {!headToHeadEnabled && (
+                              <h4>
+                                Waiting for answer from team {currentTeamName}
+                              </h4>
+                            )}
+                            {headToHeadEnabled && (
+                              <h4>
+                                Waiting for 3 answers from team{" "}
+                                {currentTeamName}
+                              </h4>
+                            )}
+                          </>
                         )}
 
                       {questionStatus === QuestionStatus.awardingPoints &&
@@ -132,6 +159,16 @@ function Game() {
                                 ].includes(lastAnswer)}
                             </h4>
                           </>
+                        )}
+
+                      {questionStatus ===
+                        QuestionStatus.receivedHeadToHeadAnswers &&
+                        headToHeadAnswers &&
+                        currentTeamName && (
+                          <HeadToHeadAnswers
+                            answers={headToHeadAnswers}
+                            teamName={currentTeamName}
+                          />
                         )}
                     </div>
                   )}

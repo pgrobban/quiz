@@ -29,7 +29,7 @@
   background: rgb(2, 0, 36);
   background: linear-gradient(
     180deg,
-    rgba(2, 0, 36, 1) 0%,
+    rgb(77, 70, 217) 0%,
     rgba(9, 9, 121, 1) 35%,
     rgba(220, 0, 255, 1) 100%
   );
@@ -40,7 +40,7 @@
   top: 150px;
   left: 50px;
   width: 150px;
-  height: 492px;
+  height: 500px;
   border: 5px solid black;
   background-color: black;
   font-family: Helvetica;
@@ -404,4 +404,22 @@
   padding: 10px;
   border: 2px solid #f2dc53;
   border-radius: 10px;
+}
+
+.headToHeadAnswer {
+  width: 400px;
+  margin-top: 15px;
+  border-radius: 30px;
+  height: 50px;
+  text-align: center;
+  background: linear-gradient(
+    180deg,
+    #45063f 0%,
+    #8b3168 25%,
+    #5d366f 50%,
+    #45063f 100%
+  );
+  color: #f0f30c;
+  font-family: Verdana;
+  text-transform: uppercase;
 }

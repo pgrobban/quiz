@@ -15,7 +15,7 @@ function NewGame() {
   }, [gameHandler]);
 
   const updateTeamName = (index: number, newName: string) => {
-    setTeamNames((teamNames) =>
+    setTeamNames(
       teamNames.map((teamName, i) => (i === index ? newName : teamName))
     );
   };

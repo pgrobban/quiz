@@ -84,6 +84,10 @@ export default function AppWrapper({
         gameHandler.onHeadToHeadEnabled(game);
         setGameState(game);
       });
+      socket.on("head-to-head-answers-submitted", (game: Game) => {
+        gameHandler.onHeadToHeadAnswersSubmitted(game);
+        setGameState(game);
+      });
     };
     getSocket();
     return () => {

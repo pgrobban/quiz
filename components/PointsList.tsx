@@ -1,10 +1,4 @@
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableRow,
-  Typography,
-} from "@mui/material";
+import { Table, TableBody, TableCell, TableRow } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useAppContext } from "../controllers/AppWrapper";
 import { getPointsFromLatestAnswer } from "../controllers/helpers";

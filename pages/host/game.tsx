@@ -1,4 +1,4 @@
-import { Button, Table, TableCell, TableRow } from "@mui/material";
+import { Button, Table, TableCell, TableRow, TextField } from "@mui/material";
 import PointsList from "../../components/PointsList";
 import withReconnect from "../../components/WithReconnect";
 import { useAppContext } from "../../controllers/AppWrapper";
@@ -14,6 +14,9 @@ import RoundPicker from "./RoundPicker";
 import { sortBy } from "lodash";
 import CheckIcon from "@mui/icons-material/Check";
 import { getFlatAcceptableAnswers } from "../../controllers/helpers";
+import { useState } from "react";
+import { HEAD_TO_HEAD_ANSWERS_TO_SUBMIT } from "../../controllers/GameHandler";
+import HeadToHeadAnswers from "../../components/HeadToHeadAnswers";
 
 function Game() {
   const appContext = useAppContext();
@@ -25,37 +28,53 @@ function Game() {
 
   const { questionStatus, round, currentQuestion, headToHeadEnabled } =
     gameState;
-  const { questionInRound, question, orderedTeamsLeftToAnswer } =
-    currentQuestion || {};
+  const {
+    questionInRound,
+    question,
+    orderedTeamsLeftToAnswer,
+    headToHeadAnswers,
+  } = currentQuestion || {};
   const { acceptableAnswers, explanation, questionText } = question || {};
+  const [receivedHeadToHeadAnswers, setReceivedHeadToHeadAnswers] = useState([
+    "",
+    "",
+    "",
+  ]);
 
-  function getAcceptableAnswerButton(answerText: string, answered: boolean) {
-    return (
-      <Button
-        key={answerText}
-        variant="contained"
-        color="primary"
-        style={{ margin: 10 }}
-        onClick={() => gameHandler.requestVerificationOfAnswer(answerText)}
-        disabled={answered}
-      >
-        {answerText}
-      </Button>
+  const updateReceivedHeadToHeadAnswer = (index: number, newAnswer: string) => {
+    setReceivedHeadToHeadAnswers(
+      receivedHeadToHeadAnswers.map((answer, i) =>
+        i === index ? newAnswer : answer
+      )
     );
-  }
+  };
 
-  function getAcceptableAnswerButtons(
+  const getAcceptableAnswerButton = (answerText: string, answered: boolean) => (
+    <Button
+      key={answerText}
+      variant="contained"
+      color="primary"
+      style={{ margin: 10 }}
+      onClick={() => gameHandler.requestVerificationOfAnswer(answerText)}
+      disabled={answered}
+    >
+      {answerText}
+    </Button>
+  );
+
+  const getAcceptableAnswerButtons = (
     acceptableAnswers: AcceptableAnswerInGame[]
-  ) {
-    return acceptableAnswers.map((acceptableAnswer) => {
+  ) =>
+    acceptableAnswers.map((acceptableAnswer) => {
       const { answerText, answered } = acceptableAnswer;
       return getAcceptableAnswerButton(answerText, answered);
     });
-  }
 
   const flatAcceptableAnswers = (
     acceptableAnswers ? getFlatAcceptableAnswers(acceptableAnswers) : []
   ) as AcceptableAnswerInGame[];
+
+  const currentTeamName = orderedTeamsLeftToAnswer?.[0];
 
   return (
     <>
@@ -84,7 +103,7 @@ function Game() {
             )}
             <>
               {currentQuestion && (
-                <>
+                <div className={styles.mainFrame}>
                   <h4>Question {questionInRound}</h4>
                   <h2>{questionText}</h2>
                   <p>{explanation}</p>
@@ -105,52 +124,105 @@ function Game() {
                     orderedTeamsLeftToAnswer &&
                     acceptableAnswers && (
                       <>
-                        Requesting answer from {orderedTeamsLeftToAnswer[0]}
-                        <>
-                          <h4>Verified accepted answers</h4>
-                          <div>
-                            {getAcceptableAnswerButtons(flatAcceptableAnswers)}
+                        {headToHeadEnabled && (
+                          <div className={styles.mainFrame}>
+                            <span>
+                              Requesting {HEAD_TO_HEAD_ANSWERS_TO_SUBMIT}{" "}
+                              answers from {currentTeamName}
+                            </span>
+                            {[...Array(HEAD_TO_HEAD_ANSWERS_TO_SUBMIT)].map(
+                              (_, index) => (
+                                <div key={index}>
+                                  <TextField
+                                    placeholder={`Answer ${index + 1}`}
+                                    value={receivedHeadToHeadAnswers[index]}
+                                    onChange={(e) =>
+                                      updateReceivedHeadToHeadAnswer(
+                                        index,
+                                        e.target.value
+                                      )
+                                    }
+                                  />
+                                </div>
+                              )
+                            )}
+
+                            <Button
+                              variant="contained"
+                              onClick={() =>
+                                gameHandler.requestHeadToHeadAnswerSubmission(
+                                  receivedHeadToHeadAnswers
+                                )
+                              }
+                            >
+                              Submit answers
+                            </Button>
                           </div>
-
-                          <Button
-                            variant="contained"
-                            color="warning"
-                            style={{ margin: 10 }}
-                            onClick={() =>
-                              gameHandler.requestVerificationOfAnswer(
-                                NON_VERIFIED_ANSWER
-                              )
-                            }
-                          >
-                            Accept a non-verified answer
-                          </Button>
-
-                          <Button
-                            variant="contained"
-                            color="error"
-                            style={{ margin: 10 }}
-                            onClick={() =>
-                              gameHandler.requestVerificationOfAnswer(
-                                NO_OR_INVALID_ANSWER
-                              )
-                            }
-                          >
-                            Invalid or no answer (100 pts)
-                          </Button>
-                        </>
+                        )}
+                        {!headToHeadEnabled && (
+                          <>
+                            <span>
+                              Requesting answer from {currentTeamName}
+                            </span>
+                            <h4>Verified accepted answers</h4>
+                            <div>
+                              {getAcceptableAnswerButtons(
+                                flatAcceptableAnswers
+                              )}
+                            </div>
+                            <Button
+                              variant="contained"
+                              color="warning"
+                              style={{ margin: 10 }}
+                              onClick={() =>
+                                gameHandler.requestVerificationOfAnswer(
+                                  NON_VERIFIED_ANSWER
+                                )
+                              }
+                            >
+                              Accept a non-verified answer
+                            </Button>
+                            <Button
+                              variant="contained"
+                              color="error"
+                              style={{ margin: 10 }}
+                              onClick={() =>
+                                gameHandler.requestVerificationOfAnswer(
+                                  NO_OR_INVALID_ANSWER
+                                )
+                              }
+                            >
+                              Invalid or no answer (100 pts)
+                            </Button>
+                          </>
+                        )}
                       </>
                     )}
 
-                  {questionStatus === QuestionStatus.pointsAdded && (
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      style={{ margin: 10 }}
-                      onClick={() => gameHandler.requestContinueGame()}
-                    >
-                      Continue game
-                    </Button>
-                  )}
+                  {questionStatus &&
+                    [
+                      QuestionStatus.pointsAdded,
+                      QuestionStatus.receivedHeadToHeadAnswers,
+                    ].includes(questionStatus) && (
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        style={{ margin: 10 }}
+                        onClick={() => gameHandler.requestContinueGame()}
+                      >
+                        Continue game
+                      </Button>
+                    )}
+
+                  {questionStatus ===
+                    QuestionStatus.receivedHeadToHeadAnswers &&
+                    headToHeadAnswers &&
+                    currentTeamName && (
+                      <HeadToHeadAnswers
+                        answers={headToHeadAnswers}
+                        teamName={currentTeamName}
+                      />
+                    )}
 
                   {questionStatus === QuestionStatus.announcingResults &&
                     acceptableAnswers && (
@@ -188,7 +260,7 @@ function Game() {
                         </Button>
                       </>
                     )}
-                </>
+                </div>
               )}
             </>
           </>

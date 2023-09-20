@@ -25,15 +25,7 @@ export const NUMBER_OF_PASSES_FOR_ROUND: Record<GameRound, number> = {
   [GameRound.pictureBoard]: 1
 };
 
-const NUMBER_OF_QUESTIONS_FOR_ROUND: Record<GameRound, number> = {
-  [GameRound.openEnded]: 3,
-  [GameRound.cluesAndAnswers]: 3,
-  [GameRound.fillInBlank]: 3,
-  [GameRound.linkedCategories]: 3,
-  [GameRound.partIdentification]: 3,
-  [GameRound.possibleAnswers]: 3,
-  [GameRound.pictureBoard]: 1
-};
+export const HEAD_TO_HEAD_ANSWERS_TO_SUBMIT = 3;
 
 export default class GameHandler {
   private games: Game[];
@@ -73,6 +65,10 @@ export default class GameHandler {
 
   requestHostJoinGame(gameId: string) {
     const game = this.getGameById(gameId);
+    if (game.gameStatus !== GameStatus.waitingForHost) { // host reconnected
+      return game;
+    }
+
     game.gameStatus = GameStatus.inProgress;
     game.questionStatus = QuestionStatus.waitingForRound;
     return game;
@@ -204,7 +200,8 @@ export default class GameHandler {
       game.currentQuestion.orderedTeamsLeftToAnswer =
         this.getOrderedTeamsToAnswer(
           game.teamsAndPoints,
-          game.currentQuestion.pass
+          game.currentQuestion.pass,
+          game.headToHeadEnabled
         );
       game.currentQuestion.answeredTeams = [];
       game.currentQuestion.lastAnswer = undefined;
@@ -216,24 +213,28 @@ export default class GameHandler {
     }
 
     game.questionStatus = QuestionStatus.waitingForTeamAnswer;
-
     console.log("*** after requestTeamAnswer", game);
     return game;
   }
 
   private getOrderedTeamsToAnswer(
     teamsAndPoints: TeamAndPoints[],
-    pass: number
+    pass: number,
+    headToHeadEnabled?: boolean
   ) {
     let orderedTeamsAndPoints;
-    switch (pass) {
-      case 1:
-        orderedTeamsAndPoints = shuffle(teamsAndPoints);
-      case 2:
-        orderedTeamsAndPoints = orderBy(teamsAndPoints, ["points"], ["asc"]);
-      case 3:
-      default:
-        orderedTeamsAndPoints = orderBy(teamsAndPoints, ["points"], ["desc"]);
+    if (headToHeadEnabled) {
+      orderedTeamsAndPoints = orderBy(teamsAndPoints, ["points"], ["asc"]);
+    } else {
+      switch (pass) {
+        case 1:
+          orderedTeamsAndPoints = shuffle(teamsAndPoints);
+        case 2:
+          orderedTeamsAndPoints = orderBy(teamsAndPoints, ["points"], ["asc"]);
+        case 3:
+        default:
+          orderedTeamsAndPoints = orderBy(teamsAndPoints, ["points"], ["desc"]);
+      }
     }
     return orderedTeamsAndPoints.map((teamAndPoints) => teamAndPoints.teamName);
   }
@@ -365,6 +366,19 @@ export default class GameHandler {
     game.teamsAndPoints[0].points = 0;
     game.teamsAndPoints[1].points = 0;
 
+    return game;
+  }
+
+  requestHeadToHeadAnswersSubmission(gameId: string, answerTexts: string[]) {
+    const game = this.getGameById(gameId);
+    if (!game.headToHeadEnabled || !game.currentQuestion || game.questionStatus !== QuestionStatus.waitingForTeamAnswer) {
+      console.log(game);
+      throw new Error('requestHeadToHeadAnswersSubmission Assertion error');
+    }
+
+    game.currentQuestion.headToHeadAnswers = answerTexts;
+    game.questionStatus = QuestionStatus.receivedHeadToHeadAnswers;
+    console.log("***", game);
     return game;
   }
 }

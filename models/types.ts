@@ -11,6 +11,7 @@ export enum QuestionStatus {
   waitingForQuestion = 'waiting_for_question',
   receivedQuestion = 'received_question',
   waitingForTeamAnswer = 'waiting_for_team_answer',
+  receivedHeadToHeadAnswers = 'received_head_to:head_answers',
   awardingPoints = 'awarding_points',
   pointsAdded = 'points_added',
   announcingResults = 'announcing_results'
@@ -77,6 +78,7 @@ export interface Game {
     orderedTeamsLeftToAnswer?: string[];
     lastAnswer?: string;
     pass: number;
+    headToHeadAnswers?: string[];
   }
   headToHeadEnabled?: boolean;
 }

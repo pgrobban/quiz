@@ -75,6 +75,10 @@ export default class ClientGameHandler {
     this.socket.emit('request-enable-head-to-head', this.activeGame?.id);
   }
 
+  requestHeadToHeadAnswerSubmission(answerTexts: string[]) {
+    this.socket.emit('request-head-to-head-answers-submission', { gameId: this.activeGame?.id, answerTexts });
+  }
+
   getConnectionStatus() {
     return this.connectionStatus;
   }
@@ -171,6 +175,10 @@ export default class ClientGameHandler {
   }
 
   onHeadToHeadEnabled(game: Game) {
+    this.activeGame = game;
+  }
+
+  onHeadToHeadAnswersSubmitted(game: Game) {
     this.activeGame = game;
   }
 }
