@@ -15,13 +15,15 @@ import {
   QuestionStatus,
 } from "../../models/types";
 import styles from "../../styles/Home.module.css";
-import classNames from "classnames";
 import HeadToHeadAnswers from "../../components/HeadToHeadAnswers";
+import HeadToHeadLogo from "../../components/HeadToHeadLogo";
 
 function Game() {
   const appContext = useAppContext();
   const { gameHandler, gameState } = appContext;
-  const [isAnimatingPoints, setIsAnimatingPoints] = useState<boolean>(false);
+  const [isAnimatingPoints, setIsAnimatingPoints] = useState(false);
+  const [hasAnimatedHeadToHeadLogo, setHasAnimatedHeadToHeadLogo] =
+    useState(false);
 
   const {
     gameStatus,
@@ -29,6 +31,7 @@ function Game() {
     currentQuestion,
     round,
     headToHeadEnabled,
+    teamsAndPoints,
   } = gameState || {};
   if (!gameState) {
     return null;
@@ -194,6 +197,15 @@ function Game() {
           </div>
         </div>
       </main>
+
+      {teamsAndPoints && headToHeadEnabled && !hasAnimatedHeadToHeadLogo && (
+        <HeadToHeadLogo
+          teamNames={teamsAndPoints?.map(
+            (teamAndPoint) => teamAndPoint.teamName
+          )}
+          callback={() => setHasAnimatedHeadToHeadLogo(true)}
+        />
+      )}
     </>
   );
 }

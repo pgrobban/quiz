@@ -423,3 +423,53 @@
   font-family: Verdana;
   text-transform: uppercase;
 }
+
+.headToHeadLogo {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  background-image: url("/images/marvel_vs_dc.webp");
+  background-size: 900px 500px;
+  width: 900px;
+  height: 500px;
+  position: fixed;
+  top: 40%;
+  color: #ffffff;
+  text-shadow: -5px -5px 0 #000, 5px -5px 0 #000, -5px 5px 0 #000,
+    5px 5px 0 #000;
+  font-family: Verdana;
+  font-weight: bold;
+  animation: headToHeadAnimation 6s ease;
+  left: 0;
+}
+
+.headToHeadTeams {
+  display: flex;
+  justify-content: space-around;
+  font-size: 30px;
+  align-items: center;
+}
+
+.headToHeadTeamName {
+  font-size: 50px;
+}
+
+@keyframes headToHeadAnimation {
+  0% {
+    left: -40%;
+  }
+  25% {
+    left: 20%;
+  }
+  75% {
+    left: 20%;
+  }
+  100% {
+    left: 200%;
+  }
+}
+
+.headToHeadHeaderText {
+  text-align: center;
+  font-size: 30px;
+}
