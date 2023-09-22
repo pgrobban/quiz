@@ -15,7 +15,11 @@ export default class ClientGameHandler {
 
   requestNewGame() {
     this.role = 'play';
-    this.socket.emit('new-game');
+    this.socket.emit('request-new-game');
+  }
+
+  requestEndGame() {
+    this.socket.emit('request-end-game', this.activeGame?.id);
   }
 
   requestStartGame(teamNames: string[]) {
@@ -180,5 +184,10 @@ export default class ClientGameHandler {
 
   onHeadToHeadAnswersSubmitted(game: Game) {
     this.activeGame = game;
+  }
+
+  onGameEnded(game: Game) {
+    this.activeGame = game;
+    Router.push('/player/game-ended');
   }
 }

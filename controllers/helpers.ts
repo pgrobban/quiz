@@ -1,5 +1,6 @@
-import { AcceptableOrGroupedAcceptableAnswers, Game, NON_VERIFIED_ANSWER, NO_OR_INVALID_ANSWER, QuestionStatus, isGroupedAcceptableAnswers } from "../models/types";
+import { AcceptableOrGroupedAcceptableAnswers, Game, QuestionStatus, isGroupedAcceptableAnswers } from "../models/types";
 import { AcceptableAnswerInGame, AcceptableOrGroupedAcceptableAnswersInGame } from './../models/types';
+import { MAXIMUM_POINTS_PER_QUESTION, NON_VERIFIED_ANSWER, NO_OR_INVALID_ANSWER } from "./GameHandler";
 
 export function getFlatAcceptableAnswers(acceptableOrGroupedAnswers: AcceptableOrGroupedAcceptableAnswers) {
   if (isGroupedAcceptableAnswers(acceptableOrGroupedAnswers)) {
@@ -18,17 +19,14 @@ export function findAcceptableAnswer(
     ret = Object.values(acceptableOrGroupedAcceptableAnswers)
       .flat()
       .find(
-        (acceptableAnswer) => acceptableAnswer.answerText === answerText
+        (acceptableAnswer) => acceptableAnswer.answerText.toUpperCase() === answerText.toUpperCase()
       )!;
   } else {
     ret = acceptableOrGroupedAcceptableAnswers.find(
-      (acceptableAnswer) => acceptableAnswer.answerText === answerText
+      (acceptableAnswer) => acceptableAnswer.answerText.toUpperCase() === answerText.toUpperCase()
     )!;
   }
 
-  if (!ret) {
-    throw new Error("findAcceptableAnswer Assertion error");
-  }
   return ret;
 }
 
@@ -41,7 +39,7 @@ export function markAnswerAsAccepted(
     const groupedAcceptableAnswersInGame = acceptableOrGroupedAcceptableAnswersInGame;
     Object.keys(groupedAcceptableAnswersInGame).forEach((key) => {
       groupedAcceptableAnswersInGame[key].find((acceptableAnswerInGame) => {
-        if (acceptableAnswerInGame.answerText === answerText) {
+        if (acceptableAnswerInGame.answerText.toUpperCase() === answerText.toUpperCase()) {
           acceptableAnswerInGame.answered = true;
         }
         return true;
@@ -49,7 +47,7 @@ export function markAnswerAsAccepted(
     })
   } else {
     const acceptableAnswerInGame = acceptableOrGroupedAcceptableAnswersInGame.find(
-      (acceptableAnswerInGame) => acceptableAnswerInGame.answerText === answerText
+      (acceptableAnswerInGame) => acceptableAnswerInGame.answerText.toUpperCase() === answerText.toUpperCase()
     );
     acceptableAnswerInGame!.answered = true;
   }
@@ -70,6 +68,6 @@ export function getPointsFromLatestAnswer(game: Game) {
     case NO_OR_INVALID_ANSWER:
       return 100;
     default:
-      return findAcceptableAnswer(game.currentQuestion.question.acceptableAnswers, game.currentQuestion.lastAnswer)?.points || 0;
+      return findAcceptableAnswer(game.currentQuestion.question.acceptableAnswers, game.currentQuestion.lastAnswer)?.points ?? MAXIMUM_POINTS_PER_QUESTION;
   }
 }

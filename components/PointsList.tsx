@@ -7,12 +7,13 @@ import styles from "../styles/Home.module.css";
 import classNames from "classnames";
 
 interface Props {
+  headToHeadEnabled: boolean;
   animate: boolean;
   callback?: () => void;
 }
 
 export default function PointsList(props: Props) {
-  const { animate, callback } = props;
+  const { headToHeadEnabled, animate, callback } = props;
   const appContext = useAppContext();
   const { gameHandler } = appContext;
   const activeGame = gameHandler.getActiveGame();
@@ -81,6 +82,12 @@ export default function PointsList(props: Props) {
 
   return (
     <div className={styles.mainFrame} style={{ minWidth: 400 }}>
+      {headToHeadEnabled && (
+        <p>
+          Head to head enabled <br /> Get a pointless answer to win
+        </p>
+      )}
+
       <Table>
         <TableBody>
           {sortedTeamsAndPoints?.map((teamNameAndPoint, index) => {

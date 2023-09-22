@@ -2,12 +2,7 @@ import { Button, Table, TableCell, TableRow, TextField } from "@mui/material";
 import PointsList from "../../components/PointsList";
 import withReconnect from "../../components/WithReconnect";
 import { useAppContext } from "../../controllers/AppWrapper";
-import {
-  AcceptableAnswerInGame,
-  NON_VERIFIED_ANSWER,
-  NO_OR_INVALID_ANSWER,
-  QuestionStatus,
-} from "../../models/types";
+import { AcceptableAnswerInGame, QuestionStatus } from "../../models/types";
 import styles from "../../styles/Home.module.css";
 import QuestionPicker from "./QuestionPicker";
 import RoundPicker from "./RoundPicker";
@@ -15,7 +10,11 @@ import { sortBy } from "lodash";
 import CheckIcon from "@mui/icons-material/Check";
 import { getFlatAcceptableAnswers } from "../../controllers/helpers";
 import { useState } from "react";
-import { HEAD_TO_HEAD_ANSWERS_TO_SUBMIT } from "../../controllers/GameHandler";
+import {
+  HEAD_TO_HEAD_ANSWERS_TO_SUBMIT,
+  NON_VERIFIED_ANSWER,
+  NO_OR_INVALID_ANSWER,
+} from "../../controllers/GameHandler";
 import HeadToHeadAnswers from "../../components/HeadToHeadAnswers";
 
 function Game() {
@@ -32,8 +31,10 @@ function Game() {
     questionInRound,
     question,
     orderedTeamsLeftToAnswer,
-    headToHeadAnswers,
+    headToHeadInfo,
   } = currentQuestion || {};
+  const { headToHeadAnswers } = headToHeadInfo || {};
+
   const { acceptableAnswers, explanation, questionText } = question || {};
   const [receivedHeadToHeadAnswers, setReceivedHeadToHeadAnswers] = useState([
     "",
@@ -55,7 +56,14 @@ function Game() {
       variant="contained"
       color="primary"
       style={{ margin: 10 }}
-      onClick={() => gameHandler.requestVerificationOfAnswer(answerText)}
+      onClick={() =>
+        headToHeadEnabled
+          ? updateReceivedHeadToHeadAnswer(
+              receivedHeadToHeadAnswers.indexOf(""),
+              answerText
+            )
+          : gameHandler.requestVerificationOfAnswer(answerText)
+      }
       disabled={answered}
     >
       {answerText}
@@ -124,7 +132,7 @@ function Game() {
                     orderedTeamsLeftToAnswer &&
                     acceptableAnswers && (
                       <>
-                        {headToHeadEnabled && (
+                        {headToHeadEnabled && !headToHeadAnswers && (
                           <div className={styles.mainFrame}>
                             <span>
                               Requesting {HEAD_TO_HEAD_ANSWERS_TO_SUBMIT}{" "}
@@ -146,18 +154,37 @@ function Game() {
                                 </div>
                               )
                             )}
-
-                            <Button
-                              variant="contained"
-                              onClick={() =>
-                                gameHandler.requestHeadToHeadAnswerSubmission(
-                                  receivedHeadToHeadAnswers
-                                )
-                              }
-                            >
-                              Submit answers
-                            </Button>
+                            <div>
+                              {getAcceptableAnswerButtons(
+                                flatAcceptableAnswers
+                              )}
+                            </div>
+                            <div style={{ marginTop: 50, marginLeft: 10 }}>
+                              <Button
+                                variant="contained"
+                                disabled={receivedHeadToHeadAnswers.some(
+                                  (answer) => !answer
+                                )}
+                                onClick={() =>
+                                  gameHandler.requestHeadToHeadAnswerSubmission(
+                                    receivedHeadToHeadAnswers
+                                  )
+                                }
+                              >
+                                Submit answers
+                              </Button>
+                            </div>
                           </div>
+                        )}
+                        {headToHeadEnabled && headToHeadAnswers && (
+                          <Button
+                            variant="contained"
+                            color="primary"
+                            style={{ margin: 10 }}
+                            onClick={() => gameHandler.requestContinueGame()}
+                          >
+                            Continue game
+                          </Button>
                         )}
                         {!headToHeadEnabled && (
                           <>
@@ -254,7 +281,11 @@ function Game() {
                           variant="contained"
                           color="primary"
                           style={{ margin: 10 }}
-                          onClick={() => gameHandler.requestEndQuestion()}
+                          onClick={() =>
+                            headToHeadEnabled
+                              ? gameHandler.requestEndGame()
+                              : gameHandler.requestEndQuestion()
+                          }
                         >
                           End question
                         </Button>
@@ -266,7 +297,7 @@ function Game() {
           </>
         )}
 
-        <PointsList animate />
+        <PointsList animate headToHeadEnabled={!!headToHeadEnabled} />
       </main>
     </>
   );

@@ -1,10 +1,9 @@
-import { Server } from 'socket.io'
 import type { Server as HTTPServer } from 'http'
-import type { NextApiRequest, NextApiResponse } from 'next'
 import type { Socket as NetSocket } from 'net'
+import type { NextApiRequest, NextApiResponse } from 'next'
 import type { Server as IOServer } from 'socket.io'
+import { Server } from 'socket.io'
 import GameHandler from '../../controllers/GameHandler'
-import { QuestionStatus } from '../../models/types'
 
 interface SocketServer extends HTTPServer {
   io?: IOServer;
@@ -29,7 +28,7 @@ const SocketHandler = (_: NextApiRequest, res: NextApiResponseWithSocket) => {
   io.on('connection', (socket) => {
     socket.on('connect', () => console.log("*** client connected"));
 
-    socket.on('new-game', () => {
+    socket.on('request-new-game', () => {
       const game = gameHandler.createNewGame();
       socket.emit('new-game-created', game);
     });
@@ -106,6 +105,11 @@ const SocketHandler = (_: NextApiRequest, res: NextApiResponseWithSocket) => {
     socket.on('request-head-to-head-answers-submission', ({ gameId, answerTexts }) => {
       const game = gameHandler.requestHeadToHeadAnswersSubmission(gameId, answerTexts);
       io.to(game.id).emit('head-to-head-answers-submitted', game);
+    });
+
+    socket.on('request-end-game', (gameId) => {
+      const game = gameHandler.requestEndGame(gameId);
+      io.to(game.id).emit('game-ended');
     });
 
     socket.on('disconnect', () => {

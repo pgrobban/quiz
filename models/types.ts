@@ -11,7 +11,7 @@ export enum QuestionStatus {
   waitingForQuestion = 'waiting_for_question',
   receivedQuestion = 'received_question',
   waitingForTeamAnswer = 'waiting_for_team_answer',
-  receivedHeadToHeadAnswers = 'received_head_to:head_answers',
+  receivedHeadToHeadAnswers = 'received_head_to_head_answers',
   awardingPoints = 'awarding_points',
   pointsAdded = 'points_added',
   announcingResults = 'announcing_results'
@@ -71,6 +71,7 @@ export interface Game {
   teamsAndPoints?: TeamAndPoints[];
   questionStatus?: QuestionStatus;
   round?: GameRound;
+  winningTeamName?: string;
   currentQuestion?: {
     questionInRound: number;
     question: QuestionInGame;
@@ -78,10 +79,11 @@ export interface Game {
     orderedTeamsLeftToAnswer?: string[];
     lastAnswer?: string;
     pass: number;
-    headToHeadAnswers?: string[];
+    headToHeadInfo?: {
+      headToHeadAnswers: string[];
+      checkingHeadToHeadAnswerIndex: number;
+      hasPointlessAnswer: boolean;
+    }
   }
   headToHeadEnabled?: boolean;
 }
-
-export const NON_VERIFIED_ANSWER = 'NON-VERIFIED-ANSWER';
-export const NO_OR_INVALID_ANSWER = 'NO-OR-INVALID-ANSWER';

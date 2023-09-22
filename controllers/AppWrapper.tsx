@@ -88,6 +88,10 @@ export default function AppWrapper({
         gameHandler.onHeadToHeadAnswersSubmitted(game);
         setGameState(game);
       });
+      socket.on("game-ended", (game: Game) => {
+        gameHandler.onGameEnded(game);
+        setGameState(game);
+      });
     };
     getSocket();
     return () => {

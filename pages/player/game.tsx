@@ -5,18 +5,17 @@ import PictureBoard from "../../components/PictureBoard";
 import PossibleAnswersBoard from "../../components/PossibleAnswersBoard";
 import PointsList from "../../components/PointsList";
 import { useAppContext } from "../../controllers/AppWrapper";
-import { NUMBER_OF_PASSES_FOR_ROUND } from "../../controllers/GameHandler";
-import { getPointsFromLatestAnswer } from "../../controllers/helpers";
 import {
-  GameRound,
-  GameStatus,
   NON_VERIFIED_ANSWER,
   NO_OR_INVALID_ANSWER,
-  QuestionStatus,
-} from "../../models/types";
+  NUMBER_OF_PASSES_FOR_ROUND,
+} from "../../controllers/GameHandler";
+import { getPointsFromLatestAnswer } from "../../controllers/helpers";
+import { GameRound, GameStatus, QuestionStatus } from "../../models/types";
 import styles from "../../styles/Home.module.css";
 import HeadToHeadAnswers from "../../components/HeadToHeadAnswers";
 import HeadToHeadLogo from "../../components/HeadToHeadLogo";
+import React from "react";
 
 function Game() {
   const appContext = useAppContext();
@@ -33,6 +32,7 @@ function Game() {
     headToHeadEnabled,
     teamsAndPoints,
   } = gameState || {};
+
   if (!gameState) {
     return null;
   }
@@ -43,8 +43,10 @@ function Game() {
     lastAnswer,
     orderedTeamsLeftToAnswer,
     pass,
-    headToHeadAnswers,
+    headToHeadInfo,
   } = currentQuestion || {};
+
+  const { headToHeadAnswers } = headToHeadInfo || {};
   const { questionText, explanation } = question || {};
   const numberOfPassesForRound = round ? NUMBER_OF_PASSES_FOR_ROUND[round] : 0;
 
@@ -118,12 +120,14 @@ function Game() {
                       <h4>Question {questionInRound}</h4>
                       <h2>{questionText}</h2>
                       <p style={{ margin: 15 }}>
-                        {explanation?.split("\n").map((explanationChunk) => (
-                          <>
-                            {explanationChunk}
-                            <br />
-                          </>
-                        ))}
+                        {explanation
+                          ?.split("\n")
+                          .map((explanationChunk, index) => (
+                            <React.Fragment key={index}>
+                              {explanationChunk}
+                              <br />
+                            </React.Fragment>
+                          ))}
                       </p>
                       {!headToHeadEnabled && numberOfPassesForRound > 1 && (
                         <p>
@@ -141,7 +145,7 @@ function Game() {
                                 Waiting for answer from team {currentTeamName}
                               </h4>
                             )}
-                            {headToHeadEnabled && (
+                            {headToHeadEnabled && !headToHeadInfo && (
                               <h4>
                                 Waiting for 3 answers from team{" "}
                                 {currentTeamName}
@@ -159,7 +163,7 @@ function Game() {
                                 ![
                                   NON_VERIFIED_ANSWER,
                                   NO_OR_INVALID_ANSWER,
-                                ].includes(lastAnswer)}
+                                ].includes(lastAnswer) && <>{lastAnswer}</>}
                             </h4>
                           </>
                         )}
@@ -180,6 +184,7 @@ function Game() {
           </div>
 
           <PointsList
+            headToHeadEnabled={!!headToHeadEnabled}
             animate={isAnimatingPoints}
             callback={() => {
               console.log("*** callback");

@@ -1,7 +1,7 @@
-import { useEffect, useState, useRef, cloneElement, ReactElement } from "react";
-import styles from "../styles/Home.module.css";
-import classNames from "classnames";
 import confetti from "canvas-confetti";
+import classNames from "classnames";
+import { useEffect, useRef, useState } from "react";
+import styles from "../styles/Home.module.css";
 
 const LINES_TO_ANIMATE_AFTER_COUNTDOWN = 5;
 const COUNTDOWN_DELAY_MS = 100;
@@ -30,10 +30,9 @@ export default function CountdownBar(props: Props) {
 
   const isIncorrectAnswer = to === 100;
   const incorrectAnswerTextRef = useRef<HTMLSpanElement>(null);
-  const topBarRef = useRef<HTMLHRElement>(null);
   const pointlessTextRef = useRef<HTMLSpanElement>(null);
 
-  // wait until animation has ended for accepted answers
+  // start countdown lines animation
   useEffect(() => {
     if (isIncorrectAnswer) {
       return;
@@ -57,6 +56,7 @@ export default function CountdownBar(props: Props) {
     return () => clearInterval(updateLinesInterval);
   }, [value, to]);
 
+  // remaining lines animation
   useEffect(() => {
     if (!remainingLinesAnimationInProgress) {
       return;
@@ -78,10 +78,12 @@ export default function CountdownBar(props: Props) {
     }, COUNTDOWN_DELAY_MS / 2);
   }, [remainingLinesAnimationInProgress]);
 
+  // incorrect answer
   useEffect(() => {
     incorrectAnswerTextRef.current?.addEventListener("animationend", callback);
   }, [incorrectAnswerTextRef.current]);
 
+  // show confetti on pointless answer
   useEffect(() => {
     pointlessTextRef.current?.addEventListener("animationend", async () => {
       await confetti({
@@ -93,6 +95,7 @@ export default function CountdownBar(props: Props) {
     });
   }, [pointlessTextRef.current]);
 
+  // fade out remaining lines
   useEffect(() => {
     const opacities = [...linesOpacities];
     opacities[value - 1] = 1;
