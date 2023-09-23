@@ -215,17 +215,17 @@
 
 .pictureBoardAnswerContainer {
   display: flex;
-  height: 30px;
+  width: 220px;
+  height: 42px;
   border: 2px solid #cf9f6d;
   border-radius: 10px;
   background-color: #700100;
   text-align: center;
   margin: -15px 10px 20px 10px;
-  color: #f2dc53;
   font-size: 20px;
   align-items: center;
   justify-content: space-between;
-  color: #fefd1d;
+  color: #f2dc53;
 }
 
 .pictureBoardAnswerContainerFull {

@@ -33,7 +33,7 @@ const questions: { [key in GameRound]: Question[] } = {
     {
       questionText: "Steven Spielberg films 1990-2012",
       explanation: "We are looking for any full-length feature film made for cinema release for which Steven Spielberg was credited as 'director', according to IMDb, that had its first release from the beginning of 1990 to the end of 2012.",
-      tags: ["Geography"],
+      tags: ["Films"],
       acceptableAnswers: [
         { answerText: "A.I. Artificial Intelligence", points: 4 },
         { answerText: "Amistad", points: 0 },
@@ -2530,7 +2530,7 @@ const questions: { [key in GameRound]: Question[] } = {
         },
         {
           answerText: "The Box",
-          clue: "the_box.webp",
+          clue: "the_box.jpeg",
           points: 1,
         },
         {

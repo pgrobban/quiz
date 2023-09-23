@@ -172,6 +172,7 @@ export default class GameHandler {
     }
 
     game.currentQuestion.pass++;
+    console.log("*** incremented", game)
     return game;
   }
 
@@ -348,11 +349,10 @@ export default class GameHandler {
     }
 
     if (!headToHeadEnabled) {
-      currentQuestion.answeredTeams!.push(
+      answeredTeams.push(
         orderedTeamsLeftToAnswer[0]
       );
-      currentQuestion.orderedTeamsLeftToAnswer =
-        orderedTeamsLeftToAnswer.slice(1);
+      orderedTeamsLeftToAnswer.splice(0, 1);
     }
 
     if ([QuestionStatus.receivedHeadToHeadAnswers, QuestionStatus.pointsAdded].includes(questionStatus) && headToHeadInfo && headToHeadInfo.checkingHeadToHeadAnswerIndex < (HEAD_TO_HEAD_ANSWERS_TO_SUBMIT - 1)) {
@@ -386,7 +386,7 @@ export default class GameHandler {
       return this.requestTeamAnswer(gameId);
     }
 
-    if (orderedTeamsLeftToAnswer.length > 0) {
+    if (orderedTeamsLeftToAnswer!.length > 0) {
       game.questionStatus = QuestionStatus.receivedQuestion;
       return this.requestTeamAnswer(gameId);
     }

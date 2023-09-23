@@ -15,15 +15,22 @@ interface Props {
 export default function PointsList(props: Props) {
   const { headToHeadEnabled, animate, callback } = props;
   const appContext = useAppContext();
-  const { gameHandler } = appContext;
-  const activeGame = gameHandler.getActiveGame();
-  const { teamsAndPoints, questionStatus, currentQuestion } = activeGame || {};
+  const { gameHandler, gameState } = appContext;
 
-  const pointsToAdd = activeGame ? getPointsFromLatestAnswer(activeGame) : 0;
+  useEffect(() => {
+    gameHandler.getActiveGame();
+  });
+
+  const pointsToAdd = gameState ? getPointsFromLatestAnswer(gameState) : 0;
   const [pointsLeftToAdd, setPointsLeftToAdd] = useState(
     animate ? pointsToAdd : 0
   );
 
+  if (!gameState) {
+    return null;
+  }
+
+  const { teamsAndPoints, questionStatus, currentQuestion } = gameState;
   const currentTeamAnswering =
     (questionStatus &&
       [
@@ -68,17 +75,9 @@ export default function PointsList(props: Props) {
     return () => clearInterval(i);
   }, [animate, currentTeamAnswering, pointsLeftToAdd, callback]);
 
-  if (!activeGame) {
-    return null;
-  }
-
   const sortedTeamsAndPoints = teamsAndPoints?.sort(
     (teamA, teamB) => teamA.points - teamB.points
   );
-
-  if (!activeGame) {
-    return null;
-  }
 
   return (
     <div className={styles.mainFrame} style={{ minWidth: 400 }}>
