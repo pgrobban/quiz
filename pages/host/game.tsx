@@ -20,13 +20,8 @@ import HeadToHeadAnswers from "../../components/HeadToHeadAnswers";
 function Game() {
   const appContext = useAppContext();
   const { gameHandler, gameState } = appContext;
-
-  if (!gameState) {
-    return null;
-  }
-
   const { questionStatus, round, currentQuestion, headToHeadEnabled } =
-    gameState;
+    gameState || {};
   const {
     questionInRound,
     question,
@@ -41,6 +36,10 @@ function Game() {
     "",
     "",
   ]);
+
+  if (!gameState) {
+    return null;
+  }
 
   const updateReceivedHeadToHeadAnswer = (index: number, newAnswer: string) => {
     setReceivedHeadToHeadAnswers(

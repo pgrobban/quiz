@@ -26,11 +26,7 @@ export default function PointsList(props: Props) {
     animate ? pointsToAdd : 0
   );
 
-  if (!gameState) {
-    return null;
-  }
-
-  const { teamsAndPoints, questionStatus, currentQuestion } = gameState;
+  const { teamsAndPoints, questionStatus, currentQuestion } = gameState || {};
   const currentTeamAnswering =
     (questionStatus &&
       [
@@ -74,6 +70,10 @@ export default function PointsList(props: Props) {
 
     return () => clearInterval(i);
   }, [animate, currentTeamAnswering, pointsLeftToAdd, callback]);
+
+  if (!gameState) {
+    return null;
+  }
 
   const sortedTeamsAndPoints = teamsAndPoints?.sort(
     (teamA, teamB) => teamA.points - teamB.points

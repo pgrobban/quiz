@@ -14,6 +14,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import styles from "../styles/Home.module.css";
 import BaseGameBoard from "./BaseGameBoard";
+import Image from "next/image";
 
 const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
@@ -81,7 +82,7 @@ export default function PictureBoard(props: Props) {
                 return (
                   <SwiperSlide key={index}>
                     <div className={styles.pictureBoardContainerFull}>
-                      <img src={imageUrl} alt="" />
+                      <Image src={imageUrl} alt="" />
                       <div className={styles.pictureBoardAnswerContainerFull}>
                         <div style={{ margin: "0 auto" }}>
                           {alphabet[index]}
