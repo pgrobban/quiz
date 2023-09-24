@@ -33,6 +33,7 @@ function Home() {
                 className={styles.menuButton}
                 variant="contained"
                 onClick={() => gameHandler.requestNewGame()}
+                fullWidth
               >
                 New game
               </Button>
@@ -40,6 +41,7 @@ function Home() {
                 className={styles.menuButton}
                 variant="contained"
                 onClick={() => gameHandler.requestToBeHost()}
+                fullWidth
               >
                 Host
               </Button>

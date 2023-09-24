@@ -191,6 +191,7 @@ export default class GameHandler {
       !game.currentQuestion ||
       !game.teamsAndPoints ||
       !game.questionStatus ||
+      !game.round ||
       game.gameStatus !== GameStatus.inProgress ||
       ![
         QuestionStatus.receivedQuestion,
