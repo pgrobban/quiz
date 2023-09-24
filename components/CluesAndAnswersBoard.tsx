@@ -6,7 +6,6 @@ import {
   isGroupedAcceptableAnswers,
 } from "../models/types";
 import BaseGameBoard from "./BaseGameBoard";
-import { useEffect, useState } from "react";
 import styles from "../styles/Home.module.css";
 
 interface Props {
@@ -23,20 +22,9 @@ export default function CluesAndAnswersBoard(props: Props) {
     throw new Error("CluesAndAnswersBoard Assertion Error");
   }
 
-  const [answerCache, setAnswerCache] = useState<string[]>([]);
   const { questionStatus, currentQuestion } = game;
   const { question, lastAnswer } = currentQuestion;
   const { acceptableAnswers } = question;
-
-  useEffect(() => {
-    if (
-      lastAnswer &&
-      !answerCache.includes(lastAnswer) &&
-      questionStatus !== QuestionStatus.awardingPoints
-    ) {
-      setAnswerCache([...answerCache, lastAnswer]);
-    }
-  }, [answerCache, lastAnswer, questionStatus]);
 
   if (isGroupedAcceptableAnswers(acceptableAnswers)) {
     throw new Error("Only support for non-grouped acceptable answers");
@@ -50,7 +38,10 @@ export default function CluesAndAnswersBoard(props: Props) {
           const shouldShowAnswer =
             answered || questionStatus === QuestionStatus.announcingResults;
           const shouldShowPoints =
-            answerCache.includes(answerText) ||
+            (answered &&
+              ((lastAnswer === answerText &&
+                questionStatus !== QuestionStatus.awardingPoints) ||
+                lastAnswer !== answerText)) ||
             questionStatus === QuestionStatus.announcingResults;
 
           return (

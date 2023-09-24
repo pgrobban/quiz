@@ -133,10 +133,11 @@ function Game() {
                       <>
                         {headToHeadEnabled && !headToHeadAnswers && (
                           <div className={styles.mainFrame}>
-                            <span>
+                            <p>
                               Requesting {HEAD_TO_HEAD_ANSWERS_TO_SUBMIT}{" "}
                               answers from {currentTeamName}
-                            </span>
+                            </p>
+                            <p>Remember to sort by least confident</p>
                             {[...Array(HEAD_TO_HEAD_ANSWERS_TO_SUBMIT)].map(
                               (_, index) => (
                                 <div key={index}>

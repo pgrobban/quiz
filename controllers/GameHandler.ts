@@ -1,4 +1,7 @@
-import { AcceptableOrGroupedAcceptableAnswersInGame, GroupedAcceptableAnswersInGame } from './../models/types';
+import {
+  AcceptableOrGroupedAcceptableAnswersInGame,
+  GroupedAcceptableAnswersInGame,
+} from "./../models/types";
 import { orderBy, shuffle, sortBy } from "lodash";
 import { v4 as uuid } from "uuid";
 import questions from "../models/questions";
@@ -11,7 +14,7 @@ import {
   TeamAndPoints,
   isGroupedAcceptableAnswers,
 } from "../models/types";
-import { findAcceptableAnswer, markAnswerAsAccepted } from './helpers';
+import { findAcceptableAnswer, markAnswerAsAccepted } from "./helpers";
 
 export const NUMBER_OF_PASSES_FOR_ROUND: Record<GameRound, number> = {
   [GameRound.openEnded]: 3,
@@ -20,11 +23,11 @@ export const NUMBER_OF_PASSES_FOR_ROUND: Record<GameRound, number> = {
   [GameRound.linkedCategories]: 1,
   [GameRound.partIdentification]: 1,
   [GameRound.possibleAnswers]: 1,
-  [GameRound.pictureBoard]: 1
+  [GameRound.pictureBoard]: 1,
 };
 
-export const NON_VERIFIED_ANSWER = 'NON-VERIFIED-ANSWER';
-export const NO_OR_INVALID_ANSWER = 'NO-OR-INVALID-ANSWER';
+export const NON_VERIFIED_ANSWER = "NON-VERIFIED-ANSWER";
+export const NO_OR_INVALID_ANSWER = "NO-OR-INVALID-ANSWER";
 export const HEAD_TO_HEAD_ANSWERS_TO_SUBMIT = 3;
 export const MAXIMUM_POINTS_PER_QUESTION = 100;
 
@@ -66,7 +69,8 @@ export default class GameHandler {
 
   requestHostJoinGame(gameId: string) {
     const game = this.getGameById(gameId);
-    if (game.gameStatus !== GameStatus.waitingForHost) { // host reconnected
+    if (game.gameStatus !== GameStatus.waitingForHost) {
+      // host reconnected
       return game;
     }
 
@@ -88,7 +92,10 @@ export default class GameHandler {
 
   requestUndoActiveRound(gameId: string) {
     const game = this.getGameById(gameId);
-    if (game.gameStatus !== GameStatus.inProgress || game.questionStatus !== QuestionStatus.waitingForQuestion) {
+    if (
+      game.gameStatus !== GameStatus.inProgress ||
+      game.questionStatus !== QuestionStatus.waitingForQuestion
+    ) {
       console.log(game);
       throw new Error("*** requestUndoActiveRound assertion error");
     }
@@ -108,7 +115,7 @@ export default class GameHandler {
           ...acceptableAnswer,
           answered: false,
         }));
-      })
+      });
       return result;
     }
     return acceptableAnswers.map((acceptableAnswer) => ({
@@ -172,7 +179,7 @@ export default class GameHandler {
     }
 
     game.currentQuestion.pass++;
-    console.log("*** incremented", game)
+    console.log("*** incremented", game);
     return game;
   }
 
@@ -202,6 +209,7 @@ export default class GameHandler {
       game.currentQuestion.orderedTeamsLeftToAnswer =
         this.getOrderedTeamsToAnswer(
           game.teamsAndPoints,
+          game.round,
           game.currentQuestion.pass,
           game.headToHeadEnabled
         );
@@ -221,6 +229,7 @@ export default class GameHandler {
 
   private getOrderedTeamsToAnswer(
     teamsAndPoints: TeamAndPoints[],
+    round: GameRound,
     pass: number,
     headToHeadEnabled?: boolean
   ) {
@@ -228,14 +237,26 @@ export default class GameHandler {
     if (headToHeadEnabled) {
       orderedTeamsAndPoints = orderBy(teamsAndPoints, ["points"], ["asc"]);
     } else {
-      switch (pass) {
-        case 1:
-          orderedTeamsAndPoints = shuffle(teamsAndPoints);
-        case 2:
-          orderedTeamsAndPoints = orderBy(teamsAndPoints, ["points"], ["asc"]);
-        case 3:
-        default:
-          orderedTeamsAndPoints = orderBy(teamsAndPoints, ["points"], ["desc"]);
+      if (round === GameRound.openEnded) {
+        switch (pass) {
+          case 1:
+            orderedTeamsAndPoints = shuffle(teamsAndPoints);
+          case 2:
+            orderedTeamsAndPoints = orderBy(
+              teamsAndPoints,
+              ["points"],
+              ["asc"]
+            );
+          case 3:
+          default:
+            orderedTeamsAndPoints = orderBy(
+              teamsAndPoints,
+              ["points"],
+              ["desc"]
+            );
+        }
+      } else {
+        orderedTeamsAndPoints = orderBy(teamsAndPoints, ["points"], ["desc"]);
       }
     }
     return orderedTeamsAndPoints.map((teamAndPoints) => teamAndPoints.teamName);
@@ -249,8 +270,11 @@ export default class GameHandler {
     if (
       !answerText ||
       !currentQuestion ||
-      questionStatus &&
-      ![QuestionStatus.waitingForTeamAnswer, QuestionStatus.receivedHeadToHeadAnswers].includes(questionStatus)
+      (questionStatus &&
+        ![
+          QuestionStatus.waitingForTeamAnswer,
+          QuestionStatus.receivedHeadToHeadAnswers,
+        ].includes(questionStatus))
     ) {
       console.log(game);
       throw new Error("requestVerificationOfAnswer Assertion error");
@@ -264,14 +288,24 @@ export default class GameHandler {
         answerText
       );
       if (foundAcceptableAnswer) {
-        markAnswerAsAccepted(currentQuestion.question.acceptableAnswers, answerText);
+        markAnswerAsAccepted(
+          currentQuestion.question.acceptableAnswers,
+          answerText
+        );
 
-        if (foundAcceptableAnswer.points === 0 && headToHeadEnabled && headToHeadInfo) {
+        if (
+          foundAcceptableAnswer.points === 0 &&
+          headToHeadEnabled &&
+          headToHeadInfo
+        ) {
           headToHeadInfo.hasPointlessAnswer = true;
         }
       } else {
         if (headToHeadEnabled && headToHeadInfo) {
-          answerText = headToHeadInfo.headToHeadAnswers[headToHeadInfo.checkingHeadToHeadAnswerIndex];
+          answerText =
+            headToHeadInfo.headToHeadAnswers[
+              headToHeadInfo.checkingHeadToHeadAnswerIndex
+            ];
         } else {
           console.log(game);
           throw new Error("requestVerificationOfAnswer Assertion error");
@@ -330,9 +364,16 @@ export default class GameHandler {
 
   requestContinueGame(gameId: string) {
     const game = this.getGameById(gameId);
-    const { currentQuestion, round, teamsAndPoints, questionStatus, headToHeadEnabled } = game;
-    const { orderedTeamsLeftToAnswer, answeredTeams, pass, headToHeadInfo } = currentQuestion || {};
-    console.log("*** continue game", game)
+    const {
+      currentQuestion,
+      round,
+      teamsAndPoints,
+      questionStatus,
+      headToHeadEnabled,
+    } = game;
+    const { orderedTeamsLeftToAnswer, answeredTeams, pass, headToHeadInfo } =
+      currentQuestion || {};
+    console.log("*** continue game", game);
 
     if (
       !currentQuestion ||
@@ -342,41 +383,64 @@ export default class GameHandler {
       !answeredTeams ||
       !questionStatus ||
       !pass ||
-      ![QuestionStatus.pointsAdded, QuestionStatus.receivedHeadToHeadAnswers, QuestionStatus.waitingForTeamAnswer].includes(questionStatus)
+      ![
+        QuestionStatus.pointsAdded,
+        QuestionStatus.receivedHeadToHeadAnswers,
+        QuestionStatus.waitingForTeamAnswer,
+      ].includes(questionStatus)
     ) {
       console.log(game);
       throw new Error("requestContinueGame Assertion error");
     }
 
     if (!headToHeadEnabled) {
-      answeredTeams.push(
-        orderedTeamsLeftToAnswer[0]
-      );
+      answeredTeams.push(orderedTeamsLeftToAnswer[0]);
       orderedTeamsLeftToAnswer.splice(0, 1);
     }
 
-    if ([QuestionStatus.receivedHeadToHeadAnswers, QuestionStatus.pointsAdded].includes(questionStatus) && headToHeadInfo && headToHeadInfo.checkingHeadToHeadAnswerIndex < (HEAD_TO_HEAD_ANSWERS_TO_SUBMIT - 1)) {
+    if (
+      [
+        QuestionStatus.receivedHeadToHeadAnswers,
+        QuestionStatus.pointsAdded,
+      ].includes(questionStatus) &&
+      headToHeadInfo &&
+      headToHeadInfo.checkingHeadToHeadAnswerIndex <
+        HEAD_TO_HEAD_ANSWERS_TO_SUBMIT - 1
+    ) {
       headToHeadInfo.checkingHeadToHeadAnswerIndex++;
-      const lastAnswer = headToHeadInfo.headToHeadAnswers[headToHeadInfo.checkingHeadToHeadAnswerIndex!];
+      const lastAnswer =
+        headToHeadInfo.headToHeadAnswers[
+          headToHeadInfo.checkingHeadToHeadAnswerIndex!
+        ];
       game.questionStatus = QuestionStatus.waitingForTeamAnswer;
       return this.requestVerificationOfAnswer(gameId, lastAnswer);
     }
 
-    if (questionStatus === QuestionStatus.pointsAdded && headToHeadInfo && headToHeadInfo.checkingHeadToHeadAnswerIndex === (HEAD_TO_HEAD_ANSWERS_TO_SUBMIT - 1) && headToHeadInfo.hasPointlessAnswer) {
+    if (
+      questionStatus === QuestionStatus.pointsAdded &&
+      headToHeadInfo &&
+      headToHeadInfo.checkingHeadToHeadAnswerIndex ===
+        HEAD_TO_HEAD_ANSWERS_TO_SUBMIT - 1 &&
+      headToHeadInfo.hasPointlessAnswer
+    ) {
       game.winningTeamName = orderedTeamsLeftToAnswer[0];
       game.questionStatus = QuestionStatus.announcingResults;
       return game;
     }
 
-    if (questionStatus === QuestionStatus.pointsAdded && headToHeadInfo && headToHeadInfo.checkingHeadToHeadAnswerIndex === (HEAD_TO_HEAD_ANSWERS_TO_SUBMIT - 1) && !headToHeadInfo.hasPointlessAnswer) {
-      currentQuestion.answeredTeams!.push(
-        orderedTeamsLeftToAnswer[0]
-      );
+    if (
+      questionStatus === QuestionStatus.pointsAdded &&
+      headToHeadInfo &&
+      headToHeadInfo.checkingHeadToHeadAnswerIndex ===
+        HEAD_TO_HEAD_ANSWERS_TO_SUBMIT - 1 &&
+      !headToHeadInfo.hasPointlessAnswer
+    ) {
+      currentQuestion.answeredTeams!.push(orderedTeamsLeftToAnswer[0]);
       currentQuestion.orderedTeamsLeftToAnswer =
         orderedTeamsLeftToAnswer.slice(1);
 
       if (currentQuestion.orderedTeamsLeftToAnswer.length === 0) {
-        game.winningTeamName = sortBy(teamsAndPoints, 'points')[0].teamName;
+        game.winningTeamName = sortBy(teamsAndPoints, "points")[0].teamName;
         game.questionStatus = QuestionStatus.announcingResults;
         return game;
       }
@@ -418,11 +482,11 @@ export default class GameHandler {
     const game = this.getGameById(gameId);
     if (game.questionStatus !== QuestionStatus.waitingForRound) {
       console.log(game);
-      throw new Error('requestEnableHeadToHead Assertion error');
+      throw new Error("requestEnableHeadToHead Assertion error");
     }
 
     game.headToHeadEnabled = true;
-    game.teamsAndPoints = sortBy(game.teamsAndPoints, 'points').slice(0, 2);
+    game.teamsAndPoints = sortBy(game.teamsAndPoints, "points").slice(0, 2);
     game.teamsAndPoints[0].points = 0;
     game.teamsAndPoints[1].points = 0;
 
@@ -431,16 +495,20 @@ export default class GameHandler {
 
   requestHeadToHeadAnswersSubmission(gameId: string, answerTexts: string[]) {
     const game = this.getGameById(gameId);
-    if (!game.headToHeadEnabled || !game.currentQuestion || game.questionStatus !== QuestionStatus.waitingForTeamAnswer) {
+    if (
+      !game.headToHeadEnabled ||
+      !game.currentQuestion ||
+      game.questionStatus !== QuestionStatus.waitingForTeamAnswer
+    ) {
       console.log(game);
-      throw new Error('requestHeadToHeadAnswersSubmission Assertion error');
+      throw new Error("requestHeadToHeadAnswersSubmission Assertion error");
     }
 
     game.currentQuestion!.headToHeadInfo = {
       headToHeadAnswers: answerTexts,
       hasPointlessAnswer: false,
-      checkingHeadToHeadAnswerIndex: -1
-    }
+      checkingHeadToHeadAnswerIndex: -1,
+    };
     game.questionStatus = QuestionStatus.receivedHeadToHeadAnswers;
     return game;
   }

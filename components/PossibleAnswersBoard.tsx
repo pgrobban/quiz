@@ -7,7 +7,6 @@ import {
 } from "../models/types";
 import BaseGameBoard from "./BaseGameBoard";
 import styles from "../styles/Home.module.css";
-import { useEffect, useState } from "react";
 
 interface Props {
   game: Game;
@@ -23,20 +22,9 @@ export default function PossibleAnswersBoard(props: Props) {
     throw new Error("PossibleAnswersBoard Assertion Error");
   }
 
-  const [answerCache, setAnswerCache] = useState<string[]>([]);
   const { questionStatus, currentQuestion } = game;
   const { question, lastAnswer } = currentQuestion;
   const { acceptableAnswers } = question;
-
-  useEffect(() => {
-    if (
-      lastAnswer &&
-      !answerCache.includes(lastAnswer) &&
-      questionStatus !== QuestionStatus.awardingPoints
-    ) {
-      setAnswerCache([...answerCache, lastAnswer]);
-    }
-  }, [answerCache, lastAnswer, questionStatus]);
 
   if (isGroupedAcceptableAnswers(acceptableAnswers)) {
     throw new Error("Only support for non-grouped acceptable answers");
@@ -49,7 +37,11 @@ export default function PossibleAnswersBoard(props: Props) {
           const { answerText, answered, points } = answer;
 
           const shouldShowPoints =
-            answered || questionStatus === QuestionStatus.announcingResults;
+            (answered &&
+              ((lastAnswer === answerText &&
+                questionStatus !== QuestionStatus.awardingPoints) ||
+                lastAnswer !== answerText)) ||
+            questionStatus === QuestionStatus.announcingResults;
 
           return (
             <div

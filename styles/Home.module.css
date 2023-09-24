@@ -360,6 +360,9 @@
   align-content: center;
   flex-direction: column;
   text-align: center;
+  font-size: 28px;
+  font-family: "Arial Black";
+  color: #fefd1d;
 }
 
 .pointlessAnswer {

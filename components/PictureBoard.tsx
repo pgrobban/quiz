@@ -1,5 +1,4 @@
 import classnames from "classnames";
-import { useEffect, useState } from "react";
 import "swiper/css";
 import { Navigation, Keyboard } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -10,8 +9,8 @@ import {
   QuestionStatus,
   isGroupedAcceptableAnswers,
 } from "../models/types";
-import 'swiper/css';
-import 'swiper/css/navigation';
+import "swiper/css";
+import "swiper/css/navigation";
 import styles from "../styles/Home.module.css";
 import BaseGameBoard from "./BaseGameBoard";
 import Image from "next/image";
@@ -32,20 +31,9 @@ export default function PictureBoard(props: Props) {
     throw new Error("PictureBoard Assertion Error");
   }
 
-  const [answerCache, setAnswerCache] = useState<string[]>([]);
   const { questionStatus, currentQuestion } = game;
   const { question, lastAnswer } = currentQuestion;
   const { questionText, acceptableAnswers } = question;
-
-  useEffect(() => {
-    if (
-      lastAnswer &&
-      !answerCache.includes(lastAnswer) &&
-      questionStatus !== QuestionStatus.awardingPoints
-    ) {
-      setAnswerCache([...answerCache, lastAnswer]);
-    }
-  }, [answerCache, lastAnswer, questionStatus]);
 
   if (isGroupedAcceptableAnswers(acceptableAnswers)) {
     throw new Error("Only support for non-grouped acceptable answers");
@@ -60,7 +48,7 @@ export default function PictureBoard(props: Props) {
               modules={[Navigation, Keyboard]}
               navigation
               keyboard={{
-                enabled: true
+                enabled: true,
               }}
               slidesPerView={1}
               spaceBetween={30}
@@ -73,7 +61,9 @@ export default function PictureBoard(props: Props) {
                     styles.pictureBoardQuestionText
                   )}
                 >
-                  <span style={{ marginLeft: 40, marginRight: 40 }}>{questionText}</span>
+                  <span style={{ marginLeft: 40, marginRight: 40 }}>
+                    {questionText}
+                  </span>
                 </div>
               </SwiperSlide>
               {acceptableAnswers.map((acceptableAnswer, index) => {
@@ -82,7 +72,7 @@ export default function PictureBoard(props: Props) {
                 return (
                   <SwiperSlide key={index}>
                     <div className={styles.pictureBoardContainerFull}>
-                      <Image src={imageUrl} alt="" />
+                      <Image src={imageUrl} alt="" height={500} width={600} />
                       <div className={styles.pictureBoardAnswerContainerFull}>
                         <div style={{ margin: "0 auto" }}>
                           {alphabet[index]}
@@ -110,7 +100,10 @@ export default function PictureBoard(props: Props) {
               const shouldShowAnswer =
                 answered || questionStatus === QuestionStatus.announcingResults;
               const shouldShowPoints =
-                answerCache.includes(answerText) ||
+                (answered &&
+                  ((lastAnswer === answerText &&
+                    questionStatus !== QuestionStatus.awardingPoints) ||
+                    lastAnswer !== answerText)) ||
                 questionStatus === QuestionStatus.announcingResults;
               const imageUrl = `/images/${clue}`;
 

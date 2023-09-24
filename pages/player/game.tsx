@@ -135,8 +135,6 @@ function Game() {
                         </p>
                       )}
 
-                      {getGameBoard()}
-
                       {questionStatus === QuestionStatus.waitingForTeamAnswer &&
                         orderedTeamsLeftToAnswer && (
                           <>
@@ -153,6 +151,8 @@ function Game() {
                             )}
                           </>
                         )}
+
+                      {getGameBoard()}
 
                       {questionStatus === QuestionStatus.awardingPoints &&
                         currentQuestion.lastAnswer && (
