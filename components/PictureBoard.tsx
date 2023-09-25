@@ -72,7 +72,12 @@ export default function PictureBoard(props: Props) {
                 return (
                   <SwiperSlide key={index}>
                     <div className={styles.pictureBoardContainerFull}>
-                      <Image src={imageUrl} alt="" height={500} width={600} />
+                      <Image
+                        src={imageUrl}
+                        alt=""
+                        fill
+                        style={{ objectFit: "contain" }}
+                      />
                       <div className={styles.pictureBoardAnswerContainerFull}>
                         <div style={{ margin: "0 auto" }}>
                           {alphabet[index]}

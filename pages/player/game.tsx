@@ -135,38 +135,43 @@ function Game() {
                         </p>
                       )}
 
-                      {questionStatus === QuestionStatus.waitingForTeamAnswer &&
-                        orderedTeamsLeftToAnswer && (
-                          <>
-                            {!headToHeadEnabled && (
-                              <h4>
-                                Waiting for answer from team {currentTeamName}
-                              </h4>
-                            )}
-                            {headToHeadEnabled && !headToHeadInfo && (
-                              <h4>
-                                Waiting for 3 answers from team{" "}
-                                {currentTeamName}
-                              </h4>
-                            )}
-                          </>
-                        )}
+                      <div style={{ minHeight: 30 }}>
+                        {questionStatus ===
+                          QuestionStatus.waitingForTeamAnswer &&
+                          orderedTeamsLeftToAnswer && (
+                            <>
+                              {!headToHeadEnabled && (
+                                <h4>
+                                  Waiting for answer from team {currentTeamName}
+                                </h4>
+                              )}
+                              {headToHeadEnabled && !headToHeadInfo && (
+                                <h4>
+                                  Waiting for 3 answers from team{" "}
+                                  {currentTeamName}
+                                </h4>
+                              )}
+                            </>
+                          )}
+                      </div>
 
                       {getGameBoard()}
 
-                      {questionStatus === QuestionStatus.awardingPoints &&
-                        currentQuestion.lastAnswer && (
-                          <>
-                            <h4>
-                              Checking answer...{" "}
-                              {lastAnswer &&
-                                ![
-                                  NON_VERIFIED_ANSWER,
-                                  NO_OR_INVALID_ANSWER,
-                                ].includes(lastAnswer) && <>{lastAnswer}</>}
-                            </h4>
-                          </>
-                        )}
+                      <div style={{ minHeight: 30 }}>
+                        {questionStatus === QuestionStatus.awardingPoints &&
+                          currentQuestion.lastAnswer && (
+                            <>
+                              <h4>
+                                Checking answer...{" "}
+                                {lastAnswer &&
+                                  ![
+                                    NON_VERIFIED_ANSWER,
+                                    NO_OR_INVALID_ANSWER,
+                                  ].includes(lastAnswer) && <>{lastAnswer}</>}
+                              </h4>
+                            </>
+                          )}
+                      </div>
 
                       {questionStatus ===
                         QuestionStatus.receivedHeadToHeadAnswers &&

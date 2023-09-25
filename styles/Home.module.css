@@ -235,12 +235,13 @@
   border-radius: 10px;
   background-color: #700100;
   text-align: center;
-  margin: -50px 10px 0px 10px;
+  margin: 550px 10px 0px 10px;
   color: #f2dc53;
   font-size: 20px;
   align-items: center;
   justify-content: space-between;
   color: #fefd1d;
+  z-index: 10;
 }
 
 .pictureBoardPictureContainer {
@@ -294,9 +295,9 @@
 
 .cluesAndAnswersBoardAnswerContainer {
   font-family: Verdana;
-  font-size: 18;
+  font-size: 16px;
   text-transform: uppercase;
-  padding: 10;
+  padding: 10px;
   color: #fefd3c;
   width: 150px;
   display: flex;
