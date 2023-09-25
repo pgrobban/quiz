@@ -9,7 +9,7 @@ import RoundPicker from "./RoundPicker";
 import { sortBy } from "lodash";
 import CheckIcon from "@mui/icons-material/Check";
 import { getFlatAcceptableAnswers } from "../../controllers/helpers";
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   HEAD_TO_HEAD_ANSWERS_TO_SUBMIT,
   NON_VERIFIED_ANSWER,
@@ -113,7 +113,14 @@ function Game() {
                 <div className={styles.mainFrame}>
                   <h4>Question {questionInRound}</h4>
                   <h2>{questionText}</h2>
-                  <p>{explanation}</p>
+                  <p>
+                    {explanation?.split("\n").map((part, index) => (
+                      <React.Fragment key={index}>
+                        {part}
+                        <br />
+                      </React.Fragment>
+                    ))}
+                  </p>
 
                   {questionStatus === QuestionStatus.receivedQuestion && (
                     <>
@@ -188,39 +195,41 @@ function Game() {
                         )}
                         {!headToHeadEnabled && (
                           <>
-                            <span>
+                            <p style={{ marginTop: 10 }}>
                               Requesting answer from {currentTeamName}
-                            </span>
+                            </p>
                             <h4>Verified accepted answers</h4>
                             <div>
                               {getAcceptableAnswerButtons(
                                 flatAcceptableAnswers
                               )}
                             </div>
-                            <Button
-                              variant="contained"
-                              color="warning"
-                              style={{ margin: 10 }}
-                              onClick={() =>
-                                gameHandler.requestVerificationOfAnswer(
-                                  NON_VERIFIED_ANSWER
-                                )
-                              }
-                            >
-                              Accept a non-verified answer
-                            </Button>
-                            <Button
-                              variant="contained"
-                              color="error"
-                              style={{ margin: 10 }}
-                              onClick={() =>
-                                gameHandler.requestVerificationOfAnswer(
-                                  NO_OR_INVALID_ANSWER
-                                )
-                              }
-                            >
-                              Invalid or no answer (100 pts)
-                            </Button>
+                            <div style={{ marginTop: 20 }}>
+                              <Button
+                                variant="contained"
+                                color="warning"
+                                style={{ margin: 10 }}
+                                onClick={() =>
+                                  gameHandler.requestVerificationOfAnswer(
+                                    NON_VERIFIED_ANSWER
+                                  )
+                                }
+                              >
+                                Accept a non-verified answer
+                              </Button>
+                              <Button
+                                variant="contained"
+                                color="error"
+                                style={{ margin: 10 }}
+                                onClick={() =>
+                                  gameHandler.requestVerificationOfAnswer(
+                                    NO_OR_INVALID_ANSWER
+                                  )
+                                }
+                              >
+                                Invalid or no answer (100 pts)
+                              </Button>
+                            </div>
                           </>
                         )}
                       </>

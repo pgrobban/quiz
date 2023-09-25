@@ -249,21 +249,6 @@ const questions: { [key in GameRound]: Question[] } = {
     },
     {
       questionText:
-        "Currencies",
-      explanation: "",
-      tags: ["Currencies"],
-      acceptableAnswers: {
-        Franc: [
-          { answerText: "Benin", points: 0 },
-          { answerText: "Burkina Faso", points: 0 },
-          { answerText: "Burundi", points: 0 },
-          { answerText: "Cameroon", points: 0 },
-          { answerText: "Central African Republic", points: 0 },
-        ],
-      },
-    },
-    {
-      questionText:
         "Eurovision 'Nul points' scorers",
       explanation: "We are looking for any country that has finished with zero points at the end of a Grand Final of the Eurovision Song Contest according to the official Eurovision website from the 1957 contest up to the 2013 contest, inclusive. We are looking for the name of the country as it was at the time of their 'nul points' finish.\n\nN.B. Although the first contest was held in 1956, the full results of that year's contest have never been made public.",
       tags: ["Music"],

@@ -9,6 +9,8 @@ import {
 import { startCase } from "lodash";
 import { useAppContext } from "../../controllers/AppWrapper";
 import questions from "../../models/questions";
+import { getFlatAcceptableAnswers } from "../../controllers/helpers";
+import styles from "../../styles/Home.module.css";
 
 export default function QuestionPicker() {
   const appContext = useAppContext();
@@ -20,7 +22,7 @@ export default function QuestionPicker() {
 
   const { round } = activeGame;
   return (
-    <>
+    <main className={styles.mainFrame}>
       <h3>Pick a question</h3>
       <Table>
         <TableHead>
@@ -32,21 +34,32 @@ export default function QuestionPicker() {
           <TableRow>
             <TableCell>Tags</TableCell>
             <TableCell>Question</TableCell>
+            <TableCell>Acceptable answers</TableCell>
+            <TableCell>Pointless answers</TableCell>
             <TableCell align="right">Pick</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {questions[round].map((question) => {
-            const { tags, questionText } = question;
+            const { tags, questionText, acceptableAnswers } = question;
+            const flatAcceptableAnswers =
+              getFlatAcceptableAnswers(acceptableAnswers);
+            const pointlessAnswers = flatAcceptableAnswers.filter(
+              (acceptableAnswer) => acceptableAnswer.points === 0
+            );
             return (
               <TableRow key={questionText}>
-                <TableCell>{tags?.sort().join(", ") || ''}</TableCell>
+                <TableCell>{tags?.sort().join(", ") || ""}</TableCell>
                 <TableCell>{questionText}</TableCell>
+                <TableCell>{flatAcceptableAnswers.length}</TableCell>
+                <TableCell>{pointlessAnswers.length}</TableCell>
                 <TableCell align="right">
                   <Button
                     color="primary"
                     variant="contained"
-                    onClick={() => gameHandler.requestSetActiveQuestion(questionText)}
+                    onClick={() =>
+                      gameHandler.requestSetActiveQuestion(questionText)
+                    }
                   >
                     Pick
                   </Button>
@@ -57,9 +70,12 @@ export default function QuestionPicker() {
         </TableBody>
       </Table>
 
-      <Button variant="contained" onClick={() => gameHandler.requestUndoRoundSelection()}>
+      <Button
+        variant="contained"
+        onClick={() => gameHandler.requestUndoRoundSelection()}
+      >
         Back to round selection
       </Button>
-    </>
+    </main>
   );
 }
