@@ -2,7 +2,11 @@ import { Button, Table, TableCell, TableRow, TextField } from "@mui/material";
 import PointsList from "../../components/PointsList";
 import withReconnect from "../../components/WithReconnect";
 import { useAppContext } from "../../controllers/AppWrapper";
-import { AcceptableAnswerInGame, QuestionStatus } from "../../models/types";
+import {
+  AcceptableAnswerInGame,
+  GameRound,
+  QuestionStatus,
+} from "../../models/types";
 import styles from "../../styles/Home.module.css";
 import QuestionPicker from "./QuestionPicker";
 import RoundPicker from "./RoundPicker";
@@ -123,7 +127,12 @@ function Game() {
                   </p>
 
                   {questionStatus === QuestionStatus.receivedQuestion && (
-                    <>
+                    <div style={{ marginTop: 15 }}>
+                      {round === GameRound.pictureBoard && (
+                        <p style={{ color: "#ddd" }}>
+                          Remember to show the pictures on the players' screen!
+                        </p>
+                      )}
                       <Button
                         color="primary"
                         variant="contained"
@@ -131,7 +140,7 @@ function Game() {
                       >
                         Request first team answer
                       </Button>
-                    </>
+                    </div>
                   )}
 
                   {questionStatus === QuestionStatus.waitingForTeamAnswer &&

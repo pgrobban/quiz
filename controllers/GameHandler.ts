@@ -17,7 +17,7 @@ import {
 import { findAcceptableAnswer, markAnswerAsAccepted } from "./helpers";
 
 export const NUMBER_OF_PASSES_FOR_ROUND: Record<GameRound, number> = {
-  [GameRound.openEnded]: 3,
+  [GameRound.openEnded]: 2,
   [GameRound.cluesAndAnswers]: 1,
   [GameRound.fillInBlank]: 1,
   [GameRound.linkedCategories]: 1,
@@ -305,7 +305,7 @@ export default class GameHandler {
         if (headToHeadEnabled && headToHeadInfo) {
           answerText =
             headToHeadInfo.headToHeadAnswers[
-              headToHeadInfo.checkingHeadToHeadAnswerIndex
+            headToHeadInfo.checkingHeadToHeadAnswerIndex
             ];
         } else {
           console.log(game);
@@ -406,12 +406,12 @@ export default class GameHandler {
       ].includes(questionStatus) &&
       headToHeadInfo &&
       headToHeadInfo.checkingHeadToHeadAnswerIndex <
-        HEAD_TO_HEAD_ANSWERS_TO_SUBMIT - 1
+      HEAD_TO_HEAD_ANSWERS_TO_SUBMIT - 1
     ) {
       headToHeadInfo.checkingHeadToHeadAnswerIndex++;
       const lastAnswer =
         headToHeadInfo.headToHeadAnswers[
-          headToHeadInfo.checkingHeadToHeadAnswerIndex!
+        headToHeadInfo.checkingHeadToHeadAnswerIndex!
         ];
       game.questionStatus = QuestionStatus.waitingForTeamAnswer;
       return this.requestVerificationOfAnswer(gameId, lastAnswer);
@@ -421,7 +421,7 @@ export default class GameHandler {
       questionStatus === QuestionStatus.pointsAdded &&
       headToHeadInfo &&
       headToHeadInfo.checkingHeadToHeadAnswerIndex ===
-        HEAD_TO_HEAD_ANSWERS_TO_SUBMIT - 1 &&
+      HEAD_TO_HEAD_ANSWERS_TO_SUBMIT - 1 &&
       headToHeadInfo.hasPointlessAnswer
     ) {
       game.winningTeamName = orderedTeamsLeftToAnswer[0];
@@ -433,7 +433,7 @@ export default class GameHandler {
       questionStatus === QuestionStatus.pointsAdded &&
       headToHeadInfo &&
       headToHeadInfo.checkingHeadToHeadAnswerIndex ===
-        HEAD_TO_HEAD_ANSWERS_TO_SUBMIT - 1 &&
+      HEAD_TO_HEAD_ANSWERS_TO_SUBMIT - 1 &&
       !headToHeadInfo.hasPointlessAnswer
     ) {
       currentQuestion.answeredTeams!.push(orderedTeamsLeftToAnswer[0]);

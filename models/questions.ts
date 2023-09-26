@@ -2526,68 +2526,6 @@ const questions: { [key in GameRound]: Question[] } = {
       ],
     },
     {
-      questionText: "Car logos",
-      explanation:
-        "We're going to show you logotypes of famous car brands. We would like you to tell us the most obscure brand.",
-      acceptableAnswers: [
-        {
-          answerText: "Audi",
-          clue: "audi.png",
-          points: 42,
-        },
-        {
-          answerText: "Mercedes",
-          clue: "mercedes.png",
-          points: 45,
-        },
-        {
-          answerText: "Citroen",
-          clue: "citroen.png",
-          points: 22,
-        },
-        {
-          answerText: "Mazda",
-          clue: "mazda.png",
-          points: 17,
-        },
-        {
-          answerText: "Daihatsu",
-          clue: "daihatsu.png",
-          points: 7,
-        },
-      ],
-    },
-    {
-      questionText: "Car logos (II)",
-      acceptableAnswers: [
-        {
-          answerText: "Subaru",
-          clue: "subaru.jpg",
-          points: 17,
-        },
-        {
-          answerText: "Mitsubishi",
-          clue: "mitsubishi.png",
-          points: 39,
-        },
-        {
-          answerText: "Koenigsegg",
-          clue: "koenigsegg.png",
-          points: 1,
-        },
-        {
-          answerText: "Peugeot",
-          clue: "peugeot.png",
-          points: 27,
-        },
-        {
-          answerText: "Tesla",
-          clue: "tesla.webp",
-          points: 37,
-        },
-      ],
-    },
-    {
       questionText: "Film aliens",
       explanation:
         "We're going to show you five images of alien life forms from various films. We need you to tell us the name of the film these first appeared in.",
@@ -2709,6 +2647,37 @@ const questions: { [key in GameRound]: Question[] } = {
           answerText: "Brazil",
           clue: "rio.webp",
           points: 18,
+        },
+      ],
+    },
+    {
+      questionText: "Abba singles",
+      explanation: "We're going to show you five picture clues to top 40 singles by ABBA. We need you to tell us the singles these pictures most directly refer to.",
+      acceptableAnswers: [
+        {
+          answerText: "SOS",
+          clue: "sos.png",
+          points: 38,
+        },
+        {
+          answerText: "Fernando",
+          clue: "fernando_torres.jpg",
+          points: 20,
+        },
+        {
+          answerText: "Waterloo",
+          clue: "waterloo.jpg",
+          points: 80,
+        },
+        {
+          answerText: "Head Over Heels",
+          clue: "head_over_heels.png",
+          points: 5,
+        },
+        {
+          answerText: "I Have A Dream",
+          clue: "mlk.webp",
+          points: 25,
         },
       ],
     },
