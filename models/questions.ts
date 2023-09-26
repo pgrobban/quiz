@@ -2319,6 +2319,10 @@ const questions: { [key in GameRound]: Question[] } = {
           answerText: "Shermy",
           points: 1,
         },
+        {
+          answerText: "Franklin",
+          points: 1,
+        },
       ],
     },
     {
