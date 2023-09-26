@@ -130,7 +130,7 @@ function Game() {
                     <div style={{ marginTop: 15 }}>
                       {round === GameRound.pictureBoard && (
                         <p style={{ color: "#ddd" }}>
-                          Remember to show the pictures on the players' screen!
+                          Remember to show the pictures on the players screen!
                         </p>
                       )}
                       <Button
