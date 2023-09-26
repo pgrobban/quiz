@@ -65,8 +65,12 @@ function NewGame() {
             })}
           </div>
 
-          <Button variant="contained" style={{ marginTop: 15 }}>
-            <PersonAddIcon onClick={() => addTeamName()} />
+          <Button
+            variant="contained"
+            style={{ marginTop: 15 }}
+            onClick={() => addTeamName()}
+          >
+            <PersonAddIcon />
           </Button>
         </div>
         <Button
