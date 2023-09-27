@@ -10,12 +10,23 @@ import {
   NO_OR_INVALID_ANSWER,
   NUMBER_OF_PASSES_FOR_ROUND,
 } from "../../controllers/GameHandler";
-import { getPointsFromLatestAnswer } from "../../controllers/helpers";
-import { GameRound, GameStatus, QuestionStatus } from "../../models/types";
+import {
+  getFlatAcceptableAnswers,
+  getPointsFromLatestAnswer,
+} from "../../controllers/helpers";
+import {
+  AcceptableAnswerInGame,
+  GameRound,
+  GameStatus,
+  QuestionStatus,
+} from "../../models/types";
 import styles from "../../styles/Home.module.css";
 import HeadToHeadAnswers from "../../components/HeadToHeadAnswers";
 import HeadToHeadLogo from "../../components/HeadToHeadLogo";
 import React from "react";
+import { Table, TableCell, TableRow } from "@mui/material";
+import CheckIcon from "@mui/icons-material/Check";
+import { orderBy, sortBy } from "lodash";
 
 function Game() {
   const appContext = useAppContext();
@@ -47,7 +58,7 @@ function Game() {
   } = currentQuestion || {};
 
   const { headToHeadAnswers } = headToHeadInfo || {};
-  const { questionText, explanation } = question || {};
+  const { questionText, explanation, acceptableAnswers } = question || {};
   const numberOfPassesForRound = round ? NUMBER_OF_PASSES_FOR_ROUND[round] : 0;
 
   const countdownTo = getPointsFromLatestAnswer(gameState);
@@ -129,11 +140,89 @@ function Game() {
                             </React.Fragment>
                           ))}
                       </p>
-                      {!headToHeadEnabled && numberOfPassesForRound > 1 && (
-                        <p>
-                          Pass {pass}/{numberOfPassesForRound}
-                        </p>
-                      )}
+                      {!headToHeadEnabled &&
+                        numberOfPassesForRound > 1 &&
+                        questionStatus !== QuestionStatus.announcingResults && (
+                          <p>
+                            Pass {pass}/{numberOfPassesForRound}
+                          </p>
+                        )}
+
+                      {round === GameRound.openEnded &&
+                        acceptableAnswers &&
+                        questionStatus === QuestionStatus.announcingResults && (
+                          <div
+                            style={{
+                              display: "flex",
+                              flexDirection: "column",
+                              alignItems: "center",
+                            }}
+                          >
+                            <p>Some low scoring answers</p>
+                            <Table
+                              className={styles.mainFrame}
+                              style={{ width: 600 }}
+                            >
+                              {(
+                                orderBy(
+                                  getFlatAcceptableAnswers(acceptableAnswers),
+                                  ["points"],
+                                  ["asc"]
+                                ) as AcceptableAnswerInGame[]
+                              )
+                                .slice(0, 3)
+                                .map((acceptableAnswer) => {
+                                  const { answerText, points, answered } =
+                                    acceptableAnswer;
+                                  return (
+                                    <TableRow key={answerText}>
+                                      <TableCell align={"left"}>
+                                        {answerText}
+                                      </TableCell>
+                                      <TableCell width={30} align="center">
+                                        {points}
+                                      </TableCell>
+                                      <TableCell width={25}>
+                                        <span>{answered && <CheckIcon />}</span>
+                                      </TableCell>
+                                    </TableRow>
+                                  );
+                                })}
+                            </Table>
+                            <p>&nbsp;</p>
+                            <p>Top 3 answers</p>
+                            <Table
+                              className={styles.mainFrame}
+                              style={{ width: 600 }}
+                            >
+                              {(
+                                orderBy(
+                                  getFlatAcceptableAnswers(acceptableAnswers),
+                                  ["points"],
+                                  ["desc"]
+                                ) as AcceptableAnswerInGame[]
+                              )
+                                .slice(0, 3)
+                                .map((acceptableAnswer) => {
+                                  const { answerText, points, answered } =
+                                    acceptableAnswer;
+                                  return (
+                                    <TableRow key={answerText}>
+                                      <TableCell align={"left"}>
+                                        {answerText}
+                                      </TableCell>
+                                      <TableCell width={30} align="left">
+                                        {points}
+                                      </TableCell>
+                                      <TableCell width={25}>
+                                        <span>{answered && <CheckIcon />}</span>
+                                      </TableCell>
+                                    </TableRow>
+                                  );
+                                })}
+                            </Table>
+                          </div>
+                        )}
 
                       <div style={{ minHeight: 30 }}>
                         {questionStatus ===

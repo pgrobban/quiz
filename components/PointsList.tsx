@@ -5,6 +5,7 @@ import { getPointsFromLatestAnswer } from "../controllers/helpers";
 import { QuestionStatus } from "../models/types";
 import styles from "../styles/Home.module.css";
 import classNames from "classnames";
+import { snakeCase } from "lodash";
 
 interface Props {
   headToHeadEnabled: boolean;
@@ -37,12 +38,12 @@ export default function PointsList(props: Props) {
     null;
 
   useEffect(() => {
-    if (!animate) {
+    if (!animate || !currentTeamAnswering) {
       return;
     }
 
     const teamAndPointsElementToTransition = document.querySelector(
-      `#team-points-${currentTeamAnswering}`
+      `#team-points-${snakeCase(currentTeamAnswering)}`
     );
     if (callback) {
       teamAndPointsElementToTransition?.addEventListener(
@@ -100,7 +101,7 @@ export default function PointsList(props: Props) {
             return (
               <TableRow
                 key={teamName}
-                id={`team-points-${teamName}`}
+                id={`team-points-${snakeCase(teamName)}`}
                 className={classNames({
                   [styles.animatedSize]: animateThisTeamRow,
                 })}
