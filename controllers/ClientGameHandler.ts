@@ -83,6 +83,14 @@ export default class ClientGameHandler {
     this.socket.emit('request-head-to-head-answers-submission', { gameId: this.activeGame?.id, answerTexts });
   }
 
+  requestPictureBoardNextSlide() {
+    this.socket.emit('request-picture-board-next-slide', this.activeGame?.id);
+  }
+
+  requestPictureBoardPreviousSlide() {
+    this.socket.emit('request-picture-board-previous-slide', this.activeGame?.id);
+  }
+
   getConnectionStatus() {
     return this.connectionStatus;
   }
@@ -189,5 +197,9 @@ export default class ClientGameHandler {
   onGameEnded(game: Game) {
     this.activeGame = game;
     Router.push('/player/game-ended');
+  }
+
+  onPictureBoardSlideUpdated(game: Game) {
+    this.activeGame = game;
   }
 }

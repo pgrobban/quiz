@@ -26,10 +26,13 @@ export const NUMBER_OF_PASSES_FOR_ROUND: Record<GameRound, number> = {
   [GameRound.pictureBoard]: 1,
 };
 
+export const ROUNDS_ALLOWED_IN_HEAD_TO_HEAD = [GameRound.openEnded];
+
 export const NON_VERIFIED_ANSWER = "NON-VERIFIED-ANSWER";
 export const NO_OR_INVALID_ANSWER = "NO-OR-INVALID-ANSWER";
 export const HEAD_TO_HEAD_ANSWERS_TO_SUBMIT = 3;
 export const MAXIMUM_POINTS_PER_QUESTION = 100;
+export const PICTURE_BOARD_ANSWERS = 5;
 
 export default class GameHandler {
   private games: Game[];
@@ -161,7 +164,10 @@ export default class GameHandler {
     };
     game.questionStatus = QuestionStatus.receivedQuestion;
     if (game.round === GameRound.pictureBoard) {
+      game.currentQuestion.pictureBoardSlide = 0;
       return game;
+    } else {
+      delete game.currentQuestion.pictureBoardSlide;
     }
     return this.requestTeamAnswer(game.id);
   }
@@ -378,7 +384,6 @@ export default class GameHandler {
     } = game;
     const { orderedTeamsLeftToAnswer, answeredTeams, pass, headToHeadInfo } =
       currentQuestion || {};
-    console.log("*** continue game", game);
 
     if (
       !currentQuestion ||
@@ -474,7 +479,7 @@ export default class GameHandler {
     const game = this.getGameById(gameId);
     if (game.questionStatus !== QuestionStatus.announcingResults) {
       console.log(game);
-      throw new Error("requestEndQuestion Assertion error");
+      throw new Error("*** requestEndQuestion Assertion error");
     }
 
     game.currentQuestion = undefined;
@@ -487,7 +492,7 @@ export default class GameHandler {
     const game = this.getGameById(gameId);
     if (game.questionStatus !== QuestionStatus.waitingForRound) {
       console.log(game);
-      throw new Error("requestEnableHeadToHead Assertion error");
+      throw new Error("*** requestEnableHeadToHead Assertion error");
     }
 
     game.headToHeadEnabled = true;
@@ -506,7 +511,7 @@ export default class GameHandler {
       game.questionStatus !== QuestionStatus.waitingForTeamAnswer
     ) {
       console.log(game);
-      throw new Error("requestHeadToHeadAnswersSubmission Assertion error");
+      throw new Error("*** requestHeadToHeadAnswersSubmission Assertion error");
     }
 
     game.currentQuestion!.headToHeadInfo = {
@@ -515,6 +520,30 @@ export default class GameHandler {
       checkingHeadToHeadAnswerIndex: -1,
     };
     game.questionStatus = QuestionStatus.receivedHeadToHeadAnswers;
+    return game;
+  }
+
+  requestPictureBoardNextSlide(gameId: string) {
+    const game = this.getGameById(gameId);
+    if (game.round !== GameRound.pictureBoard || game.questionStatus !== QuestionStatus.receivedQuestion || game.currentQuestion?.pictureBoardSlide === undefined) {
+      throw new Error("*** requestPictureBoardNextSlide Assertion error");
+    }
+    game.currentQuestion.pictureBoardSlide++;
+    if (game.currentQuestion.pictureBoardSlide > PICTURE_BOARD_ANSWERS) { // including index slide, the last index will be PICTURE_BOARD_ANSWERS.
+      game.currentQuestion.pictureBoardSlide = PICTURE_BOARD_ANSWERS;
+    }
+    return game;
+  }
+
+  requestPictureBoardPreviousSlide(gameId: string) {
+    const game = this.getGameById(gameId);
+    if (game.round !== GameRound.pictureBoard || game.questionStatus !== QuestionStatus.receivedQuestion || game.currentQuestion?.pictureBoardSlide === undefined) {
+      throw new Error("*** requestPictureBoardNextSlide Assertion error");
+    }
+    game.currentQuestion.pictureBoardSlide--;
+    if (game.currentQuestion.pictureBoardSlide < 0) {
+      game.currentQuestion.pictureBoardSlide = 0;
+    }
     return game;
   }
 }

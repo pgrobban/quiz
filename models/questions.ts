@@ -2540,7 +2540,7 @@ const questions: { [key in GameRound]: Question[] } = {
           points: 20,
         },
         {
-          answerText: "The Hitchhiker's Guide To The Galaxyt",
+          answerText: "The Hitchhiker's Guide To The Galaxy",
           clue: "vogon.jpg",
           points: 6,
         },

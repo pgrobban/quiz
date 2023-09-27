@@ -92,6 +92,10 @@ export default function AppWrapper({
         gameHandler.onGameEnded(game);
         setGameState(game);
       });
+      socket.on("picture-board-slide-updated", (game: Game) => {
+        gameHandler.onPictureBoardSlideUpdated(game);
+        setGameState(game);
+      });
     };
     getSocket();
     return () => {

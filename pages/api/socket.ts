@@ -109,7 +109,16 @@ const SocketHandler = (_: NextApiRequest, res: NextApiResponseWithSocket) => {
 
     socket.on('request-end-game', (gameId) => {
       const game = gameHandler.requestEndGame(gameId);
-      io.to(game.id).emit('game-ended');
+      io.to(game.id).emit('game-ended', game);
+    });
+
+    socket.on('request-picture-board-previous-slide', (gameId) => {
+      const game = gameHandler.requestPictureBoardPreviousSlide(gameId);
+      io.to(game.id).emit('picture-board-slide-updated', game);
+    });
+    socket.on('request-picture-board-next-slide', (gameId) => {
+      const game = gameHandler.requestPictureBoardNextSlide(gameId);
+      io.to(game.id).emit('picture-board-slide-updated', game);
     });
 
     socket.on('disconnect', () => {

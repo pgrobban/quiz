@@ -1,7 +1,10 @@
 import classnames from "classnames";
+import Image from "next/image";
+import { useEffect, useRef } from "react";
 import "swiper/css";
-import { Navigation, Keyboard } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css/navigation";
+import { Keyboard, Navigation } from "swiper/modules";
+import { Swiper, SwiperRef, SwiperSlide } from "swiper/react";
 import {
   Game,
   GameRound,
@@ -9,11 +12,8 @@ import {
   QuestionStatus,
   isGroupedAcceptableAnswers,
 } from "../models/types";
-import "swiper/css";
-import "swiper/css/navigation";
 import styles from "../styles/Home.module.css";
 import BaseGameBoard from "./BaseGameBoard";
-import Image from "next/image";
 
 const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
@@ -23,6 +23,8 @@ interface Props {
 
 export default function PictureBoard(props: Props) {
   const { game } = props;
+  const swiperRef = useRef<SwiperRef>(null);
+
   if (
     game.gameStatus !== GameStatus.inProgress ||
     !game.currentQuestion?.question ||
@@ -32,8 +34,29 @@ export default function PictureBoard(props: Props) {
   }
 
   const { questionStatus, currentQuestion } = game;
-  const { question, lastAnswer } = currentQuestion;
+  const { question, lastAnswer, pictureBoardSlide } = currentQuestion;
   const { questionText, acceptableAnswers } = question;
+
+  useEffect(() => {
+    if (
+      game.currentQuestion?.pictureBoardSlide === undefined ||
+      !swiperRef.current
+    ) {
+      return;
+    }
+
+    if (
+      game.currentQuestion.pictureBoardSlide <
+      swiperRef.current.swiper.activeIndex
+    ) {
+      swiperRef.current.swiper.slidePrev();
+    } else if (
+      game.currentQuestion.pictureBoardSlide >
+      swiperRef.current.swiper.activeIndex
+    ) {
+      swiperRef.current.swiper.slideNext();
+    }
+  }, [pictureBoardSlide]);
 
   if (isGroupedAcceptableAnswers(acceptableAnswers)) {
     throw new Error("Only support for non-grouped acceptable answers");
@@ -45,6 +68,7 @@ export default function PictureBoard(props: Props) {
         {game.questionStatus === QuestionStatus.receivedQuestion && (
           <div style={{ width: "100%", height: 700 }}>
             <Swiper
+              ref={swiperRef}
               modules={[Navigation, Keyboard]}
               navigation
               keyboard={{

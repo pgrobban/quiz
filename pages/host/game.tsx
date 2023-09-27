@@ -129,9 +129,28 @@ function Game() {
                   {questionStatus === QuestionStatus.receivedQuestion && (
                     <div style={{ marginTop: 15 }}>
                       {round === GameRound.pictureBoard && (
-                        <p style={{ color: "#ddd" }}>
-                          Remember to show the pictures on the players screen!
-                        </p>
+                        <div style={{ marginBottom: 50 }}>
+                          <Button
+                            color="primary"
+                            variant="contained"
+                            onClick={() =>
+                              gameHandler.requestPictureBoardPreviousSlide()
+                            }
+                            style={{ marginRight: 15 }}
+                          >
+                            Previous slide
+                          </Button>
+
+                          <Button
+                            color="primary"
+                            variant="contained"
+                            onClick={() =>
+                              gameHandler.requestPictureBoardNextSlide()
+                            }
+                          >
+                            Next slide
+                          </Button>
+                        </div>
                       )}
                       <Button
                         color="primary"

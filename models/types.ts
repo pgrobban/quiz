@@ -83,7 +83,8 @@ export interface Game {
       headToHeadAnswers: string[];
       checkingHeadToHeadAnswerIndex: number;
       hasPointlessAnswer: boolean;
-    }
+    },
+    pictureBoardSlide?: number;
   }
   headToHeadEnabled?: boolean;
 }
