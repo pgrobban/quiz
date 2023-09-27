@@ -234,19 +234,23 @@ export default class GameHandler {
     pass: number,
     headToHeadEnabled?: boolean
   ) {
-    let orderedTeamsAndPoints;
+    let orderedTeamsAndPoints: TeamAndPoints[];
     if (headToHeadEnabled) {
       orderedTeamsAndPoints = orderBy(teamsAndPoints, ["points"], ["asc"]);
     } else {
       if (round === GameRound.openEnded) {
         switch (pass) {
           case 1:
-            orderedTeamsAndPoints = shuffle(teamsAndPoints);
-          case 2:
             orderedTeamsAndPoints = orderBy(
               teamsAndPoints,
               ["points"],
               ["asc"]
+            );
+          case 2:
+            orderedTeamsAndPoints = orderBy(
+              teamsAndPoints,
+              ["points"],
+              ["desc"]
             );
           case 3:
           default:
