@@ -38,22 +38,13 @@ export default function PictureBoard(props: Props) {
   const { questionText, acceptableAnswers } = question;
 
   useEffect(() => {
-    if (
-      game.currentQuestion?.pictureBoardSlide === undefined ||
-      !swiperRef.current
-    ) {
+    if (pictureBoardSlide === undefined || !swiperRef.current) {
       return;
     }
 
-    if (
-      game.currentQuestion.pictureBoardSlide <
-      swiperRef.current.swiper.activeIndex
-    ) {
+    if (pictureBoardSlide < swiperRef.current.swiper.activeIndex) {
       swiperRef.current.swiper.slidePrev();
-    } else if (
-      game.currentQuestion.pictureBoardSlide >
-      swiperRef.current.swiper.activeIndex
-    ) {
+    } else if (pictureBoardSlide > swiperRef.current.swiper.activeIndex) {
       swiperRef.current.swiper.slideNext();
     }
   }, [pictureBoardSlide]);
