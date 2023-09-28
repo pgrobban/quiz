@@ -1177,9 +1177,9 @@ const questions: { [key in GameRound]: Question[] } = {
           points: 51,
         },
         {
-          clue: "Grain-like seed, staple food in the Andes",
-          answerText: "Quinoa",
-          points: 16,
+          clue: "City that houses the International Court of Justice",
+          answerText: "The Hague",
+          points: 35,
         },
       ],
     },
